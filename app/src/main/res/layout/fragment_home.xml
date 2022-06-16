@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/abl_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                app:contentScrim="#ffaa00">
+
+                <!--<include
+                    android:id="@+id/tlb"
+                    layout="@layout/toolbar_home_expand_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/toolbar_height"
+                    />-->
+
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolbar_height"
+                    app:layout_collapseMode="pin"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetStart="0dp">
+
+                    <include
+                        android:id="@+id/tl_expend"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        layout="@layout/toolbar_home_expand"/>
+
+                    <include
+                        android:id="@+id/tl_collage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        layout="@layout/toolbar_home_collapse"
+                        android:visibility="gone"/>
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/home_tab"
+        android:layout_width="200dp"
+        android:layout_gravity="left"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/tab_margin_bottom"
+        app:tabBackground="@color/white"
+        app:tabRippleColor="@color/white"
+        app:tabIndicatorColor="@color/tab_indicator"
+        app:tabIndicatorFullWidth="false"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/home_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:fitsSystemWindows="true"/>
+
+</LinearLayout>

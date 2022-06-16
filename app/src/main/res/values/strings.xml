@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Patpat</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="title_home">首页</string>
+    <string name="title_discovery">发现</string>
+    <string name="title_dynamic">动态</string>
+    <string name="title_messages">消息</string>
+
+    <!--首页相关-->
+    <string name="home_tabNum">2</string>
+    <string name="home_recommend">推荐</string>
+    <string name="home_leaderboard">排行榜</string>
+    <string name="home_search_hint">🔍 what 7 you want to search for?</string>
+
+    <!--弹出菜单-->
+    <string name="menu_personal_page">个人主页</string>
+    <string name="menu_follow">关注</string>
+    <string name="menu_favorite">收藏</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+</resources>
