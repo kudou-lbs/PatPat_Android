@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -46,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
             //透明
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.mainDrawerLayout, new OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
+                binding.container.setPadding(0,insets.getSystemWindowInsetTop(),0,0);
+                return insets;
+            }
+        });
     }
 
     //初始化底部栏
