@@ -9,4 +9,6 @@
     <dimen name="tab_text_size">25sp</dimen>
     <dimen name="tab_margin_bottom">10dp</dimen>
     <dimen name="menu_width">250dp</dimen>
+
+    <dimen name="status_bar_height">30dp</dimen>
 </resources>
