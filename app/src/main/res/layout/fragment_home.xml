@@ -6,7 +6,8 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+<!--可收缩bar，暂弃-->
+<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -22,13 +23,13 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:contentScrim="#ffaa00">
 
-                <!--<include
+                &lt;!&ndash;<include
                     android:id="@+id/tlb"
                     layout="@layout/toolbar_home_expand_bottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/toolbar_height"
-                    />-->
+                    />&ndash;&gt;
 
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
@@ -56,7 +57,13 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+    <include
+        android:id="@+id/tl_expend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/toolbar_home_expand"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/home_tab"

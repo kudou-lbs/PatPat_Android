@@ -18,8 +18,11 @@ import com.lbs.patpat.databinding.FragmentWebViewBinding;
 public class webViewFragment extends Fragment {
 
     private WebViewViewModel mViewModel;
-    private String url1="http://www.baidu.com";
+    private String url1="file:///android_asset/rcmdpage/index.html";
     private FragmentWebViewBinding binding;
+
+    //这里添加根据pos修改url1
+//    public webViewFragment(int pos)
 
     //根据position改变行为
     public static webViewFragment newInstance(int position) {

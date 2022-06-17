@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
+        //适配问题
         ViewCompat.setOnApplyWindowInsetsListener(binding.mainDrawerLayout, new OnApplyWindowInsetsListener() {
             @Override
             public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 return insets;
             }
         });
+
+
     }
 
     //初始化底部栏

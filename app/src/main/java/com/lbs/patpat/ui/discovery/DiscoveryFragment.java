@@ -27,13 +27,12 @@ public class DiscoveryFragment extends Fragment {
         binding = FragmentDiscoveryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDiscovery;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        /*dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
             }
-        });
+        });*/
         return root;
     }
 
