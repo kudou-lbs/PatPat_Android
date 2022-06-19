@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel;
 
 public class DynamicViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private MutableLiveData<String[]> tabItems;
 
     public DynamicViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dynamic fragment");
+        tabItems = new MutableLiveData<>();
+        tabItems.setValue(new String[]{"关注","推荐","论坛"});
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<String[]> getTabItems() {
+        return tabItems;
     }
 }

@@ -11,8 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.databinding.FragmentDynamicBinding;
+import com.lbs.patpat.ui.webviewFragment.webViewFragment;
+
+import java.util.Objects;
 
 public class DynamicFragment extends Fragment {
 
@@ -27,14 +32,29 @@ public class DynamicFragment extends Fragment {
         binding = FragmentDynamicBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDynamic;
-        dynamicViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        binding.dynamicPager.setAdapter(new FragmentStateAdapter(getActivity().getSupportFragmentManager(),getLifecycle()) {
+            @NonNull
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public Fragment createFragment(int position) {
+                return webViewFragment.newInstance(position);
+            }
+
+            @Override
+            public int getItemCount() {
+                return Objects.requireNonNull(dynamicViewModel.getTabItems().getValue()).length;
             }
         });
+
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //绑定viewpager&tab
+        new TabLayoutMediator(binding.dynamicToolbar.toolbarTabDynamic, binding.dynamicPager,
+                ((tab, position) -> tab.setText(Objects.requireNonNull(dynamicViewModel.getTabItems().getValue())[position])))
+                .attach();
     }
 
     @Override

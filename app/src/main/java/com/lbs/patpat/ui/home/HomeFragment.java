@@ -2,25 +2,18 @@ package com.lbs.patpat.ui.home;
 
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.MainActivity;
 import com.lbs.patpat.R;
@@ -28,8 +21,6 @@ import com.lbs.patpat.SearchActivity;
 import com.lbs.patpat.databinding.FragmentHomeBinding;
 import com.lbs.patpat.global.CircleImageDrawable;
 import com.lbs.patpat.ui.webviewFragment.webViewFragment;
-
-import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener,View.OnClickListener {
 
@@ -59,11 +50,11 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
         });
 
         //设置未登录时头像
-        binding.tlExpend.toolbarPersonal.setImageDrawable(
+        binding.tlExpend.toolbarPersonalHome.setImageDrawable(
                 new CircleImageDrawable(CircleImageDrawable.drawableToBitmap(
                                 getResources().getDrawable(R.drawable.ic_launcher_background,null))));
-        binding.tlExpend.toolbarSearch.setOnClickListener(this);
-        binding.tlExpend.toolbarPersonal.setOnClickListener(this);
+        binding.tlExpend.toolbarSearchHome.setOnClickListener(this);
+        binding.tlExpend.toolbarPersonalHome.setOnClickListener(this);
 
         return binding.getRoot();
     }
@@ -90,11 +81,11 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.toolbar_search:
+            case R.id.toolbar_search_home:
                 Intent intent=new Intent(getActivity(), SearchActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.toolbar_personal:
+            case R.id.toolbar_personal_home:
                 ((MainActivity)getActivity()).getBinding().mainDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             default:
