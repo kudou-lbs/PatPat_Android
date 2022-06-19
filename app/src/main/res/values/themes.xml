@@ -15,4 +15,9 @@
         <!-- Customize your theme here. -->
 
     </style>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/tab_text_size</item>
+        <!--<item name="android:textColor">@drawable/selector_tab_text_color</item>-->
+    </style>
 </resources>

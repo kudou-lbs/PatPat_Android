@@ -43,13 +43,8 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
         tabs=new String[2];
         tabs[0]=new String(getString(R.string.home_recommend));
         tabs[1]=new String(getString(R.string.home_leaderboard));
-        ArrayList<webViewFragment> fragments=new ArrayList<>();
-        for(int i=0;i<tabs.length;++i){
-            fragments.add(new webViewFragment());
-        }
 
-        //禁用预加载
-        binding.homePager.setOffscreenPageLimit(binding.homePager.OFFSCREEN_PAGE_LIMIT_DEFAULT);
+        //设置适配器
         binding.homePager.setAdapter(new FragmentStateAdapter(getActivity().getSupportFragmentManager(),getLifecycle()) {
             @NonNull
             @Override
@@ -76,6 +71,7 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //tabLayout和viewPager2绑定
         new TabLayoutMediator(binding.homeTab,binding.homePager,((tab1, position) -> tab1.setText(tabs[position]))).attach();
     }
 
