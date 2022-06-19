@@ -13,12 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
+import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.FragmentWebViewBinding;
+import com.lbs.patpat.global.MyApplication;
+
+import java.security.PublicKey;
 
 public class webViewFragment extends Fragment {
 
+    public final static int RECOMMEND_PAGE=0;
+    public final static int LEADER_PAGE=1;
+
     private WebViewViewModel mViewModel;
-    private String url1="file:///android_asset/rcmdpage/index.html";
+    /*public String url1="file:///android_asset/rcmd/index.html";*/
+    //默认
+    private String url1="http://www.baidu.com";
     private FragmentWebViewBinding binding;
 
     //这里添加根据pos修改url1
@@ -26,9 +35,22 @@ public class webViewFragment extends Fragment {
 
     //根据position改变行为
     public static webViewFragment newInstance(int position) {
-        webViewFragment webViewFragment=new webViewFragment();
-
-        return webViewFragment;
+        webViewFragment fragment=new webViewFragment();
+        switch (position){
+            case RECOMMEND_PAGE:
+                fragment.url1= MyApplication.getInstance().getString(R.string.url_prefix)+
+                        MyApplication.getInstance().getString(R.string.url_recommend)+
+                        MyApplication.getInstance().getString(R.string.url_suffix);
+                return fragment;
+            case LEADER_PAGE:
+                fragment.url1= MyApplication.getInstance().getString(R.string.url_prefix)+
+                        MyApplication.getInstance().getString(R.string.url_leaderboard)+
+                        MyApplication.getInstance().getString(R.string.url_suffix);
+                return fragment;
+            default:
+                break;
+        }
+        return fragment;
     }
 
     @Override
