@@ -12,8 +12,11 @@
     <color name="grey_text">#666666</color>
     <color name="tab_indicator">#ff5555</color>
 
-    <!--tableLayout-->
-    <string name="hot_color">#c37d7d</string>
+    <!--gridLayout-->
+    <color name="search_button_background">#ffeced</color>
+    <color name="hot_color">#c37d7d</color>
+    <color name="grid_num">#fb7d7d</color>
+    <color name="grid_text_color">#333333</color>
 
 
 </resources>

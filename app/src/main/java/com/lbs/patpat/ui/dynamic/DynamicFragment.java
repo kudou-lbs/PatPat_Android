@@ -30,6 +30,7 @@ public class DynamicFragment extends Fragment {
         binding = FragmentDynamicBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        //tabLayout与viewPager适配器
         binding.dynamicPager.setAdapter(new FragmentStateAdapter(getActivity().getSupportFragmentManager(),getLifecycle()) {
             @NonNull
             @Override
