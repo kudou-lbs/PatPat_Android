@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.active.DynamicFragment">
+    tools:context=".ui.dynamic.DynamicFragment">
 
     <include
         android:id="@+id/dynamic_toolbar"

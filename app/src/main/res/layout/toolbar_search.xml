@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    android:gravity="center_vertical"
+    android:background="@color/white">
+    
+    <ImageView
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:src="@drawable/button_back"
+        android:layout_marginLeft="@dimen/toolbar_icon_margin"
+        android:scaleType="centerInside"/>
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="@dimen/toolbar_edit_text_height"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/toolbar_edit_text_padding_left"
+        android:background="@drawable/shape_search"
+        android:hint="请输入搜索内容"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/toolbar_search_button_height"
+        android:layout_marginLeft="@dimen/toolbar_edit_text_padding_left"
+        android:background="@drawable/button_search"
+        android:gravity="center"
+        android:text="搜索"
+        android:textSize="@dimen/toolbar_search_button_text_size"/>
+
+</LinearLayout>

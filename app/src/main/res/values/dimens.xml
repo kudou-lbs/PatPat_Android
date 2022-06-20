@@ -8,6 +8,12 @@
     <dimen name="toolbar_icon_margin">20dp</dimen>
     <dimen name="toolbar_icon_diameter">30dp</dimen>
     <dimen name="toolbar_icon_padding">5dp</dimen>
+    <dimen name="toolbar_edit_text_height">30dp</dimen>
+    <dimen name="toolbar_edit_text_padding_left">10dp</dimen>
+    <dimen name="toolbar_search_return_height">34dp</dimen>
+    <dimen name="toolbar_search_button_height">34dp</dimen>
+    <dimen name="toolbar_search_button_text_size">20sp</dimen>
+    <dimen name="toolbar_search_button_radius">17dp</dimen>
     <!--tabBar相关属性-->
     <dimen name="tabbar_height">60dp</dimen>
     <dimen name="tab_text_size">18sp</dimen>
@@ -16,7 +22,11 @@
         <!--根据选中情况更改字体大小，暂未用上-->
     <dimen name="tab_text_size_selected">20sp</dimen>
     <dimen name="tab_text_size_unselected">18sp</dimen>
-
+    <!--tableLayout-->
+    <dimen name="table_margin_left">50dp</dimen>
+    <dimen name="table_hot_margin_top">100dp</dimen>
+    <dimen name="table_margin_hot">20dp</dimen>
+    <dimen name="table_hot_text_size">25dp</dimen>
 
 
 </resources>

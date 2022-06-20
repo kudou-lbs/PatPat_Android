@@ -1,4 +1,4 @@
-package com.lbs.patpat.ui.active;
+package com.lbs.patpat.ui.dynamic;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

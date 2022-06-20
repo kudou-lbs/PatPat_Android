@@ -34,4 +34,8 @@
     <string name="url_recommend">rcmd</string>
     <string name="url_leaderboard">top</string>
 
+    <!--搜索界面-->
+    <string name="table_hot_text">热搜榜</string>
+
+
 </resources>
