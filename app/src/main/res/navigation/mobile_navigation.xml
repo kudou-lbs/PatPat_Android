@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_dynamic"
-        android:name="com.lbs.patpat.ui.dynamic.DynamicFragment"
+        android:name="com.lbs.patpat.ui.active.DynamicFragment"
         android:label="@string/title_dynamic"
         tools:layout="@layout/fragment_dynamic" />
 
