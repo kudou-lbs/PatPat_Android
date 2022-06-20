@@ -1,4 +1,4 @@
-package com.lbs.patpat.ui.dynamic;
+package com.lbs.patpat.ui.active;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

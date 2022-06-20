@@ -17,4 +17,6 @@
     <dimen name="tab_text_size_selected">20sp</dimen>
     <dimen name="tab_text_size_unselected">18sp</dimen>
 
+
+
 </resources>
