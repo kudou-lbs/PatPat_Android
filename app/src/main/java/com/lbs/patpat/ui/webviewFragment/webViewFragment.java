@@ -23,19 +23,29 @@ public class webViewFragment extends Fragment {
 
     public final static int RECOMMEND_PAGE=0;
     public final static int LEADER_PAGE=1;
+    public final static int DYNAMIC_FOLLOW=2;
+    public final static int DYNAMIC_RECOMMEND=3;
+    public final static int DYNAMIC_FORUM=4;
+    public final static int SEARCH_GAMES=5;
+    //后面两个得用其他fragment
+    public final static int SEARCH_FORUM=6;
+    public final static int SEARCH_USER=7;
 
     private WebViewViewModel mViewModel;
-    /*public String url1="file:///android_asset/rcmd/index.html";*/
-    //默认
+    //请求webView地址
     private String url1="http://www.baidu.com";
+    private int requestPage;
     private FragmentWebViewBinding binding;
 
     //这里添加根据pos修改url1
-//    public webViewFragment(int pos)
+    public webViewFragment(int requestPage){
+        super();
+        this.requestPage=requestPage;
+    }
 
     //根据position改变行为
     public static webViewFragment newInstance(int position) {
-        webViewFragment fragment=new webViewFragment();
+        webViewFragment fragment=new webViewFragment(position);
         switch (position){
             case RECOMMEND_PAGE:
                 fragment.url1= MyApplication.getInstance().getString(R.string.url_prefix)+

@@ -1,4 +1,4 @@
-package com.lbs.patpat.ui.active;
+package com.lbs.patpat.ui.dynamic;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +30,7 @@ public class DynamicFragment extends Fragment {
         binding = FragmentDynamicBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        //tabLayout与viewPager适配器
         binding.dynamicPager.setAdapter(new FragmentStateAdapter(getActivity().getSupportFragmentManager(),getLifecycle()) {
             @NonNull
             @Override

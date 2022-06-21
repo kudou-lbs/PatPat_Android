@@ -33,5 +33,10 @@
     <string name="url_suffix">/index.html</string>
     <string name="url_recommend">rcmd</string>
     <string name="url_leaderboard">top</string>
+    <string name="url_discovery">dscv</string>
+
+    <!--搜索界面-->
+    <string name="grid_hot_text">热搜榜</string>
+
 
 </resources>
