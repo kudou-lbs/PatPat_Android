@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/recycler_item_margin">
+
+        <ImageView
+            android:id="@+id/item_forum_icon"
+            android:layout_width="@dimen/recycler_icon_width"
+            android:layout_height="@dimen/recycler_icon_width"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_forum_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/recycler_text_margin_icon"
+            app:layout_constraintStart_toEndOf="@+id/item_forum_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_forum_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/item_forum_name"
+            app:layout_constraintTop_toBottomOf="@id/item_forum_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

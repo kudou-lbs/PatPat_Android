@@ -30,6 +30,10 @@
     <dimen name="grid_margin_hot">20dp</dimen>
     <dimen name="grid_hot_text_size">16sp</dimen>
     <dimen name="grid_text_margin_num">6dp</dimen>
+    <!--search results with recyclerView-->
+    <dimen name="recycler_item_margin">10dp</dimen>
+    <dimen name="recycler_icon_width">40dp</dimen>
+    <dimen name="recycler_text_margin_icon">10dp</dimen>
 
 
 </resources>
