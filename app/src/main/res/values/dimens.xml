@@ -30,6 +30,16 @@
     <dimen name="grid_margin_hot">20dp</dimen>
     <dimen name="grid_hot_text_size">16sp</dimen>
     <dimen name="grid_text_margin_num">6dp</dimen>
+    <!--search results with recyclerView-->
+    <dimen name="recycler_item_margin">10dp</dimen>
+    <dimen name="recycler_icon_width">40dp</dimen>
+    <dimen name="recycler_text_margin_icon">10dp</dimen>
+    <!--drawer相关-->
+    <dimen name="drawer_icon_width">60dp</dimen>
+    <dimen name="drawer_padding_top">40dp</dimen>
+    <dimen name="drawer_padding_bottom">10dp</dimen>
+    <dimen name="drawer_nickname_size">15sp</dimen>
+    <dimen name="drawer_follow_and_fans_size">10sp</dimen>
 
 
 </resources>

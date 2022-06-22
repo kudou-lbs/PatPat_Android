@@ -1,4 +1,4 @@
-package com.lbs.patpat.model;
+package com.lbs.patpat.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/menu_personal_page"
-        android:title="@string/menu_personal_page"/>
+    <group android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_person_page"
+            android:icon="@drawable/drawer_person_page"
+            android:title="@string/drawer_person_page"/>
+        <item
+            android:id="@+id/drawer_follow"
+            android:icon="@drawable/drawer_follow"
+            android:title="@string/drawer_follow"/>
+    </group>
 
-    <item
-        android:id="@+id/menu_follow"
-        android:title="@string/menu_follow"/>
+    <group android:id="@+id/group2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_setting"
+            android:icon="@drawable/drawer_setting"
+            android:title="@string/drawer_setting"/>
+        <item
+            android:id="@+id/drawer_dark_mode"
+            android:icon="@drawable/drawer_dark_mode"
+            android:title="@string/drawer_dark_mode"/>
+        <item
+            android:id="@+id/drawer_version"
+            android:icon="@drawable/drawer_version"
+            android:title="@string/drawer_version"/>
+    </group>
 
-    <item
-        android:id="@+id/menu_favorite"
-        android:title="@string/menu_favorite"/>
+    <group android:id="@+id/group3"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_logout"
+            android:icon="@drawable/drawer_logout"
+            android:title="@string/drawer_logout"/>
+    </group>
 
 </menu>

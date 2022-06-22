@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         initBottomNav();
+        initNavDrawerMenu();
 
         //状态栏字体颜色为黑
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     //初始化底部栏
     private void initBottomNav(){
         binding.navView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
-        //这个属性待研究
+        //修复图片不显示原图
         binding.navView.setItemIconTintList(null);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -71,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+    }
+
+    //初始化抽屉菜单
+    private void initNavDrawerMenu(){
+        //修复图片不显示原图
+        binding.navDrawerMenu.setItemIconTintList(null);
+
     }
     
     public ActivityMainBinding getBinding() {

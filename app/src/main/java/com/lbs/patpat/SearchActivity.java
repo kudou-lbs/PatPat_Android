@@ -12,7 +12,8 @@ import android.view.View;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.databinding.ActivitySearchBinding;
-import com.lbs.patpat.model.SearchViewModel;
+import com.lbs.patpat.viewmodel.SearchViewModel;
+import com.lbs.patpat.fragment.ListFragment;
 import com.lbs.patpat.ui.webviewFragment.webViewFragment;
 
 import java.util.Objects;
@@ -54,6 +55,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //搜索结果
                 binding.searchTab.setVisibility(View.VISIBLE);
+                binding.hotSearch.setVisibility(View.GONE);
                 binding.searchResultPage.setVisibility(View.VISIBLE);
             }
         });
@@ -86,7 +88,16 @@ public class SearchActivity extends AppCompatActivity {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return webViewFragment.newInstance(position);
+                switch (position){
+                    //case 0与默认一致，返回游戏列表
+                    case 1:
+                        return ListFragment.newInstance();
+                    default:
+                        //默认返回游戏列表
+                        return webViewFragment.newInstance(webViewFragment.SEARCH_GAMES);
+
+                }
+
             }
 
             @Override

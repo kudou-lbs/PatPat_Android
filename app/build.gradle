@@ -27,6 +27,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 
     viewBinding {
@@ -46,6 +47,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.jaeger.statusbarutil:library:1.4.0'
     implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.databinding:databinding-runtime:4.2.2'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

@@ -48,7 +48,7 @@
         android:layout_width="@dimen/menu_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#6699ff"
+        android:background="@color/white"
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/drawer_menu"/>
 
