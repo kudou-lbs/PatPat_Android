@@ -37,6 +37,8 @@
     <string name="url_recommend">rcmd</string>
     <string name="url_leaderboard">top</string>
     <string name="url_discovery">dscv</string>
+    <string name="url_search_game">search</string>
+    <string name="url_dynamic_follow_or_recommend">post</string>
 
     <!--搜索界面-->
     <string name="grid_hot_text">热搜榜</string>

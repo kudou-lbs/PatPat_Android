@@ -13,6 +13,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.databinding.FragmentDynamicBinding;
+import com.lbs.patpat.fragment.ListFragment;
 import com.lbs.patpat.ui.webviewFragment.webViewFragment;
 
 import java.util.Objects;
@@ -35,7 +36,21 @@ public class DynamicFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return webViewFragment.newInstance(position);
+                int webViewType=webViewFragment.DEFAULT;
+                switch (position){
+                    //webView：关注和推荐
+                    case 0:
+                        webViewType=webViewFragment.DYNAMIC_FOLLOW;
+                        break;
+                    case 1:
+                        webViewType=webViewFragment.DYNAMIC_RECOMMEND;
+                        break;
+                    //ListView：论坛
+                    case 2:
+                        return ListFragment.newInstance(webViewFragment.DYNAMIC_FORUM);
+                }
+
+                return webViewFragment.newInstance(webViewType);
             }
 
             @Override

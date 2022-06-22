@@ -5,13 +5,16 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
@@ -25,6 +28,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.core.view.ViewCompat;
 
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.android.material.navigation.NavigationView;
 import com.jaeger.library.StatusBarUtil;
 import com.lbs.patpat.databinding.ActivityMainBinding;
 
@@ -78,7 +82,13 @@ public class MainActivity extends AppCompatActivity {
     private void initNavDrawerMenu(){
         //修复图片不显示原图
         binding.navDrawerMenu.setItemIconTintList(null);
-
+        binding.navDrawerMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Toast.makeText(MainActivity.this,item.getTitle(),Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
     
     public ActivityMainBinding getBinding() {

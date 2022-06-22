@@ -90,11 +90,15 @@ public class SearchActivity extends AppCompatActivity {
             public Fragment createFragment(int position) {
                 switch (position){
                     //case 0与默认一致，返回游戏列表
+                    case 0:
+                        return webViewFragment.newInstance(webViewFragment.SEARCH_GAMES);
                     case 1:
-                        return ListFragment.newInstance();
+                        return ListFragment.newInstance(webViewFragment.SEARCH_FORUM);
+                    case 2:
+                        return ListFragment.newInstance(webViewFragment.SEARCH_USER);
                     default:
                         //默认返回游戏列表
-                        return webViewFragment.newInstance(webViewFragment.SEARCH_GAMES);
+                        return webViewFragment.newInstance(webViewFragment.DEFAULT);
 
                 }
 

@@ -21,13 +21,14 @@ import java.security.PublicKey;
 
 public class webViewFragment extends Fragment {
 
+    public final static int DEFAULT=-1;
     public final static int RECOMMEND_PAGE=0;
     public final static int LEADER_PAGE=1;
     public final static int DYNAMIC_FOLLOW=2;
     public final static int DYNAMIC_RECOMMEND=3;
     public final static int DYNAMIC_FORUM=4;
     public final static int SEARCH_GAMES=5;
-    //后面两个得用其他fragment
+    //后面两个适应ListFragment
     public final static int SEARCH_FORUM=6;
     public final static int SEARCH_USER=7;
 
@@ -38,7 +39,7 @@ public class webViewFragment extends Fragment {
     private FragmentWebViewBinding binding;
 
     //这里添加根据pos修改url1
-    public webViewFragment(int requestPage){
+    private webViewFragment(int requestPage){
         super();
         this.requestPage=requestPage;
     }
@@ -46,19 +47,33 @@ public class webViewFragment extends Fragment {
     //根据position改变行为
     public static webViewFragment newInstance(int position) {
         webViewFragment fragment=new webViewFragment(position);
+        String viewSelect=null;
         switch (position){
+            //首页推荐
             case RECOMMEND_PAGE:
-                fragment.url1= MyApplication.getInstance().getString(R.string.url_prefix)+
-                        MyApplication.getInstance().getString(R.string.url_recommend)+
-                        MyApplication.getInstance().getString(R.string.url_suffix);
-                return fragment;
+                viewSelect=MyApplication.getInstance().getString(R.string.url_recommend);
+                break;
+            //首页排行榜
             case LEADER_PAGE:
-                fragment.url1= MyApplication.getInstance().getString(R.string.url_prefix)+
-                        MyApplication.getInstance().getString(R.string.url_leaderboard)+
-                        MyApplication.getInstance().getString(R.string.url_suffix);
-                return fragment;
+                viewSelect=MyApplication.getInstance().getString(R.string.url_leaderboard);
+                break;
+            //动态关注&推荐
+            case DYNAMIC_FOLLOW:
+            case DYNAMIC_RECOMMEND:
+                viewSelect=MyApplication.getInstance().getString(R.string.url_dynamic_follow_or_recommend);
+                break;
+            //搜索游戏列表
+            case SEARCH_GAMES:
+                viewSelect=MyApplication.getInstance().getString(R.string.url_search_game);
+                break;
             default:
                 break;
+        }
+
+        if(viewSelect!=null) {
+            fragment.url1= MyApplication.getInstance().getString(R.string.url_prefix)+
+                    viewSelect+
+                    MyApplication.getInstance().getString(R.string.url_suffix);
         }
         return fragment;
     }

@@ -19,6 +19,7 @@ import com.lbs.patpat.R;
 import com.lbs.patpat.adapter.ForumListAdapter;
 import com.lbs.patpat.databinding.FragmentListBinding;
 import com.lbs.patpat.model.ForumModel;
+import com.lbs.patpat.ui.webviewFragment.webViewFragment;
 import com.lbs.patpat.viewmodel.ListViewModel;
 
 import java.util.ArrayList;
@@ -33,8 +34,22 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
     private List<ForumModel> forumModelList;
     private ForumListAdapter adapter;
 
-    public static ListFragment newInstance() {
-        return new ListFragment();
+    public ListFragment(int position){
+        super();
+        //根据不同情形选择不同的viewModel，adapter
+    }
+
+    public static ListFragment newInstance(int position) {
+        switch (position){
+            //搜索结果
+            case webViewFragment.SEARCH_FORUM:
+                return new ListFragment(webViewFragment.SEARCH_FORUM);
+            case webViewFragment.SEARCH_USER:
+                return new ListFragment(webViewFragment.SEARCH_USER);
+            case webViewFragment.DYNAMIC_FORUM:
+                return new ListFragment(webViewFragment.DYNAMIC_FORUM);
+        }
+        return new ListFragment(webViewFragment.DEFAULT);
     }
 
     @Override
