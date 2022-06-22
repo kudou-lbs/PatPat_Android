@@ -3,26 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ff6666">
+    android:paddingTop="@dimen/drawer_padding_top"
+    android:paddingBottom="@dimen/drawer_padding_bottom"
+    android:background="@drawable/drawer_background_custom">
 
     <ImageView
         android:id="@+id/header_avatar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="@dimen/drawer_icon_width"
+        android:layout_height="@dimen/drawer_icon_width"
         android:layout_marginLeft="30dp"
         android:src="@drawable/circle_image_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/header_introduction"
+        android:id="@+id/header_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="@dimen/drawer_nickname_size"
+        android:text="无敌暴龙战神"
         app:layout_constraintTop_toBottomOf="@id/header_avatar"
-        app:layout_constraintLeft_toLeftOf="@id/header_avatar"
-        android:text="这个人很懒，什么都没有写"/>
+        app:layout_constraintLeft_toLeftOf="@id/header_avatar"/>
+
+    <TextView
+        android:id="@+id/header_follow_and_fans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/drawer_follow_and_fans_size"
+        android:text="这个人很懒，什么都没有写"
+        app:layout_constraintTop_toBottomOf="@id/header_nickname"
+        app:layout_constraintLeft_toLeftOf="@id/header_nickname" />
 
 
 
