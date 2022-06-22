@@ -1,5 +1,6 @@
 package com.lbs.patpat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,8 +33,9 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 import com.jaeger.library.StatusBarUtil;
 import com.lbs.patpat.databinding.ActivityMainBinding;
+import com.lbs.patpat.global.MyActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MyActivity {
 
     private ActivityMainBinding binding;
 
@@ -45,13 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         initBottomNav();
         initNavDrawerMenu();
-
-        //状态栏字体颜色为黑
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            //透明
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
 
         //适配问题
         ViewCompat.setOnApplyWindowInsetsListener(binding.mainDrawerLayout, new OnApplyWindowInsetsListener() {
@@ -87,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Toast.makeText(MainActivity.this,item.getTitle(),Toast.LENGTH_SHORT).show();
                 return false;
+            }
+        });
+
+        //头部点击事件
+        View headerView=binding.navDrawerMenu.getHeaderView(0);
+        ImageView icon=headerView.findViewById(R.id.header_avatar);
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,PersonalActivity.class);
+                startActivity(intent);
             }
         });
     }

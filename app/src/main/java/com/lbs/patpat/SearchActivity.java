@@ -12,13 +12,14 @@ import android.view.View;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.databinding.ActivitySearchBinding;
+import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.viewmodel.SearchViewModel;
 import com.lbs.patpat.fragment.ListFragment;
 import com.lbs.patpat.ui.webviewFragment.webViewFragment;
 
 import java.util.Objects;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends MyActivity {
 
     private ActivitySearchBinding binding;
     private SearchViewModel searchViewModel;
@@ -34,11 +35,6 @@ public class SearchActivity extends AppCompatActivity {
         initToolBar();
         initSearchPage();
         initResultPage();
-
-        //状态栏字体颜色为黑
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
     }
 
     //初始化标题栏
