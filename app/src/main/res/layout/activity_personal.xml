@@ -6,4 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".PersonalActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/drawer_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/search_return"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_margin="@dimen/toolbar_icon_margin"
+                android:scaleType="centerInside"
+                android:src="@drawable/button_back" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
