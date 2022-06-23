@@ -76,7 +76,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@id/personal_follow_num"/>
+            app:layout_constraintTop_toBottomOf="@id/personal_follow_num"
+            android:layout_marginTop="@dimen/toolbar_icon_margin"
+            android:text="这个人很烂"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
