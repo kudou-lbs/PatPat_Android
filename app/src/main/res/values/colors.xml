@@ -11,6 +11,8 @@
     <color name="grey_background">#eeeeee</color>
     <color name="grey_text">#666666</color>
     <color name="tab_indicator">#ff5555</color>
+    <color name="red">#EE2315</color>
+    <color name="patpat">#F1A6A6</color>
 
     <!--gridLayout-->
     <color name="search_button_background">#ffeced</color>

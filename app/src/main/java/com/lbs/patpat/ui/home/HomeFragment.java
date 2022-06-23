@@ -20,6 +20,7 @@ import com.lbs.patpat.R;
 import com.lbs.patpat.SearchActivity;
 import com.lbs.patpat.databinding.FragmentHomeBinding;
 import com.lbs.patpat.global.CircleImageDrawable;
+import com.lbs.patpat.ui.login.LoginActivity;
 import com.lbs.patpat.ui.webviewFragment.webViewFragment;
 
 public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener,View.OnClickListener {
@@ -55,7 +56,6 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
                                 getResources().getDrawable(R.drawable.ic_launcher_background,null))));
         binding.tlExpend.toolbarSearchHome.setOnClickListener(this);
         binding.tlExpend.toolbarPersonalHome.setOnClickListener(this);
-
         return binding.getRoot();
     }
 
@@ -86,7 +86,9 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
                 startActivity(intent);
                 break;
             case R.id.toolbar_personal_home:
-                ((MainActivity)getActivity()).getBinding().mainDrawerLayout.openDrawer(GravityCompat.START);
+                //((MainActivity)getActivity()).getBinding().mainDrawerLayout.openDrawer(GravityCompat.START);
+                Intent intent2=new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent2);
                 break;
             default:
                 break;

@@ -1,5 +1,9 @@
 package com.lbs.patpat.ui.message;
 
+import static com.lbs.patpat.R.string.saved_user_account_key;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.FragmentMessageBinding;
+import com.lbs.patpat.ui.login.LoginActivity;
 
 public class MessageFragment extends Fragment {
 
