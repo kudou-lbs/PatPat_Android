@@ -14,7 +14,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.databinding.FragmentDynamicBinding;
 import com.lbs.patpat.fragment.ListFragment;
-import com.lbs.patpat.ui.webviewFragment.webViewFragment;
+import com.lbs.patpat.fragment.webviewFragment.webViewFragment;
 
 import java.util.Objects;
 

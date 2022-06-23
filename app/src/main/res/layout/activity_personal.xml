@@ -4,19 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     tools:context=".PersonalActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/personal_base_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
+        android:background="@drawable/drawer_background_custom"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/drawer_background">
+        tools:layout_editor_absoluteX="-16dp">
 
+        <!--返回按钮-->
         <LinearLayout
+            android:id="@+id/personal_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/search_return"
@@ -28,6 +34,51 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="@dimen/drawer_icon_width"
+            android:layout_height="@dimen/drawer_icon_width"
+            android:layout_marginLeft="@dimen/toolbar_icon_margin"
+            android:layout_marginTop="50dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/personal_bar" />
+
+        <TextView
+            android:id="@+id/personal_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            android:layout_marginTop="@dimen/toolbar_icon_margin"
+            android:text="无敌暴龙战神"/>
+
+        <TextView
+            android:id="@+id/personal_follow_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/personal_nickname"
+            android:layout_marginTop="@dimen/toolbar_icon_margin"
+            android:text="关注 32"/>
+
+        <TextView
+            android:id="@+id/personal_fan_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/personal_follow_num"
+            app:layout_constraintTop_toTopOf="@id/personal_follow_num"
+            android:layout_marginLeft="@dimen/toolbar_icon_margin"
+            android:text="粉丝 20"/>
+
+        <TextView
+            android:id="@+id/personal_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@id/personal_follow_num"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

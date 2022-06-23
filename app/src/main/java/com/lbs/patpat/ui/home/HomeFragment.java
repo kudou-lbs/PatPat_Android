@@ -20,7 +20,7 @@ import com.lbs.patpat.R;
 import com.lbs.patpat.SearchActivity;
 import com.lbs.patpat.databinding.FragmentHomeBinding;
 import com.lbs.patpat.global.CircleImageDrawable;
-import com.lbs.patpat.ui.webviewFragment.webViewFragment;
+import com.lbs.patpat.fragment.webviewFragment.webViewFragment;
 
 public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener,View.OnClickListener {
 

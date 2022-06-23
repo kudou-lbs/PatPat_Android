@@ -72,7 +72,7 @@
                     android:id="@+id/hot_1"
                     android:layout_columnSpan="1"
                     android:layout_gravity="fill"
-                    layout="@layout/grid_hottest"
+                    layout="@layout/item_grid_hottest"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"/>
@@ -80,7 +80,7 @@
                     android:id="@+id/hot_2"
                     android:layout_columnSpan="1"
                     android:layout_gravity="fill"
-                    layout="@layout/grid_hottest"
+                    layout="@layout/item_grid_hottest"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"/>
@@ -88,28 +88,28 @@
                     android:id="@+id/hot_3"
                     android:layout_columnSpan="1"
                     android:layout_gravity="fill"
-                    layout="@layout/grid_hottest"
+                    layout="@layout/item_grid_hottest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <include
                     android:id="@+id/hot_4"
                     android:layout_columnSpan="1"
                     android:layout_gravity="fill"
-                    layout="@layout/grid_hot"
+                    layout="@layout/item_grid_hot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <include
                     android:id="@+id/hot_5"
                     android:layout_columnSpan="1"
                     android:layout_gravity="fill"
-                    layout="@layout/grid_hot"
+                    layout="@layout/item_grid_hot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <include
                     android:id="@+id/hot_6"
                     android:layout_columnSpan="1"
                     android:layout_gravity="fill"
-                    layout="@layout/grid_hot"
+                    layout="@layout/item_grid_hot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

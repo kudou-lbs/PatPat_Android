@@ -3,9 +3,8 @@
     android:shape="rectangle">
 
     <solid
-        android:color="@color/button_background"/>
-
+        android:color="@color/button_follow"/>
     <corners
-        android:radius="@dimen/toolbar_search_button_radius"/>
+        android:radius="@dimen/follow_button_radius"/>
 
 </shape>

@@ -32,11 +32,11 @@
     <string name="login_failed">"Login failed"</string>
 
     <!--webView相关-->
-    <string name="url_prefix">file:///android_asset/</string>
-    <string name="url_suffix">/index.html</string>
-    <string name="url_recommend">rcmd</string>
+    <string name="url_prefix">file:///android_asset/dist/</string>
+    <string name="url_suffix">index.html#/</string>
+    <string name="url_recommend"> </string>
     <string name="url_leaderboard">top</string>
-    <string name="url_discovery">dscv</string>
+    <string name="url_discovery">discover</string>
     <string name="url_search_game">search</string>
     <string name="url_dynamic_follow_or_recommend">post</string>
 

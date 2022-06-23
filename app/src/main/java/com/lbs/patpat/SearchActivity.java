@@ -1,12 +1,10 @@
 package com.lbs.patpat;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,7 +13,7 @@ import com.lbs.patpat.databinding.ActivitySearchBinding;
 import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.viewmodel.SearchViewModel;
 import com.lbs.patpat.fragment.ListFragment;
-import com.lbs.patpat.ui.webviewFragment.webViewFragment;
+import com.lbs.patpat.fragment.webviewFragment.webViewFragment;
 
 import java.util.Objects;
 
