@@ -15,6 +15,7 @@
     <dimen name="toolbar_search_button_height">34dp</dimen>
     <dimen name="toolbar_search_button_text_size">18sp</dimen>
     <dimen name="toolbar_search_button_radius">17dp</dimen>
+    <dimen name="toolbar_game_type_size">25sp</dimen>
     <!--tabLayout相关属性-->
     <dimen name="tabbar_height">60dp</dimen>
     <dimen name="tab_text_size">18sp</dimen>

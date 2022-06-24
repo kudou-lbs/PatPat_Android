@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.discovery.DiscoveryFragment">
 
+    <!--具体分类-->
     <include
-        android:id="@+id/toolbar_discovery"
+        android:id="@+id/toolbar_discover_both"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        layout="@layout/toolbar_home_expand"/>
+        layout="@layout/toolbar_discover"/>
 
     <WebView
         android:id="@+id/wv_discovery"

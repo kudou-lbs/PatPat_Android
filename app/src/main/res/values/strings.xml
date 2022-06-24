@@ -43,5 +43,7 @@
     <!--搜索界面-->
     <string name="grid_hot_text">热搜榜</string>
 
+    <!--JS_url-->
+    <string name="intent_url_name">url</string>
 
 </resources>
