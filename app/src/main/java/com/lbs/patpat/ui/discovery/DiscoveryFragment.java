@@ -37,13 +37,15 @@ public class DiscoveryFragment extends BackHandledFragment implements JSGameType
         return root;
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "JavascriptInterface"})
     private void onCreateWebView(){
         url=getString(R.string.url_prefix)+getString(R.string.url_suffix)+getString(R.string.url_discovery);
 
         binding.wvDiscovery.getSettings().setJavaScriptEnabled(true);
         binding.wvDiscovery.setWebViewClient(new WebViewClient());
         binding.wvDiscovery.loadUrl(url);
+
+        binding.wvDiscovery.addJavascriptInterface(this,"jsAdapter");
     }
 
     @Override
