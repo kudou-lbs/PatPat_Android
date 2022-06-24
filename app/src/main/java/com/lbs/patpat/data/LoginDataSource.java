@@ -71,7 +71,7 @@ public class LoginDataSource {
         public void run() {
             String loginUrl = "http://172.21.140.162/login?username=" + this.usrname + "&password=" + this.passwd;
             //loginUrl="http://110.64.89.131:8199/login";
-            loginUrl="http://110.64.89.131:8199/wrongPasswd";
+            //loginUrl="http://110.64.89.131:8199/wrongPasswd";
             //loginUrl="http://110.64.89.131:8199/noUser";
             Log.d(TAG, "url:"+loginUrl);
             try {
@@ -93,7 +93,7 @@ public class LoginDataSource {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.d(TAG, "做不了就滚！");
+                Log.d(TAG, "登录不了就滚！");
             }
         }
     }

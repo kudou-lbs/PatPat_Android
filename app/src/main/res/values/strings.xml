@@ -57,7 +57,9 @@
     <string name="passwd_same">再次输入密码</string>
     <string name="registerButton">注册</string>
     <string name="passwd_confirm">密码前后应一致</string>
-    <string name="saved_user_account_key">user_account</string>
+    <string name="saved_user_account_key">saved_user_account</string>
     <string name="preference_file_key">patpat_sharePreference</string>
+    <string name="log_tag">TEST</string>
+    <string name="saved_token_key">saved_token</string>
 
 </resources>

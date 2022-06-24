@@ -1,14 +1,20 @@
 package com.lbs.patpat.ui.login;
 
+import static com.lbs.patpat.R.string.saved_token_key;
+import static com.lbs.patpat.R.string.saved_user_account_key;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -18,14 +24,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.ActivityRegisterBinding;
+
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding binding;
     private EditText accountEditText, passwordEditText, confirmEditText;
     private Button registerButton, goBackButton;
     private CheckBox protocolAgreement;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,9 +146,71 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String registerUrl = "http://172.21.140.162/register";
+                final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                Log.d(getString(R.string.log_tag), "url:"+registerUrl);
+                try {
+                    Map<String, Object> bodyDta = new HashMap<>();
+                    bodyDta.put("username","patpat");
+                    String json = new Gson().toJson(bodyDta);
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = RequestBody.create(JSON, json);
+                    Request request = new Request.Builder()
+                            .url(registerUrl)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    String responseBody = response.body().string();
+                    JSONObject jsonObject = new JSONObject(responseBody);
+                    Log.d(getString(R.string.log_tag), responseBody);
+                    int responseCode = jsonObject.getInt("code");
+                    String responseMsg = jsonObject.getString("message");
+                    Log.d(getString(R.string.log_tag), responseMsg +String.valueOf(responseCode));
+                    if (responseCode == 0){ //注册成功
+                        try {
+                            String loginUrl = "http://172.21.140.162/login?username=" + account + "&password=" + passwd;
+                            request = new Request.Builder()
+                                    .url(loginUrl)
+                                    .build();
+                            response = client.newCall(request).execute();
+                            responseBody = response.body().string();
+                            jsonObject = new JSONObject(responseBody);
+                            Log.d(getString(R.string.log_tag), responseBody);
+                            int loginCode = jsonObject.getInt("code");
+                            String loginMsg = jsonObject.getString("message");
+                            String loginToken ="";
+                            if (loginCode == 0) {
+                                loginToken = new JSONObject(jsonObject.getString("data")).getString("token");
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString(getString(saved_token_key), loginToken);
+                                editor.apply();
+                                Toast.makeText(RegisterActivity.this, "注册成功并自动登录", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                                Toast.makeText(RegisterActivity.this, loginMsg, Toast.LENGTH_SHORT).show();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
 
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivityForResult(intent, 2);
+
+
+                    }
+                    else{
+                        Toast.makeText(RegisterActivity.this, responseMsg, Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d(getString(R.string.log_tag), "注册不了就滚！");
+                }
+            }
+        }).start();
+
 
 
     }

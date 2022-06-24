@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         final CheckBox protocolAgreement = binding.checkBox;
         InputMethodManager keyBoard = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         protocolAgreement.setText(Html.fromHtml("勾选即代表同意<font color=#F1A6A6>《服务协议》</font>" +
-                "和<font color=#F1A6A6>《隐私政策》</font>"));
+                "和<font color=#F1A6A6>《隐私政策》</font>",0));
 
         accountEditText.setText(sharedPref.getString(getString(saved_user_account_key), ""));
 
