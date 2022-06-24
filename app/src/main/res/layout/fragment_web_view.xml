@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.webviewFragment.webViewFragment">
+    tools:context=".fragment.webviewFragment.webViewFragment">
 
-    <com.lbs.patpat.ui.webviewFragment.CollapsingWebView
+    <com.lbs.patpat.fragment.webviewFragment.CollapsingWebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

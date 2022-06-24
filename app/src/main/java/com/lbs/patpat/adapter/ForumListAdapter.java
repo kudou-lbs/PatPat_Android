@@ -13,6 +13,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.lbs.patpat.BR;
 import com.lbs.patpat.R;
 import com.lbs.patpat.global.CircleImageDrawable;
@@ -49,7 +52,11 @@ public class ForumListAdapter extends RecyclerView.Adapter<ForumListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         //设置图标，这里还需要再network里写相关方法
-        holder.icon.setImageDrawable(context.getDrawable(R.drawable.patpat));
+//        holder.icon.setImageDrawable(context.getDrawable(R.drawable.patpat));
+        Glide.with(context)
+                .load("https://upload.wikimedia.org/wikipedia/zh/9/94/Genshin_Impact.jpg")
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                .into(holder.icon);
         holder.name.setText(forumModelList.get(position).getForumName());
         holder.intro.setText(new StringBuilder()
                 .append(forumModelList.get(position).getForumFollowNum())

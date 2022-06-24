@@ -31,7 +31,7 @@ public class DiscoveryFragment extends Fragment {
         View root = binding.getRoot();
 
         //加载webView
-        url=getString(R.string.url_prefix)+getString(R.string.url_discovery)+getString(R.string.url_suffix);
+        url=getString(R.string.url_prefix)+getString(R.string.url_suffix)+getString(R.string.url_discovery);
         onCreateWebView();
 
         return root;
