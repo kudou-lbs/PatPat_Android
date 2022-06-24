@@ -9,11 +9,16 @@ import android.webkit.JavascriptInterface;
 
 public interface JSAdapter {
 
-    //打开官网
+    /**
+     * 打开游戏官网
+     * */
     @JavascriptInterface
     public void goToUrl( String url);
 
-    //关闭当前活动，一般情况不要使用
+    /**
+     * 关闭当前活动，一般情况不要使用
+     * */
     @JavascriptInterface
     public void finishCurrentActivity();
+
 }

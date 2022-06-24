@@ -15,9 +15,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.lbs.patpat.R;
 import com.lbs.patpat.adapter.JSGameTypeAdapter;
 import com.lbs.patpat.databinding.FragmentDiscoveryBinding;
+import com.lbs.patpat.global.BackHandledFragment;
 import com.lbs.patpat.webViewActivity;
 
-public class DiscoveryFragment extends Fragment implements JSGameTypeAdapter {
+public class DiscoveryFragment extends BackHandledFragment implements JSGameTypeAdapter {
 
     private DiscoveryViewModel discoveryViewModel;
     private FragmentDiscoveryBinding binding;
@@ -52,7 +53,8 @@ public class DiscoveryFragment extends Fragment implements JSGameTypeAdapter {
         binding = null;
     }
 
-    //打开游戏详情
+
+
     @Override
     public void goToUrl(String url1) {
         Intent intent=new Intent(getActivity(), webViewActivity.class);
@@ -83,5 +85,14 @@ public class DiscoveryFragment extends Fragment implements JSGameTypeAdapter {
         binding.toolbarDiscoverBoth.toolbarDiscoveryDetailInclude.discoverGameType.setText("Game Type");
         binding.toolbarDiscoverBoth.toolbarDiscoveryDetail.setVisibility(View.GONE);
         binding.toolbarDiscoverBoth.toolbarDiscoveryAll.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if(binding.wvDiscovery.canGoBack()){
+            binding.wvDiscovery.goBack();
+            return true;
+        }
+        return false;
     }
 }
