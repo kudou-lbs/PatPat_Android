@@ -80,6 +80,7 @@ public class webViewFragment extends Fragment {
             url1= MyApplication.getInstance().getString(R.string.url_prefix)+ MyApplication.getInstance().getString(R.string.url_suffix)+viewSelect;
         }
 
+        //允许webView中的js脚本调用安卓方法。
         binding.webview.getSettings().setJavaScriptEnabled(true);
         binding.webview.setWebViewClient(new WebViewClient());
         binding.webview.loadUrl(url1);

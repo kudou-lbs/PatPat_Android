@@ -1,5 +1,6 @@
 package com.lbs.patpat.ui.discovery;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.lbs.patpat.R;
+import com.lbs.patpat.adapter.JSGameTypeAdapter;
 import com.lbs.patpat.databinding.FragmentDiscoveryBinding;
 
-public class DiscoveryFragment extends Fragment {
+public class DiscoveryFragment extends Fragment implements JSGameTypeAdapter {
 
     private DiscoveryViewModel dashboardViewModel;
     private FragmentDiscoveryBinding binding;
@@ -47,5 +49,25 @@ public class DiscoveryFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void goToUrl(Context context, String url) {
+
+    }
+
+    @Override
+    public void goToPost(Context context, int pid) {
+
+    }
+
+    @Override
+    public void goToGameList(String type) {
+
+    }
+
+    @Override
+    public void backToGameList() {
+
     }
 }
