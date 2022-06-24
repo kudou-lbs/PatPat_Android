@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.lbs.patpat.R;
@@ -52,8 +51,6 @@ public class DiscoveryFragment extends BackHandledFragment implements JSGameType
         super.onDestroyView();
         binding = null;
     }
-
-
 
     @Override
     public void goToUrl(String url1) {
