@@ -97,7 +97,7 @@ public class MainActivity extends MyActivity {
             }
         });
     }
-    
+
     public ActivityMainBinding getBinding() {
         return binding;
     }

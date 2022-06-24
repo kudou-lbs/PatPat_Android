@@ -11,6 +11,10 @@
             android:id="@+id/drawer_follow"
             android:icon="@drawable/drawer_follow"
             android:title="@string/drawer_follow"/>
+        <item
+            android:id="@+id/drawer_collect"
+            android:icon="@drawable/drawer_collect"
+            android:title="@string/drawer_collect"/>
     </group>
 
     <group android:id="@+id/group2"

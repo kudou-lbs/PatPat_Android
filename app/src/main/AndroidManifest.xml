@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Patpat"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".webViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".PersonalActivity"
             android:exported="false" />
         <activity

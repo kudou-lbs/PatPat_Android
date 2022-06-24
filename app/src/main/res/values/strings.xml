@@ -17,6 +17,7 @@
     <!--弹出菜单-->
     <string name="drawer_person_page">个人主页</string>
     <string name="drawer_follow">关注</string>
+    <string name="drawer_collect">收藏</string>
     <string name="drawer_setting">设置</string>
     <string name="drawer_dark_mode">夜间模式</string>
     <string name="drawer_version">当前版本</string>
@@ -43,6 +44,8 @@
     <!--搜索界面-->
     <string name="grid_hot_text">热搜榜</string>
 
+    <!--JS_url-->
+    <string name="intent_url_name">url</string>
 
     <!--登录、注册界面-->
     <string name="accountText">账号</string>

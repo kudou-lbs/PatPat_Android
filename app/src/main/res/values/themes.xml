@@ -26,4 +26,5 @@
         <item name="color">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
+
 </resources>
