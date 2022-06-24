@@ -13,8 +13,7 @@ public interface JSAdapter {
     @JavascriptInterface
     public void goToUrl( String url);
 
-    //打开某个帖子的详细页
+    //关闭当前活动，一般情况不要使用
     @JavascriptInterface
-    public void goToPost( int pid);
-
+    public void finishCurrentActivity();
 }
