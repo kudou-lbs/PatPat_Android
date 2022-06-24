@@ -1,6 +1,5 @@
 package com.lbs.patpat.ui.discovery;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,12 +51,12 @@ public class DiscoveryFragment extends Fragment implements JSGameTypeAdapter {
     }
 
     @Override
-    public void goToUrl(Context context, String url) {
+    public void goToUrl(String url) {
 
     }
 
     @Override
-    public void goToPost(Context context, int pid) {
+    public void goToPost(int pid) {
 
     }
 

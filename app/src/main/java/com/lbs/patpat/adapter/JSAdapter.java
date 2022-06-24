@@ -11,10 +11,10 @@ public interface JSAdapter {
 
     //打开官网
     @JavascriptInterface
-    public void goToUrl(Context context, String url);
+    public void goToUrl( String url);
 
     //打开某个帖子的详细页
     @JavascriptInterface
-    public void goToPost(Context context, int pid);
+    public void goToPost( int pid);
 
 }
