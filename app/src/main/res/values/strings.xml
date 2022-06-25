@@ -35,7 +35,7 @@
     <!--webView相关-->
     <string name="url_prefix">file:///android_asset/dist/</string>
     <string name="url_suffix">index.html#/</string>
-    <string name="url_recommend"> </string>
+    <string name="url_recommend">recommend</string>
     <string name="url_leaderboard">top</string>
     <string name="url_discovery">discover</string>
     <string name="url_search_game">search</string>
@@ -46,6 +46,9 @@
 
     <!--JS_url-->
     <string name="intent_url_name">url</string>
+    <string name="intent_post_pid">pid</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--登录、注册界面-->
     <string name="accountText">账号</string>

@@ -6,6 +6,7 @@
     tools:context=".webViewActivity">
 
     <WebView
+        android:fitsSystemWindows="true"
         android:id="@+id/wv_game_official_websites"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

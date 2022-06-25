@@ -37,12 +37,14 @@ public class ListViewModel extends ViewModel {
     public void makeForumApiCall(){
         //使用okHttp请求信息，具体逻辑在network相关类里写好再调用
         //test
+        if(forumsList!=null)forumsList.getValue().clear();
         for(int i=0;i<10;++i){
             forumsList.getValue().add(new ForumModel("原神","123","sad",12,13));
         }
     }
     public void makeUserApiCall(){
         //同上请求
+        if(userList!=null)userList.getValue().clear();
         for(int i=0;i<10;++i){
             userList.getValue().add(new UserModel("123","原神-西风驿站","192.168.0.1/avatar",9999,true));
         }
