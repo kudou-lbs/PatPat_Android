@@ -46,7 +46,7 @@ public class JSPost implements JSPostAdapter{
     @JavascriptInterface
     public void goToPost(int pid) {
         Intent intent=new Intent(context, webViewActivity.class);
-        intent.putExtra(context.getString(R.string.intent_post_pid),pid);
+        intent.putExtra(context.getString(R.string.intent_post_pid),String.valueOf(pid));
         context.startActivity(intent);
     }
 }
