@@ -34,7 +34,7 @@ public class webViewActivity extends MyActivity {
             url=getString(R.string.url_prefix)
                     +getString(R.string.url_suffix)
                     +getString(R.string.url_dynamic_follow_or_recommend)
-                    +pid;
+                    +"/"+pid;
         }
 
         initView();
