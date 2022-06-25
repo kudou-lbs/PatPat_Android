@@ -2,6 +2,7 @@ package com.lbs.patpat.fragment.webviewFragment;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,8 +16,11 @@ import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
 import com.lbs.patpat.R;
+import com.lbs.patpat.adapter.JSGamType;
+import com.lbs.patpat.adapter.JSGame;
 import com.lbs.patpat.databinding.FragmentWebViewBinding;
 import com.lbs.patpat.global.MyApplication;
+import com.lbs.patpat.ui.discovery.DiscoveryFragment;
 
 public class webViewFragment extends Fragment {
 
@@ -49,6 +53,7 @@ public class webViewFragment extends Fragment {
         return fragment;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -59,12 +64,14 @@ public class webViewFragment extends Fragment {
             //首页推荐
             case RECOMMEND_PAGE:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_recommend);
+                binding.webview.addJavascriptInterface(new JSGame(webViewFragment.this),"jsAdapter");
                 break;
             //首页排行榜
             case LEADER_PAGE:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_leaderboard);
+                binding.webview.addJavascriptInterface(new JSGame(webViewFragment.this),"jsAdapter");
                 break;
-            //动态关注&推荐
+            //动态：关注&推荐
             case DYNAMIC_FOLLOW:
             case DYNAMIC_RECOMMEND:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_dynamic_follow_or_recommend);
@@ -72,6 +79,7 @@ public class webViewFragment extends Fragment {
             //搜索游戏列表
             case SEARCH_GAMES:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_search_game);
+                binding.webview.addJavascriptInterface(new JSGame(webViewFragment.this),"jsAdapter");
                 break;
             default:
                 break;

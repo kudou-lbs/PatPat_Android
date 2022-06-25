@@ -1,10 +1,8 @@
 package com.lbs.patpat.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
-import android.view.View;
 import android.webkit.JavascriptInterface;
 
 import androidx.fragment.app.Fragment;
@@ -13,12 +11,12 @@ import com.lbs.patpat.R;
 import com.lbs.patpat.ui.discovery.DiscoveryFragment;
 import com.lbs.patpat.webViewActivity;
 
-public class JSClass implements JSGameTypeAdapter{
+public class JSGamType implements JSGameTypeInterface {
 
     Activity context;
     Fragment fragment;
 
-    public JSClass( Fragment fragment) {
+    public JSGamType(Fragment fragment) {
         this.fragment = fragment;
         context=fragment.getActivity();
     }

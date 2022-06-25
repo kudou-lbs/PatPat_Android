@@ -1,9 +1,8 @@
 package com.lbs.patpat.adapter;
 
-import android.content.Context;
 import android.webkit.JavascriptInterface;
 
-public interface JSGameTypeAdapter extends JSAdapter {
+public interface JSGameTypeInterface extends JSInterface {
     /**
      * 传入游戏类型，将bar改为游戏类型，用于更新toolbar
      * */

@@ -1,7 +1,6 @@
 package com.lbs.patpat.ui.discovery;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,11 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.lbs.patpat.R;
-import com.lbs.patpat.adapter.JSClass;
-import com.lbs.patpat.adapter.JSGameTypeAdapter;
+import com.lbs.patpat.adapter.JSGamType;
 import com.lbs.patpat.databinding.FragmentDiscoveryBinding;
 import com.lbs.patpat.global.BackHandledFragment;
-import com.lbs.patpat.webViewActivity;
 
 public class DiscoveryFragment extends BackHandledFragment{
 
@@ -69,7 +66,7 @@ public class DiscoveryFragment extends BackHandledFragment{
         binding.wvDiscovery.setWebViewClient(new WebViewClient());
         binding.wvDiscovery.loadUrl(url);
 
-        binding.wvDiscovery.addJavascriptInterface(new JSClass(DiscoveryFragment.this),"jsAdapter");
+        binding.wvDiscovery.addJavascriptInterface(new JSGamType(DiscoveryFragment.this),"jsAdapter");
     }
 
     @Override
