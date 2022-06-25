@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
+    android:orientation="vertical"
     tools:context=".PersonalActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,15 +40,32 @@
             android:layout_width="@dimen/drawer_icon_width"
             android:layout_height="@dimen/drawer_icon_width"
             android:layout_marginLeft="@dimen/toolbar_icon_margin"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:src="@mipmap/ic_launcher_round"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/personal_bar" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/modify_rectangle_height"
+            android:background="@drawable/shape_modify_personal_info"
+            android:gravity="center"
+            android:text="  修改资料  "
+            android:textColor="@color/white"
+            android:textSize="@dimen/modify_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.809"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+        <TextView
             android:id="@+id/personal_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@+id/imageView4"
             app:layout_constraintTop_toBottomOf="@+id/imageView4"
             android:layout_marginTop="@dimen/toolbar_icon_margin"
@@ -57,15 +75,17 @@
             android:id="@+id/personal_follow_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@+id/imageView4"
             app:layout_constraintTop_toBottomOf="@+id/personal_nickname"
-            android:layout_marginTop="@dimen/toolbar_icon_margin"
+            android:layout_marginTop="10dp"
             android:text="关注 32"/>
 
         <TextView
             android:id="@+id/personal_fan_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             app:layout_constraintLeft_toRightOf="@id/personal_follow_num"
             app:layout_constraintTop_toTopOf="@id/personal_follow_num"
             android:layout_marginLeft="@dimen/toolbar_icon_margin"
@@ -75,12 +95,29 @@
             android:id="@+id/personal_intro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@+id/imageView4"
             app:layout_constraintTop_toBottomOf="@id/personal_follow_num"
-            android:layout_marginTop="@dimen/toolbar_icon_margin"
+            android:layout_marginTop="10dp"
             android:text="这个人很烂"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/personal_tab_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/grey_text"
+        app:tabBackground="@color/white"
+        app:tabRippleColor="@color/white"
+        app:tabIndicatorColor="@color/tab_indicator"
+        app:tabIndicatorFullWidth="false"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/personal_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

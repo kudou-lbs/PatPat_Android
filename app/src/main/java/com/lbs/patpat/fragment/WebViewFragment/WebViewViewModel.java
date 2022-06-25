@@ -1,4 +1,4 @@
-package com.lbs.patpat.fragment.webviewFragment;
+package com.lbs.patpat.fragment.WebViewFragment;
 
 import androidx.lifecycle.ViewModel;
 

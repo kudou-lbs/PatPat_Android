@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.WebViewFragment.WebViewFragment">
+    tools:context=".fragment.PersonalPublishFragment.PersonalPublishFragment">
 
-    <com.lbs.patpat.fragment.WebViewFragment.CollapsingWebView
-        android:id="@+id/webview"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:text="Hello" />
 
 </FrameLayout>

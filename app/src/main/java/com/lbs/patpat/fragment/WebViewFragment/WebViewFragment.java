@@ -1,4 +1,4 @@
-package com.lbs.patpat.fragment.webviewFragment;
+package com.lbs.patpat.fragment.WebViewFragment;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,13 +16,12 @@ import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
 import com.lbs.patpat.R;
-import com.lbs.patpat.adapter.JSGamType;
 import com.lbs.patpat.adapter.JSGame;
+import com.lbs.patpat.adapter.JSPost;
 import com.lbs.patpat.databinding.FragmentWebViewBinding;
 import com.lbs.patpat.global.MyApplication;
-import com.lbs.patpat.ui.discovery.DiscoveryFragment;
 
-public class webViewFragment extends Fragment {
+public class WebViewFragment extends Fragment {
 
     public final static int DEFAULT=-1;
     public final static int RECOMMEND_PAGE=0;
@@ -42,14 +41,14 @@ public class webViewFragment extends Fragment {
     private FragmentWebViewBinding binding;
 
     //这里添加根据pos修改url1
-    private webViewFragment(int requestPage){
+    private WebViewFragment(int requestPage){
         super();
         this.requestPage=requestPage;
     }
 
     //根据position改变行为
-    public static webViewFragment newInstance(int position) {
-        webViewFragment fragment=new webViewFragment(position);
+    public static WebViewFragment newInstance(int position) {
+        WebViewFragment fragment=new WebViewFragment(position);
         return fragment;
     }
 
@@ -64,22 +63,23 @@ public class webViewFragment extends Fragment {
             //首页推荐
             case RECOMMEND_PAGE:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_recommend);
-                binding.webview.addJavascriptInterface(new JSGame(webViewFragment.this),"jsAdapter");
+                binding.webview.addJavascriptInterface(new JSGame(WebViewFragment.this),"jsAdapter");
                 break;
             //首页排行榜
             case LEADER_PAGE:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_leaderboard);
-                binding.webview.addJavascriptInterface(new JSGame(webViewFragment.this),"jsAdapter");
+                binding.webview.addJavascriptInterface(new JSGame(WebViewFragment.this),"jsAdapter");
                 break;
             //动态：关注&推荐
             case DYNAMIC_FOLLOW:
             case DYNAMIC_RECOMMEND:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_dynamic_follow_or_recommend);
+                binding.webview.addJavascriptInterface(new JSPost(WebViewFragment.this),"jsAdapter");
                 break;
             //搜索游戏列表
             case SEARCH_GAMES:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_search_game);
-                binding.webview.addJavascriptInterface(new JSGame(webViewFragment.this),"jsAdapter");
+                binding.webview.addJavascriptInterface(new JSGame(WebViewFragment.this),"jsAdapter");
                 break;
             default:
                 break;

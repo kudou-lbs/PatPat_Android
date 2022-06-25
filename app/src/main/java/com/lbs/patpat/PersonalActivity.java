@@ -19,10 +19,13 @@ public class PersonalActivity extends MyActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding=ActivityPersonalBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
+
+        initClick();
+    }
+
+    private void initClick(){
 
     }
 }
