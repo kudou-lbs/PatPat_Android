@@ -57,5 +57,8 @@
     <dimen name="personal_about_radius">20dp</dimen>
     <dimen name="personal_about_margin">20dp</dimen>
     <dimen name="personal_about_padding">12dp</dimen>
+    <dimen name="personal_about_item_detail_margin">120sp</dimen>
+    <dimen name="personal_about_title_size">18sp</dimen>
+    <dimen name="personal_about_item_size">16sp</dimen>
 
 </resources>

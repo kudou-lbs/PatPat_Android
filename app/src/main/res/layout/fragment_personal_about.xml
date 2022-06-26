@@ -19,11 +19,17 @@
             android:text="个人信息"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/personal_about_title_size"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@color/grey_view_group_background"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/personal_about_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

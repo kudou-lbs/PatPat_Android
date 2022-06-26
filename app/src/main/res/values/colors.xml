@@ -23,5 +23,6 @@
     <color name="button_follow">#fb7d7d</color>
     <color name="button_unfollow">#666666</color>
 
-
+    <!--personal_about-->
+    <color name="personal_about_detail">#fb7d7d</color>
 </resources>
