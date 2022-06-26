@@ -3,11 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.PersonalPublishFragment.PersonalPublishFragment">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/personal_publish"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/personal_publish_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabTextAppearance="@style/TabLayoutSmallTextStyle"
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextColor="@color/grey_text"
+            app:tabBackground="@color/white"
+            app:tabRippleColor="@color/white"
+            app:tabIndicatorColor="@color/tab_indicator"
+            app:tabIndicatorFullWidth="false"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/personal_publish_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/personal_other_user_posts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
 </FrameLayout>

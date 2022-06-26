@@ -8,8 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="grey_background">#eeeeee</color>
-    <color name="grey_text">#666666</color>
+    <color name="grey_background">#f8f1f2</color>
+    <color name="grey_text">#999999</color>
+    <color name="grey_view_group_background">#ebebeb</color>
     <color name="tab_indicator">#ff5555</color>
 
     <!--gridLayout-->
@@ -21,5 +22,6 @@
     <!--button-->
     <color name="button_follow">#fb7d7d</color>
     <color name="button_unfollow">#666666</color>
+
 
 </resources>

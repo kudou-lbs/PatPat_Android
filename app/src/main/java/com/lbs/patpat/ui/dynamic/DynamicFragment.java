@@ -1,5 +1,6 @@
 package com.lbs.patpat.ui.dynamic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,18 +8,22 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.lbs.patpat.MainActivity;
+import com.lbs.patpat.R;
+import com.lbs.patpat.SearchActivity;
 import com.lbs.patpat.databinding.FragmentDynamicBinding;
 import com.lbs.patpat.fragment.ListFragment;
 import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 
 import java.util.Objects;
 
-public class DynamicFragment extends Fragment {
+public class DynamicFragment extends Fragment implements View.OnClickListener{
 
     private DynamicViewModel dynamicViewModel;
     private FragmentDynamicBinding binding;
@@ -29,6 +34,9 @@ public class DynamicFragment extends Fragment {
 
         binding = FragmentDynamicBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        binding.dynamicToolbar.imageView2.setOnClickListener(this);
+        binding.dynamicToolbar.imageView3.setOnClickListener(this);
 
         //tabLayout与viewPager适配器
         binding.dynamicPager.setAdapter(new FragmentStateAdapter(getActivity().getSupportFragmentManager(),getLifecycle()) {
@@ -74,5 +82,20 @@ public class DynamicFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imageView2:
+                Intent intent=new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.imageView3:
+                ((MainActivity)getActivity()).getBinding().mainDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            default:
+                break;
+        }
     }
 }

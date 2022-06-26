@@ -5,23 +5,38 @@
     android:background="@color/white"
     android:orientation="horizontal">
 
-    <TextView
+    <LinearLayout
         android:id="@+id/toolbar_search_home"
         android:layout_width="0dp"
         android:layout_height="@dimen/toolbar_edit_text_height"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:background="@drawable/shape_search"
-        android:layout_marginLeft="20dp"
-        android:paddingLeft="10dp"
+        android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:text="@string/home_search_hint" />
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/shape_search">
+
+        <ImageView
+            android:layout_width="@dimen/toolbar_icon_height"
+            android:layout_height="@dimen/toolbar_icon_height"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/search"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/grey_text"
+            android:text="请输入搜索内容"/>
+
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/toolbar_personal_home"
         android:layout_margin="@dimen/toolbar_icon_margin"
         android:layout_gravity="center"
-        android:background="@drawable/circle_image_background"
+        android:src="@drawable/icon_default"
         android:layout_width="@dimen/toolbar_icon_diameter"
         android:layout_height="@dimen/toolbar_icon_diameter"/>
 

@@ -12,7 +12,7 @@
         android:layout_width="@dimen/drawer_icon_width"
         android:layout_height="@dimen/drawer_icon_width"
         android:layout_marginLeft="30dp"
-        android:src="@drawable/circle_image_background"
+        android:src="@drawable/icon_default"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -10,6 +10,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.lbs.patpat.adapter.JSBasic;
+import com.lbs.patpat.adapter.JSPostDetail;
 import com.lbs.patpat.global.MyActivity;
 
 /**
@@ -40,11 +42,15 @@ public class webViewActivity extends MyActivity {
         initView();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initView(){
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.setWebViewClient(new WebViewClient());
+
+        webView.addJavascriptInterface(new JSBasic(webViewActivity.this),"jsAdapter");
         webView.loadUrl(url);
     }
 }

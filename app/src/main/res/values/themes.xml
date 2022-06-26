@@ -19,7 +19,9 @@
 
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">@dimen/tab_text_size</item>
-        <!--<item name="android:textColor">@drawable/selector_tab_text_color</item>-->
+    </style>
+    <style name="TabLayoutSmallTextStyle">
+        <item name="android:textSize">@dimen/tab_small_text_size</item>
     </style>
     <style name="RecyclerViewItemTitleStyle">
         <item name="android:textSize">@dimen/recycler_user_nickname_size</item>

@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/search_return"
+                android:id="@+id/personal_return"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 android:layout_margin="@dimen/toolbar_icon_margin"
@@ -41,7 +41,7 @@
             android:layout_height="@dimen/drawer_icon_width"
             android:layout_marginLeft="@dimen/toolbar_icon_margin"
             android:layout_marginTop="30dp"
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@drawable/icon_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/personal_bar" />
 
@@ -114,7 +114,10 @@
         app:tabRippleColor="@color/white"
         app:tabIndicatorColor="@color/tab_indicator"
         app:tabIndicatorFullWidth="false"/>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_background"/>
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/personal_pager"
         android:layout_width="match_parent"

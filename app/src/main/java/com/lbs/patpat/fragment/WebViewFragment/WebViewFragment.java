@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
 import com.lbs.patpat.R;
-import com.lbs.patpat.adapter.JSGame;
-import com.lbs.patpat.adapter.JSPost;
+import com.lbs.patpat.adapter.JSBasic;
+import com.lbs.patpat.adapter.JSPostList;
 import com.lbs.patpat.databinding.FragmentWebViewBinding;
 import com.lbs.patpat.global.MyApplication;
 
@@ -63,23 +63,23 @@ public class WebViewFragment extends Fragment {
             //首页推荐
             case RECOMMEND_PAGE:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_recommend);
-                binding.webview.addJavascriptInterface(new JSGame(WebViewFragment.this),"jsAdapter");
+                binding.webview.addJavascriptInterface(new JSBasic(WebViewFragment.this),"jsAdapter");
                 break;
             //首页排行榜
             case LEADER_PAGE:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_leaderboard);
-                binding.webview.addJavascriptInterface(new JSGame(WebViewFragment.this),"jsAdapter");
+                binding.webview.addJavascriptInterface(new JSBasic(WebViewFragment.this),"jsAdapter");
                 break;
             //动态：关注&推荐
             case DYNAMIC_FOLLOW:
             case DYNAMIC_RECOMMEND:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_dynamic_follow_or_recommend);
-                binding.webview.addJavascriptInterface(new JSPost(WebViewFragment.this),"jsAdapter");
+                binding.webview.addJavascriptInterface(new JSPostList(WebViewFragment.this),"jsAdapter");
                 break;
             //搜索游戏列表
             case SEARCH_GAMES:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_search_game);
-                binding.webview.addJavascriptInterface(new JSGame(WebViewFragment.this),"jsAdapter");
+                binding.webview.addJavascriptInterface(new JSBasic(WebViewFragment.this),"jsAdapter");
                 break;
             default:
                 break;

@@ -69,8 +69,6 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
 
         userModelList=new ArrayList<>();
 
-        Log.d("lbsss","create");
-
         // 一般来说数据获取在onActivityCreated()中进行，但此方法已弃用，且该fragment出现时activity一定已创建，
         // 因此在这里获取数据影响不大，可能视图加载稍慢
         return root;
@@ -124,23 +122,5 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
     @Override
     public void onItemClick(ForumModel forumModel) {
         Toast.makeText(getActivity(),forumModel.getForumName(),Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("lbsss","pause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d("lbsss","stop");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d("lbssss","destroy");
     }
 }

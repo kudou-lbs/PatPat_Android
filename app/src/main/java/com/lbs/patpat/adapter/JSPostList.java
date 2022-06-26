@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment;
 import com.lbs.patpat.R;
 import com.lbs.patpat.webViewActivity;
 
-public class JSPost implements JSPostAdapter{
+public class JSPostList implements JSPostAdapter{
 
     Activity context;
     Fragment fragment;
 
-    public JSPost(Fragment fragment) {
+    public JSPostList(Fragment fragment) {
         this.fragment = fragment;
         context=fragment.getActivity();
     }
