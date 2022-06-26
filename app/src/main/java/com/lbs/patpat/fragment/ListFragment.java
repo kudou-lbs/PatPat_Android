@@ -1,5 +1,6 @@
 package com.lbs.patpat.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.lbs.patpat.ForumActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.adapter.ForumListAdapter;
 import com.lbs.patpat.adapter.UserListAdapter;
@@ -121,6 +123,8 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
     //社区项点击事件
     @Override
     public void onItemClick(ForumModel forumModel) {
-        Toast.makeText(getActivity(),forumModel.getForumName(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(),forumModel.getForumName(),Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(getActivity(), ForumActivity.class);
+        getActivity().startActivity(intent);
     }
 }

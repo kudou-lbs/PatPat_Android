@@ -93,9 +93,7 @@ public class SearchActivity extends MyActivity {
                     default:
                         //默认返回游戏列表
                         return WebViewFragment.newInstance(WebViewFragment.DEFAULT);
-
                 }
-
             }
 
             @Override
