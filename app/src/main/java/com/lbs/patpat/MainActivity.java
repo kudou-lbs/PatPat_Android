@@ -34,6 +34,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.jaeger.library.StatusBarUtil;
 import com.lbs.patpat.databinding.ActivityMainBinding;
 import com.lbs.patpat.global.MyActivity;
+import com.lbs.patpat.ui.login.LoginActivity;
 
 public class MainActivity extends MyActivity {
 
@@ -92,7 +93,9 @@ public class MainActivity extends MyActivity {
         icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,PersonalActivity.class);
+//                Intent intent=new Intent(MainActivity.this,PersonalActivity.class);
+//                startActivity(intent);
+                Intent intent=new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

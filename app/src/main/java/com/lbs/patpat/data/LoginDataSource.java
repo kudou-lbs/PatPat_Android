@@ -3,7 +3,10 @@ package com.lbs.patpat.data;
 import android.util.JsonReader;
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.lbs.patpat.data.model.LoggedInUser;
+import com.lbs.patpat.ui.login.LoginResult;
 
 import org.json.JSONObject;
 
@@ -21,19 +24,24 @@ import okhttp3.Response;
 public class LoginDataSource {
 
     private static final String TAG = "TEST";
+    private MutableLiveData<LoginResult> loginResultMutableLiveData;
 
-    public Result<LoggedInUser> login(String username, String password) {
-        LoginRequest loginRequest = new LoginRequest(username,password);
+    public LoginDataSource(MutableLiveData<LoginResult> loginResult){
+        this.loginResultMutableLiveData = loginResult;
+    }
+
+    public void login(String username, String password) {
+        LoginRequest loginRequest = new LoginRequest(username,password,loginResultMutableLiveData);
         new Thread(loginRequest).start();
 
-        while (loginRequest.getResponseCode()==-1);
-        //Log.d(TAG, responseMsg +String.valueOf(responseCode));
-        if (loginRequest.getResponseCode()==0) {
-            Log.d(TAG, "登陆成功,Username is " + username);
-            return new Result.Success<>(new LoggedInUser(username, "patpat"));
-        }
-        Log.d(TAG, "登陆失败");
-        return new Result.Error(loginRequest.getResponseMsg());
+//        while (loginRequest.getResponseCode()==-1);
+//        //Log.d(TAG, responseMsg +String.valueOf(responseCode));
+//        if (loginRequest.getResponseCode()==0) {
+//            Log.d(TAG, "登陆成功,Username is " + username);
+//            return new Result.Success<>(new LoggedInUser(username, "patpat"));
+//        }
+//        Log.d(TAG, "登陆失败");
+//        return new Result.Error(loginRequest.getResponseMsg());
 
 
     }
@@ -46,30 +54,18 @@ public class LoginDataSource {
 
         static private String usrname;
         static private String passwd;
-        static private String responseMsg;
-        static private String responseToken;
-        static private int responseCode=-1;
+        private MutableLiveData<LoginResult> loginResult;
 
-        LoginRequest(String name, String pd) {
+        LoginRequest(String name, String pd,MutableLiveData<LoginResult> loginResult) {
             this.usrname = name;
             this.passwd = pd;
-        }
+            this.loginResult = loginResult;
 
-        public String getResponseMsg() {
-            return this.responseMsg;
-        }
-
-        public String getResponseToken() {
-            return this.responseToken;
-        }
-
-        public int getResponseCode() {
-            return responseCode;
         }
 
         @Override
         public void run() {
-            String loginUrl = "http://172.21.140.162/login?username=" + this.usrname + "&password=" + this.passwd;
+            String loginUrl = "http://172.21.140.162/user/login?username=" + this.usrname + "&password=" + this.passwd;
             //loginUrl="http://110.64.89.131:8199/login";
             //loginUrl="http://110.64.89.131:8199/wrongPasswd";
             //loginUrl="http://110.64.89.131:8199/noUser";
@@ -83,12 +79,16 @@ public class LoginDataSource {
                 String responseBody = response.body().string();
                 JSONObject jsonObject = new JSONObject(responseBody);
                 Log.d(TAG, responseBody);
-                responseCode = jsonObject.getInt("code");
-                responseMsg = jsonObject.getString("message");
+                int responseCode = jsonObject.getInt("code");
+                String responseMsg = jsonObject.getString("message");
                 Log.d(TAG, responseMsg +String.valueOf(responseCode));
-                if (responseCode == 0)
-                    responseToken = new JSONObject(jsonObject.getString("data")).getString("token");
-
+                if (responseCode == 0) {
+                    JSONObject userData = new JSONObject(jsonObject.getString("data"));
+                    loginResult.postValue(new LoginResult(userData));
+                }
+                else{
+                    loginResult.postValue((new LoginResult(responseMsg)));
+                }
 
 
             } catch (Exception e) {

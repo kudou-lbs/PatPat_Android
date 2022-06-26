@@ -2,30 +2,36 @@ package com.lbs.patpat.ui.login;
 
 import androidx.annotation.Nullable;
 
+import org.json.JSONObject;
+
 /**
  * Authentication result : success (user details) or error message.
  */
-class LoginResult {
-    @Nullable
-    private LoggedInUserView success;
-    @Nullable
+public class LoginResult {
+
+    private boolean resultState;
     private String error;
+    private JSONObject userData;
 
-    LoginResult(@Nullable String error) {
-        this.error = error;
+    public LoginResult(JSONObject userData){
+        resultState = true;
+        this.userData=userData;
+
+    }
+    public LoginResult(String errMessage){
+        resultState = false;
+        error = errMessage;
     }
 
-    LoginResult(@Nullable LoggedInUserView success) {
-        this.success = success;
+    public Boolean isSuccess(){
+        return resultState;
     }
 
-    @Nullable
-    LoggedInUserView getSuccess() {
-        return success;
+    public JSONObject getUserData(){
+        return this.userData;
     }
 
-    @Nullable
-    String getError() {
+    public String getError() {
         return error;
     }
 }

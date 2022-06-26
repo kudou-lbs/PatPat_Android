@@ -4,13 +4,16 @@ import static com.lbs.patpat.R.string.saved_token_key;
 import static com.lbs.patpat.R.string.saved_user_account_key;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -18,6 +21,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -33,6 +37,8 @@ import org.json.JSONStringer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -45,13 +51,15 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText accountEditText, passwordEditText, confirmEditText;
     private Button registerButton, goBackButton;
     private CheckBox protocolAgreement;
-    private SharedPreferences sharedPref;
-
+    private InputMethodManager keyBoard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+        keyBoard = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         accountEditText = binding.account;
         passwordEditText = binding.password;
@@ -94,6 +102,9 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (keyBoard != null)
+                    keyBoard.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
                 register(accountEditText.getText().toString(), passwordEditText.getText().toString(), confirmEditText.getText().toString());
             }
         });
@@ -110,6 +121,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (keyBoard != null)
+                        keyBoard.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     register(accountEditText.getText().toString(), passwordEditText.getText().toString(), confirmEditText.getText().toString());
                 }
                 return false;
@@ -141,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), R.string.passwd_form, Toast.LENGTH_SHORT).show();
             return;
         }
-        if (isPasswdConfirm()) {
+        if (!isPasswdConfirm()) {
             Toast.makeText(getApplicationContext(), R.string.passwd_confirm, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -149,16 +162,19 @@ public class RegisterActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String registerUrl = "http://172.21.140.162/register";
+                String registerUrl = "http://172.21.140.162/user/register";
                 final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
                 Log.d(getString(R.string.log_tag), "url:"+registerUrl);
                 try {
+                    Looper.prepare();
                     Map<String, Object> bodyDta = new HashMap<>();
-                    bodyDta.put("username","patpat");
+                    bodyDta.put("username",account);
+                    bodyDta.put("password",passwd);
                     String json = new Gson().toJson(bodyDta);
                     OkHttpClient client = new OkHttpClient();
                     RequestBody body = RequestBody.create(JSON, json);
                     Request request = new Request.Builder()
+                            .post(body)
                             .url(registerUrl)
                             .build();
                     Response response = client.newCall(request).execute();
@@ -170,7 +186,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Log.d(getString(R.string.log_tag), responseMsg +String.valueOf(responseCode));
                     if (responseCode == 0){ //注册成功
                         try {
-                            String loginUrl = "http://172.21.140.162/login?username=" + account + "&password=" + passwd;
+                            String loginUrl = "http://172.21.140.162/user/login?username=" + account + "&password=" + passwd;
                             request = new Request.Builder()
                                     .url(loginUrl)
                                     .build();
@@ -183,22 +199,22 @@ public class RegisterActivity extends AppCompatActivity {
                             String loginToken ="";
                             if (loginCode == 0) {
                                 loginToken = new JSONObject(jsonObject.getString("data")).getString("token");
-                                SharedPreferences.Editor editor = sharedPref.edit();
-                                editor.putString(getString(saved_token_key), loginToken);
-                                editor.apply();
+
                                 Toast.makeText(RegisterActivity.this, "注册成功并自动登录", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
                             }
-                            else
+                            else {
                                 Toast.makeText(RegisterActivity.this, loginMsg, Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            }
                         }catch (Exception e){
                             e.printStackTrace();
                         }
 
-
-
                     }
                     else{
                         Toast.makeText(RegisterActivity.this, responseMsg, Toast.LENGTH_SHORT).show();
+                        Looper.loop();
                     }
 
 
@@ -223,10 +239,16 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean isPassswdValid() {
-        if (passwordEditText.getText().toString().length() < 6)
-            return false;
-        else
+        String passwd = passwordEditText.getText().toString();
+        Log.d(getString(R.string.log_tag), passwd);
+        if (Pattern.matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$",passwd)&&passwd.length()>5){
+
             return true;
+        }
+
+
+        else
+            return false;
     }
 
     private boolean isAccountValid() {

@@ -7,6 +7,12 @@ public class MyApplication extends Application {
 
     private static Context mContext;
 
+    public static String getTest() {
+        return test;
+    }
+
+    private static String test = "123456";
+
     @Override
     public void onCreate() {
         super.onCreate();
