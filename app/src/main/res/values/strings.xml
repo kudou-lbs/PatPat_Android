@@ -12,7 +12,7 @@
     <string name="home_tabNum">2</string>
     <string name="home_recommend">推荐</string>
     <string name="home_leaderboard">排行榜</string>
-    <string name="home_search_hint">🔍 what 7 you want to search for?</string>
+    <string name="home_search_hint">请输入想要查找的内容</string>
 
     <!--弹出菜单-->
     <string name="drawer_person_page">个人主页</string>

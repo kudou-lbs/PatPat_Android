@@ -19,8 +19,7 @@ import com.lbs.patpat.MainActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.SearchActivity;
 import com.lbs.patpat.databinding.FragmentHomeBinding;
-import com.lbs.patpat.global.CircleImageDrawable;
-import com.lbs.patpat.fragment.webviewFragment.webViewFragment;
+import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 
 public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener,View.OnClickListener {
 
@@ -40,7 +39,7 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return webViewFragment.newInstance(position);
+                return WebViewFragment.newInstance(position);
             }
 
             @Override
@@ -49,10 +48,6 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
             }
         });
 
-        //设置未登录时头像
-        binding.tlExpend.toolbarPersonalHome.setImageDrawable(
-                new CircleImageDrawable(CircleImageDrawable.drawableToBitmap(
-                                getResources().getDrawable(R.drawable.ic_launcher_background,null))));
         binding.tlExpend.toolbarSearchHome.setOnClickListener(this);
         binding.tlExpend.toolbarPersonalHome.setOnClickListener(this);
 

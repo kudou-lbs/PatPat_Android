@@ -9,6 +9,7 @@
     <dimen name="toolbar_icon_diameter">30dp</dimen>
     <dimen name="toolbar_icon_padding">5dp</dimen>
     <dimen name="toolbar_edit_text_height">30dp</dimen>
+    <dimen name="toolbar_icon_height">24dp</dimen>
     <dimen name="toolbar_edit_text_padding_left">10dp</dimen>
     <dimen name="toolbar_search_return_height">34dp</dimen>
     <dimen name="toolbar_search_button_width">70dp</dimen>
@@ -19,6 +20,7 @@
     <!--tabLayout相关属性-->
     <dimen name="tabbar_height">60dp</dimen>
     <dimen name="tab_text_size">18sp</dimen>
+    <dimen name="tab_small_text_size">13sp</dimen>
     <dimen name="tab_margin_bottom">10dp</dimen>
     <dimen name="tab_width3">200dp</dimen>
     <dimen name="menu_width">250dp</dimen>
@@ -32,8 +34,8 @@
     <dimen name="grid_hot_text_size">16sp</dimen>
     <dimen name="grid_text_margin_num">6dp</dimen>
     <!--drawer相关-->
-    <dimen name="drawer_icon_width">60dp</dimen>
-    <dimen name="drawer_padding_top">40dp</dimen>
+    <dimen name="drawer_icon_width">70dp</dimen>
+    <dimen name="drawer_padding_top">70dp</dimen>
     <dimen name="drawer_padding_bottom">10dp</dimen>
     <dimen name="drawer_nickname_size">15sp</dimen>
     <dimen name="drawer_follow_and_fans_size">10sp</dimen>
@@ -47,6 +49,16 @@
     <dimen name="follow_button_height">30dp</dimen>
     <dimen name="follow_button_radius">15dp</dimen>
     <dimen name="follow_button_text_size">15sp</dimen>
-
+    <!--修改资料-->
+    <dimen name="modify_text_size">12sp</dimen>
+    <dimen name="modify_rectangle_height">20dp</dimen>
+    <dimen name="modify_rectangle_radius">10dp</dimen>
+    <!--个人中心-->
+    <dimen name="personal_about_radius">20dp</dimen>
+    <dimen name="personal_about_margin">20dp</dimen>
+    <dimen name="personal_about_padding">12dp</dimen>
+    <dimen name="personal_about_item_detail_margin">120sp</dimen>
+    <dimen name="personal_about_title_size">18sp</dimen>
+    <dimen name="personal_about_item_size">16sp</dimen>
 
 </resources>

@@ -20,7 +20,7 @@ import com.lbs.patpat.R;
 import com.lbs.patpat.adapter.ForumListAdapter;
 import com.lbs.patpat.adapter.UserListAdapter;
 import com.lbs.patpat.model.ForumModel;
-import com.lbs.patpat.fragment.webviewFragment.webViewFragment;
+import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 import com.lbs.patpat.model.UserModel;
 import com.lbs.patpat.viewmodel.ListViewModel;
 
@@ -48,14 +48,14 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
     public static ListFragment newInstance(int position) {
         switch (position){
             //搜索结果
-            case webViewFragment.SEARCH_FORUM:
-                return new ListFragment(webViewFragment.SEARCH_FORUM);
-            case webViewFragment.SEARCH_USER:
-                return new ListFragment(webViewFragment.SEARCH_USER);
-            case webViewFragment.DYNAMIC_FORUM:
-                return new ListFragment(webViewFragment.DYNAMIC_FORUM);
+            case WebViewFragment.SEARCH_FORUM:
+                return new ListFragment(WebViewFragment.SEARCH_FORUM);
+            case WebViewFragment.SEARCH_USER:
+                return new ListFragment(WebViewFragment.SEARCH_USER);
+            case WebViewFragment.DYNAMIC_FORUM:
+                return new ListFragment(WebViewFragment.DYNAMIC_FORUM);
         }
-        return new ListFragment(webViewFragment.DEFAULT);
+        return new ListFragment(WebViewFragment.DEFAULT);
     }
 
     @Override
@@ -69,8 +69,6 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
 
         userModelList=new ArrayList<>();
 
-        Log.d("lbsss","create");
-
         // 一般来说数据获取在onActivityCreated()中进行，但此方法已弃用，且该fragment出现时activity一定已创建，
         // 因此在这里获取数据影响不大，可能视图加载稍慢
         return root;
@@ -80,7 +78,7 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         recyclerView=root.findViewById(R.id.recycler_view_fragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //adapter里定义了数据的展示方式
-        if(requestPage==webViewFragment.SEARCH_USER){
+        if(requestPage== WebViewFragment.SEARCH_USER){
             userListAdapter =new UserListAdapter(getActivity(),userModelList);
             recyclerView.setAdapter(userListAdapter);
             bindUserViewModel();
@@ -124,23 +122,5 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
     @Override
     public void onItemClick(ForumModel forumModel) {
         Toast.makeText(getActivity(),forumModel.getForumName(),Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("lbsss","pause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d("lbsss","stop");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d("lbssss","destroy");
     }
 }

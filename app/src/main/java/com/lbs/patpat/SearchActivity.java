@@ -13,7 +13,7 @@ import com.lbs.patpat.databinding.ActivitySearchBinding;
 import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.viewmodel.SearchViewModel;
 import com.lbs.patpat.fragment.ListFragment;
-import com.lbs.patpat.fragment.webviewFragment.webViewFragment;
+import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 
 import java.util.Objects;
 
@@ -85,14 +85,14 @@ public class SearchActivity extends MyActivity {
                 switch (position){
                     //case 0与默认一致，返回游戏列表
                     case 0:
-                        return webViewFragment.newInstance(webViewFragment.SEARCH_GAMES);
+                        return WebViewFragment.newInstance(WebViewFragment.SEARCH_GAMES);
                     case 1:
-                        return ListFragment.newInstance(webViewFragment.SEARCH_FORUM);
+                        return ListFragment.newInstance(WebViewFragment.SEARCH_FORUM);
                     case 2:
-                        return ListFragment.newInstance(webViewFragment.SEARCH_USER);
+                        return ListFragment.newInstance(WebViewFragment.SEARCH_USER);
                     default:
                         //默认返回游戏列表
-                        return webViewFragment.newInstance(webViewFragment.DEFAULT);
+                        return WebViewFragment.newInstance(WebViewFragment.DEFAULT);
 
                 }
 

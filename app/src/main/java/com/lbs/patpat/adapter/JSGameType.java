@@ -11,12 +11,12 @@ import com.lbs.patpat.R;
 import com.lbs.patpat.ui.discovery.DiscoveryFragment;
 import com.lbs.patpat.webViewActivity;
 
-public class JSGamType implements JSGameTypeInterface {
+public class JSGameType implements JSGameTypeInterface {
 
     Activity context;
     Fragment fragment;
 
-    public JSGamType(Fragment fragment) {
+    public JSGameType(Fragment fragment) {
         this.fragment = fragment;
         context=fragment.getActivity();
     }

@@ -12,14 +12,18 @@ import com.lbs.patpat.webViewActivity;
 /**
  * 打开游戏详情，基础功能
  * */
-public class JSGame implements JSInterface{
+public class JSBasic implements JSInterface{
 
     Activity context;
     Fragment fragment;
 
-    public JSGame(Fragment fragment) {
+    public JSBasic(Fragment fragment) {
         this.fragment = fragment;
         context=fragment.getActivity();
+    }
+
+    public JSBasic(Activity context) {
+        this.context = context;
     }
 
     /**

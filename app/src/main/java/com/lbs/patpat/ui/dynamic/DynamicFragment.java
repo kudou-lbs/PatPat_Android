@@ -1,5 +1,6 @@
 package com.lbs.patpat.ui.dynamic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,50 +8,56 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.lbs.patpat.MainActivity;
+import com.lbs.patpat.R;
+import com.lbs.patpat.SearchActivity;
 import com.lbs.patpat.databinding.FragmentDynamicBinding;
 import com.lbs.patpat.fragment.ListFragment;
-import com.lbs.patpat.fragment.webviewFragment.webViewFragment;
+import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 
 import java.util.Objects;
 
-public class DynamicFragment extends Fragment {
+public class DynamicFragment extends Fragment implements View.OnClickListener{
 
     private DynamicViewModel dynamicViewModel;
     private FragmentDynamicBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dynamicViewModel =
-                new ViewModelProvider(this).get(DynamicViewModel.class);
+        dynamicViewModel = new ViewModelProvider(this).get(DynamicViewModel.class);
 
         binding = FragmentDynamicBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        binding.dynamicToolbar.imageView2.setOnClickListener(this);
+        binding.dynamicToolbar.imageView3.setOnClickListener(this);
 
         //tabLayout与viewPager适配器
         binding.dynamicPager.setAdapter(new FragmentStateAdapter(getActivity().getSupportFragmentManager(),getLifecycle()) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                int webViewType=webViewFragment.DEFAULT;
+                int webViewType= WebViewFragment.DEFAULT;
                 switch (position){
                     //webView：关注和推荐
                     case 0:
-                        webViewType=webViewFragment.DYNAMIC_FOLLOW;
+                        webViewType= WebViewFragment.DYNAMIC_FOLLOW;
                         break;
                     case 1:
-                        webViewType=webViewFragment.DYNAMIC_RECOMMEND;
+                        webViewType= WebViewFragment.DYNAMIC_RECOMMEND;
                         break;
                     //ListView：论坛
                     case 2:
-                        return ListFragment.newInstance(webViewFragment.DYNAMIC_FORUM);
+                        return ListFragment.newInstance(WebViewFragment.DYNAMIC_FORUM);
                 }
 
-                return webViewFragment.newInstance(webViewType);
+                return WebViewFragment.newInstance(webViewType);
             }
 
             @Override
@@ -75,5 +82,20 @@ public class DynamicFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imageView2:
+                Intent intent=new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.imageView3:
+                ((MainActivity)getActivity()).getBinding().mainDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            default:
+                break;
+        }
     }
 }

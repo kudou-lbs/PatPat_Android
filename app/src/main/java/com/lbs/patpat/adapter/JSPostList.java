@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment;
 import com.lbs.patpat.R;
 import com.lbs.patpat.webViewActivity;
 
-public class JSPost implements JSPostAdapter{
+public class JSPostList implements JSPostAdapter{
 
     Activity context;
     Fragment fragment;
 
-    public JSPost(Fragment fragment) {
+    public JSPostList(Fragment fragment) {
         this.fragment = fragment;
         context=fragment.getActivity();
     }
@@ -46,7 +46,7 @@ public class JSPost implements JSPostAdapter{
     @JavascriptInterface
     public void goToPost(int pid) {
         Intent intent=new Intent(context, webViewActivity.class);
-        intent.putExtra(context.getString(R.string.intent_post_pid),pid);
+        intent.putExtra(context.getString(R.string.intent_post_pid),String.valueOf(pid));
         context.startActivity(intent);
     }
 }

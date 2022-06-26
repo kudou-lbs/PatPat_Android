@@ -1,6 +1,7 @@
 package com.lbs.patpat.ui.discovery;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,14 +12,17 @@ import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.lbs.patpat.MainActivity;
 import com.lbs.patpat.R;
-import com.lbs.patpat.adapter.JSGamType;
+import com.lbs.patpat.SearchActivity;
+import com.lbs.patpat.adapter.JSGameType;
 import com.lbs.patpat.databinding.FragmentDiscoveryBinding;
 import com.lbs.patpat.global.BackHandledFragment;
 
-public class DiscoveryFragment extends BackHandledFragment{
+public class DiscoveryFragment extends BackHandledFragment implements View.OnClickListener{
 
     private DiscoveryViewModel discoveryViewModel;
     private FragmentDiscoveryBinding binding;
@@ -52,6 +56,10 @@ public class DiscoveryFragment extends BackHandledFragment{
         binding = FragmentDiscoveryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarSearchHome.setOnClickListener(this);
+        binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarPersonalHome.setOnClickListener(this);
+
+
         //加载webView
         onCreateWebView();
 
@@ -66,7 +74,7 @@ public class DiscoveryFragment extends BackHandledFragment{
         binding.wvDiscovery.setWebViewClient(new WebViewClient());
         binding.wvDiscovery.loadUrl(url);
 
-        binding.wvDiscovery.addJavascriptInterface(new JSGamType(DiscoveryFragment.this),"jsAdapter");
+        binding.wvDiscovery.addJavascriptInterface(new JSGameType(DiscoveryFragment.this),"jsAdapter");
     }
 
     @Override
@@ -109,5 +117,20 @@ public class DiscoveryFragment extends BackHandledFragment{
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.toolbar_search_home:
+                Intent intent=new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.toolbar_personal_home:
+                ((MainActivity)getActivity()).getBinding().mainDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -37,7 +37,7 @@
         android:layout_width="@dimen/toolbar_icon_diameter"
         android:layout_height="@dimen/toolbar_icon_diameter"
         android:layout_margin="@dimen/toolbar_icon_margin"
-        android:background="@drawable/circle_image_background"
+        android:src="@drawable/icon_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
