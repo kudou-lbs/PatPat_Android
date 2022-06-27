@@ -66,7 +66,7 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         root=inflater.inflate(R.layout.fragment_list, container, false);
 
         forumModelList=new ArrayList<>();
-        //大问题，在这里写每次重建时view时都会插入重复的数据
+        //大问题，在这里写每次重建时view时都会插入重复的数据，已修复
         initRecyclerView();
 
         userModelList=new ArrayList<>();
@@ -125,6 +125,7 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
     public void onItemClick(ForumModel forumModel) {
         //Toast.makeText(getActivity(),forumModel.getForumName(),Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(getActivity(), ForumActivity.class);
+        intent.putExtra("fid",forumModel.getForumFid());
         getActivity().startActivity(intent);
     }
 }

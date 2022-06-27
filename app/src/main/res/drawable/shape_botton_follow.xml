@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <solid
-        android:color="@color/button_follow"/>
+        android:color="@color/button_background"/>
     <corners
         android:radius="@dimen/follow_button_radius"/>
 

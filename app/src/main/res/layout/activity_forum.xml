@@ -1,110 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="false"
-    tools:context=".ForumActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/item_forum_background"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/forum_background_height"
-        android:background="@drawable/drawer_background"
-        android:fitsSystemWindows="true">
-        <ImageView
-            android:id="@+id/item_forum_icon"
-            android:layout_width="@dimen/forum_icon_height"
-            android:layout_height="@dimen/forum_icon_height"
-            android:layout_marginLeft="@dimen/toolbar_icon_margin"
-            android:src="@drawable/icon_default"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:fitsSystemWindows="false"
+        tools:context=".ForumActivity">
 
-        <TextView
-            android:id="@+id/item_forum_name"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_forum_background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/forum_background_height"
+            android:background="@drawable/drawer_background"
+            android:fitsSystemWindows="true">
+            <ImageView
+                android:id="@+id/item_forum_icon"
+                android:layout_width="@dimen/forum_icon_height"
+                android:layout_height="@dimen/forum_icon_height"
+                android:layout_marginLeft="@dimen/toolbar_icon_margin"
+                android:src="@drawable/icon_default"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/item_forum_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/recycler_text_margin_icon"
+                android:layout_marginTop="@dimen/forum_title_margin_top"
+                android:textColor="@color/white"
+                android:text="原神"
+                android:textSize="@dimen/forum_title_size"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/item_forum_icon"
+                app:layout_constraintTop_toTopOf="@+id/item_forum_icon" />
+
+
+            <TextView
+                android:id="@+id/item_forum_intro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/forum_follow_and_post_num_margin_top"
+                android:textSize="@dimen/forum_follow_and_post_num_size"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/item_forum_name"
+                app:layout_constraintStart_toStartOf="@+id/item_forum_name" />
+
+            <Button
+                android:id="@+id/item_user_button_followed"
+                android:layout_width="@dimen/follow_button_width"
+                android:layout_height="@dimen/follow_button_height"
+                android:layout_marginRight="@dimen/toolbar_icon_margin"
+                android:text="关注"
+                android:textSize="@dimen/follow_button_text_size"
+                android:background="@drawable/shape_botton_follow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:gravity="center_vertical"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/forum_search_return"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:src="@drawable/button_back"
+                android:layout_margin="@dimen/toolbar_icon_margin"
+                android:scaleType="centerInside"/>
+
+            <EditText
+                android:id="@+id/forum_search_edit"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/toolbar_edit_text_height"
+                android:layout_weight="1"
+                android:layout_marginRight="@dimen/toolbar_icon_margin"
+                android:paddingLeft="@dimen/toolbar_edit_text_padding_left"
+                android:background="@drawable/shape_search"
+                android:windowSoftInputMode="adjustPan|stateHidden"
+                android:hint="论坛内搜索"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/forum_tab"
+            android:layout_width="match_parent"
+            android:layout_gravity="left"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/recycler_text_margin_icon"
-            android:layout_marginTop="@dimen/forum_title_margin_top"
-            android:textColor="@color/white"
-            android:text="原神"
-            android:textSize="@dimen/forum_title_size"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/item_forum_icon"
-            app:layout_constraintTop_toTopOf="@+id/item_forum_icon" />
+            android:layout_marginBottom="@dimen/tab_margin_bottom"
+            app:tabTextAppearance="@style/TabLayoutTextStyle"
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextColor="@color/grey_text"
+            app:tabBackground="@color/white"
+            app:tabRippleColor="@color/white"
+            app:tabIndicatorColor="@color/tab_indicator"
+            app:tabIndicatorFullWidth="false"/>
 
-        <TextView
-            android:id="@+id/item_forum_intro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/forum_follow_and_post_num_margin_top"
-            android:textSize="@dimen/forum_follow_and_post_num_size"
-            android:textColor="@color/white"
-            android:text="20万+粉丝 70万+帖子"
-            app:layout_constraintTop_toBottomOf="@+id/item_forum_name"
-            app:layout_constraintStart_toStartOf="@+id/item_forum_name" />
-
-        <Button
-            android:id="@+id/item_user_button_followed"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/follow_button_height"
-            android:text="关注"
-            android:textSize="@dimen/follow_button_text_size"
-            android:background="@drawable/shape_botton_follow"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:gravity="center_vertical"
-        android:background="@color/white">
-
-        <ImageView
-            android:id="@+id/forum_search_return"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:src="@drawable/button_back"
-            android:layout_margin="@dimen/toolbar_icon_margin"
-            android:scaleType="centerInside"/>
-
-        <EditText
-            android:id="@+id/forum_search_edit"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/toolbar_edit_text_height"
-            android:layout_weight="1"
-            android:layout_marginRight="@dimen/toolbar_icon_margin"
-            android:paddingLeft="@dimen/toolbar_edit_text_padding_left"
-            android:background="@drawable/shape_search"
-            android:hint="论坛内搜索"/>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/forum_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/forum_tab"
-        android:layout_width="match_parent"
-        android:layout_gravity="left"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/tab_margin_bottom"
-        app:tabTextAppearance="@style/TabLayoutTextStyle"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="@color/grey_text"
-        app:tabBackground="@color/white"
-        app:tabRippleColor="@color/white"
-        app:tabIndicatorColor="@color/tab_indicator"
-        app:tabIndicatorFullWidth="false"/>
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/icon_default"
+        android:background="@drawable/drawer_background"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/grey_background"
+        android:clickable="true"
+        app:maxImageSize="56dp"/>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/forum_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
+</FrameLayout>
