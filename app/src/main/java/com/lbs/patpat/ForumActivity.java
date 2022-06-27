@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -27,7 +28,7 @@ import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.model.ForumDetailModel;
 import com.lbs.patpat.viewmodel.ForumViewModel;
 
-public class ForumActivity extends MyActivity {
+public class ForumActivity extends MyActivity implements View.OnClickListener{
 
     private ActivityForumBinding binding;
     private String[] forumTab;
@@ -40,8 +41,10 @@ public class ForumActivity extends MyActivity {
         forumTab=new String[]{"全部","官方","精华"};
         initTabAndPager();
         initData();
+        initClick();
         setContentView(binding.getRoot());
     }
+
     private void initTabAndPager(){
         //关闭预加载
         binding.forumPager.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);
@@ -80,5 +83,24 @@ public class ForumActivity extends MyActivity {
                 binding.itemForumIntro.setText(forumDetailModel.getFollowNum()+"粉丝    "+forumDetailModel.getPostNum()+"帖子");
             }
         });
+    }
+    private void initClick() {
+        binding.forumSearchReturn.setOnClickListener(this);
+        binding.floatingButtonNewPost.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.forum_search_return:
+                finish();
+                break;
+            case R.id.floating_button_new_post:
+                Intent intent=new Intent(this,PostWriteActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }
