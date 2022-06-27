@@ -26,7 +26,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -52,12 +51,30 @@ import okio.BufferedSink;
 
 public class MainActivity extends MyActivity {
 
+    private static Boolean isLogin;
     private ActivityMainBinding binding;
     private ImageView icon;
     private ConstraintLayout backGround;
     private TextView intro, nickName;
     private UserDao userDao;
-    private static Boolean isLogin ;
+    private String token,uid;
+
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     @SuppressLint("WrongConstant")
     @Override
@@ -99,6 +116,8 @@ public class MainActivity extends MyActivity {
                                     //Toast.makeText(getApplicationContext(), "用户未登录", Toast.LENGTH_SHORT).show();
                                 } else {
                                     isLogin = true;
+                                    setToken(loginedUsers.get(0).token);
+                                    setUid(loginedUsers.get(0).getUid());
                                     intro.setVisibility(View.VISIBLE);
                                     if (loginedUsers.get(0).intro.equals("null"))
                                         intro.setText("这个人很懒，什么都没有写");
@@ -123,10 +142,10 @@ public class MainActivity extends MyActivity {
                                     } else
                                         Glide.with(MainActivity.this)
                                                 .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
-                                                //.apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                                                .centerCrop()
                                                 .into(new SimpleTarget<Drawable>() {
                                                     @Override
-                                                    public void onResourceReady(Drawable resource, Transition<?super Drawable> transition) {
+                                                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
                                                         backGround.setBackground(resource);
                                                         // Set the resource wherever you need to use it.
                                                     }
@@ -178,7 +197,7 @@ public class MainActivity extends MyActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.drawer_logout:
                         logOut();
                 }
@@ -192,10 +211,9 @@ public class MainActivity extends MyActivity {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                if(isLogin) {       //已登录，点击事件为打开个人中心
+                if (isLogin) {       //已登录，点击事件为打开个人中心
                     intent = new Intent(MainActivity.this, PersonalActivity.class);
-                }
-                else {      //未登录，点击事件为打开登录活动
+                } else {      //未登录，点击事件为打开登录活动
                     intent = new Intent(MainActivity.this, LoginActivity.class);
                 }
                 startActivity(intent);
@@ -218,7 +236,7 @@ public class MainActivity extends MyActivity {
                 } else {
                     try {
                         String cachedToken = userDao.getToken()[0];
-                        String testTokenUrl = getString(R.string.server_ip)+"/user/test";
+                        String testTokenUrl = getString(R.string.server_ip) + "/user/test";
                         OkHttpClient client = new OkHttpClient();
                         Request request = new Request.Builder()
                                 .addHeader("token", cachedToken)
@@ -239,7 +257,7 @@ public class MainActivity extends MyActivity {
                         Response response = null;
                         response = client.newCall(request).execute();
                         String responseBody = response.body().string();
-                        Log.d("TEST","\ttestToken Body:"+responseBody );
+                        Log.d("TEST", "\ttestToken Body:" + responseBody);
                         if (responseBody.equals("请求成功")) {
 
                             Toast.makeText(getApplicationContext(), "用户已登录", Toast.LENGTH_SHORT).show();
@@ -265,7 +283,7 @@ public class MainActivity extends MyActivity {
     }
 
     //退出登录
-    private void  logOut(){
+    private void logOut() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -273,7 +291,7 @@ public class MainActivity extends MyActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MainActivity.this,"退出登录",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "退出登录", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
