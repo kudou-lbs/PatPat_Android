@@ -2,7 +2,6 @@ package com.lbs.patpat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
@@ -26,11 +25,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.BaseTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
@@ -61,8 +57,8 @@ public class MainActivity extends MyActivity {
     private ConstraintLayout backGround;
     private TextView intro, nickName;
     private UserDao userDao;
-    private String token;
-    private int uid;
+    private String token,uid;
+
 
     public String getToken() {
         return token;
@@ -72,11 +68,11 @@ public class MainActivity extends MyActivity {
         this.token = token;
     }
 
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 
@@ -121,7 +117,7 @@ public class MainActivity extends MyActivity {
                                 } else {
                                     isLogin = true;
                                     setToken(loginedUsers.get(0).token);
-                                    setUid(Integer.parseInt(loginedUsers.get(0).getUid()));
+                                    setUid(loginedUsers.get(0).getUid());
                                     intro.setVisibility(View.VISIBLE);
                                     if (loginedUsers.get(0).intro.equals("null"))
                                         intro.setText("这个人很懒，什么都没有写");
