@@ -7,6 +7,8 @@ import android.webkit.JavascriptInterface;
 import androidx.fragment.app.Fragment;
 
 import com.lbs.patpat.R;
+import com.lbs.patpat.global.MyApplication;
+import com.lbs.patpat.ui.login_register.UserDao;
 import com.lbs.patpat.webViewActivity;
 
 /**
@@ -37,9 +39,34 @@ public class JSBasic implements JSInterface{
         context.startActivity(intent);
     }
 
+    /**
+     * 销毁当前活动
+     * */
     @Override
     @JavascriptInterface
     public void finishCurrentActivity() {
         context.finish();
+    }
+
+    /**
+     * 未登录则返回null
+    * */
+    @JavascriptInterface
+    public String getToken(){
+        UserDao userDao= MyApplication.getUserDatabase().userDao();
+        if(userDao.getCount()<1)return null;
+
+        return userDao.getToken()[0];
+    }
+
+    /**
+     * 当uid为-1则未登录
+     * */
+    @JavascriptInterface
+    public int getUid(){
+        UserDao userDao= MyApplication.getUserDatabase().userDao();
+        if(userDao.getCount()<1)return -1;
+
+        return userDao.getUID()[0];
     }
 }

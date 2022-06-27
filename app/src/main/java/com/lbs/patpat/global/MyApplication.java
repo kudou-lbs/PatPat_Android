@@ -2,27 +2,9 @@ package com.lbs.patpat.global;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Bundle;
-import android.os.Looper;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.lbs.patpat.network.APIServer;
-
-import com.google.gson.Gson;
-import com.lbs.patpat.R;
 import com.lbs.patpat.ui.login_register.UserDatabase;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class MyApplication extends Application {
 

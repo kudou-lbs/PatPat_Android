@@ -11,31 +11,20 @@ import com.lbs.patpat.R;
 import com.lbs.patpat.ui.discovery.DiscoveryFragment;
 import com.lbs.patpat.webViewActivity;
 
-public class JSGameType implements JSGameTypeInterface {
+/**
+ * 发现页专用，goToGameList和backToGameList用于控制toolbar的展示样式
+ * */
+public class JSGameType extends JSBasic {
 
     Activity context;
     Fragment fragment;
 
     public JSGameType(Fragment fragment) {
+        super(fragment);
         this.fragment = fragment;
         context=fragment.getActivity();
     }
 
-    @Override
-    @JavascriptInterface
-    public void goToUrl(String url) {
-        Intent intent=new Intent(context, webViewActivity.class);
-        intent.putExtra(context.getString(R.string.intent_url_name),url);
-        context.startActivity(intent);
-    }
-
-    @Override
-    @JavascriptInterface
-    public void finishCurrentActivity() {
-        context.finish();
-    }
-
-    @Override
     @JavascriptInterface
     public void goToGameList(String type) {
         if(fragment instanceof DiscoveryFragment){
@@ -46,7 +35,6 @@ public class JSGameType implements JSGameTypeInterface {
         }
     }
 
-    @Override
     @JavascriptInterface
     public void backToGameList() {
         if(fragment instanceof DiscoveryFragment){

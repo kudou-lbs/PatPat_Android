@@ -1,6 +1,7 @@
 package com.lbs.patpat.ui.home;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
         //LiveData更新头像
         UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.getLoginedUser().observe(requireActivity(), new Observer<List<LoginedUser>>() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onChanged(List<LoginedUser> loginedUsers) {
                 if (loginedUsers.size()==1){

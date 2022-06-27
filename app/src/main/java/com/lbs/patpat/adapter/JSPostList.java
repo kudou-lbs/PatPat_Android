@@ -9,40 +9,20 @@ import androidx.fragment.app.Fragment;
 import com.lbs.patpat.R;
 import com.lbs.patpat.webViewActivity;
 
-public class JSPostList implements JSPostAdapter{
+public class JSPostList extends JSBasic{
 
     Activity context;
     Fragment fragment;
 
     public JSPostList(Fragment fragment) {
+        super(fragment);
         this.fragment = fragment;
         context=fragment.getActivity();
     }
 
     /**
-     * 打开游戏详情
-     * */
-    @Override
-    @JavascriptInterface
-    public void goToUrl(String url) {
-        Intent intent=new Intent(context, webViewActivity.class);
-        intent.putExtra(context.getString(R.string.intent_url_name),url);
-        context.startActivity(intent);
-    }
-
-    /**
-     * 关闭当前活动
-    * */
-    @Override
-    @JavascriptInterface
-    public void finishCurrentActivity() {
-        context.finish();
-    }
-
-    /**
      * 打开帖子详情页面
     * */
-    @Override
     @JavascriptInterface
     public void goToPost(int pid) {
         Intent intent=new Intent(context, webViewActivity.class);
