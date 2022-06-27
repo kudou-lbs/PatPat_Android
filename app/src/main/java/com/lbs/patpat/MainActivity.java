@@ -3,42 +3,38 @@ package com.lbs.patpat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import androidx.core.view.ViewCompat;
-
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
-import com.jaeger.library.StatusBarUtil;
 import com.lbs.patpat.databinding.ActivityMainBinding;
 import com.lbs.patpat.global.MyActivity;
-import com.lbs.patpat.ui.login.LoginActivity;
+import com.lbs.patpat.ui.login_register.LoginActivity;
+import com.lbs.patpat.ui.login_register.LoginedUser;
+import com.lbs.patpat.viewmodel.UserViewModel;
+
+import java.util.List;
 
 public class MainActivity extends MyActivity {
 
     private ActivityMainBinding binding;
+    private ImageView icon;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -47,8 +43,16 @@ public class MainActivity extends MyActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         initBottomNav();
         initNavDrawerMenu();
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getLoginedUser().observe(this, new Observer<List<LoginedUser>>() {
+            @Override
+            public void onChanged(List<LoginedUser> loginedUsers) {
+
+            }
+        });
 
         //适配问题
         ViewCompat.setOnApplyWindowInsetsListener(binding.mainDrawerLayout, new OnApplyWindowInsetsListener() {
@@ -78,6 +82,9 @@ public class MainActivity extends MyActivity {
     //初始化抽屉菜单
     private void initNavDrawerMenu(){
         //修复图片不显示原图
+        View headerView=binding.navDrawerMenu.getHeaderView(0);
+        ImageView icon=headerView.findViewById(R.id.header_avatar);
+        icon.setBackground(getDrawable(R.drawable.icon_default));
         binding.navDrawerMenu.setItemIconTintList(null);
         binding.navDrawerMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -88,8 +95,7 @@ public class MainActivity extends MyActivity {
         });
 
         //头部点击事件
-        View headerView=binding.navDrawerMenu.getHeaderView(0);
-        ImageView icon=headerView.findViewById(R.id.header_avatar);
+
         icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

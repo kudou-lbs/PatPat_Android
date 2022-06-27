@@ -1,4 +1,4 @@
-package com.lbs.patpat.ui.login;
+package com.lbs.patpat.ui.login_register;
 
 import androidx.annotation.Nullable;
 

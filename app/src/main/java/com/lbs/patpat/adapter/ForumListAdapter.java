@@ -9,18 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.lbs.patpat.BR;
 import com.lbs.patpat.R;
-import com.lbs.patpat.global.CircleImageDrawable;
 import com.lbs.patpat.model.ForumModel;
-import com.lbs.patpat.viewmodel.ListViewModel;
 
 import java.util.List;
 

@@ -12,9 +12,10 @@
         android:layout_width="@dimen/drawer_icon_width"
         android:layout_height="@dimen/drawer_icon_width"
         android:layout_marginLeft="30dp"
-        android:src="@drawable/icon_default"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+<!--        android:src="@drawable/icon_default"-->
+
 
     <TextView
         android:id="@+id/header_nickname"
@@ -23,7 +24,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:textSize="@dimen/drawer_nickname_size"
-        android:text="无敌暴龙战神"
+        android:text="点击头像登录"
         app:layout_constraintTop_toBottomOf="@id/header_avatar"
         app:layout_constraintLeft_toLeftOf="@id/header_avatar"/>
 

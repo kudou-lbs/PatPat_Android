@@ -1,4 +1,4 @@
-package com.lbs.patpat.ui.login;
+package com.lbs.patpat.ui.login_register;
 
 import static com.lbs.patpat.R.string.saved_user_account_key;
 
@@ -11,19 +11,14 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.Html;
-import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,17 +31,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.ActivityLoginBinding;
 import com.lbs.patpat.global.MyApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -56,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText accountEditText;
     private EditText passwordEditText;
     private SharedPreferences sharedPref;
-
+    private UserDao userDao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         sharedPref = LoginActivity.this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        userDao = MyApplication.getUserDatabase().userDao();
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
@@ -79,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
         protocolAgreement.setText(Html.fromHtml("勾选即代表同意<font color=#F1A6A6>《服务协议》</font>" +
                 "和<font color=#F1A6A6>《隐私政策》</font>",0));
 
-        Log.d(TAG, MyApplication.getTest());
         accountEditText.setText(sharedPref.getString(getString(saved_user_account_key), ""));
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -97,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable LoginResult loginResult) {
 
-                Log.d(TAG, "登录结果变化");
                 if (loginResult == null) {
                     return;
                 }
@@ -113,11 +101,6 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(TAG, "登录失败");
                     showLoginFailed(loginResult.getError());
                 }
-
-//                if (loginResult.getSuccess() != null) {
-//
-//
-//                }
 
 
             }
@@ -197,17 +180,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUiWithUser(JSONObject data) {
         String welcome = null;
-        String token = null;
         try {
-            token = data.getString("token");
             welcome = getString(R.string.welcome) + new JSONObject(data.getString("user")).getString("username");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        userDao.insertUser(new LoginedUser(data));
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(saved_user_account_key), accountEditText.getText().toString());
         editor.apply();
-        Log.d(TAG, welcome);
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_SHORT).show();
     }
 

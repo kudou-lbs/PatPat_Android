@@ -1,6 +1,4 @@
-package com.lbs.patpat.ui.login;
-
-import androidx.annotation.Nullable;
+package com.lbs.patpat.ui.login_register;
 
 import org.json.JSONObject;
 

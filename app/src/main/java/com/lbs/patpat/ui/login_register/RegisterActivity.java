@@ -1,17 +1,11 @@
-package com.lbs.patpat.ui.login;
-
-import static com.lbs.patpat.R.string.saved_token_key;
-import static com.lbs.patpat.R.string.saved_user_account_key;
+package com.lbs.patpat.ui.login_register;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.Editable;
@@ -33,11 +27,9 @@ import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.ActivityRegisterBinding;
 
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import okhttp3.MediaType;

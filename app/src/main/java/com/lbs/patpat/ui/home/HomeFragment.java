@@ -3,6 +3,7 @@ package com.lbs.patpat.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.appbar.AppBarLayout;
@@ -20,6 +23,10 @@ import com.lbs.patpat.R;
 import com.lbs.patpat.SearchActivity;
 import com.lbs.patpat.databinding.FragmentHomeBinding;
 import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
+import com.lbs.patpat.ui.login_register.LoginedUser;
+import com.lbs.patpat.viewmodel.UserViewModel;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener,View.OnClickListener {
 
@@ -34,6 +41,16 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
         tabs[0]=new String(getString(R.string.home_recommend));
         tabs[1]=new String(getString(R.string.home_leaderboard));
 
+        //LiveData更新头像
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getLoginedUser().observe(getActivity(), new Observer<List<LoginedUser>>() {
+            @Override
+            public void onChanged(List<LoginedUser> loginedUsers) {
+                if (loginedUsers.size()==1){
+                    //binding.tlExpend.toolbarPersonalHome.setImageDrawable();
+                }
+            }
+        });
         //设置适配器
         binding.homePager.setAdapter(new FragmentStateAdapter(getActivity().getSupportFragmentManager(),getLifecycle()) {
             @NonNull
@@ -59,18 +76,26 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
         super.onViewCreated(view, savedInstanceState);
         //tabLayout和viewPager2绑定
         new TabLayoutMediator(binding.homeTab,binding.homePager,((tab1, position) -> tab1.setText(tabs[position]))).attach();
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+
     }
 
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("TEST", "onResume");
     }
 
     @Override

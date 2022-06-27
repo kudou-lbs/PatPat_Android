@@ -1,4 +1,4 @@
-package com.lbs.patpat.ui.login;
+package com.lbs.patpat.ui.login_register;
 
 import android.util.Patterns;
 
@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.lbs.patpat.R;
-import com.lbs.patpat.data.LoginDataSource;
 
 public class LoginViewModel extends ViewModel {
 
