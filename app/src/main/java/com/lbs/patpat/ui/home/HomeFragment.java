@@ -72,18 +72,18 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onChanged(List<LoginedUser> loginedUsers) {
-                if (loginedUsers.size()==1){
-                    if(loginedUsers.get(0).avatar.equals("null")) {
+                if (loginedUsers.size()==1){  //数据库中存在用户，即已登录
+                    if(loginedUsers.get(0).avatar.equals("null")) {  //用户未设置头像，采用默认头像
                         avatar.setImageDrawable(MyApplication.getContext().getDrawable(R.drawable.icon_default));
                     }
-                    else
+                    else    //从服务器加载头像
                         Glide.with(MyApplication.getContext())
                                 .load(MyApplication.getContext().getString(R.string.server_ip) + loginedUsers.get(0).avatar)
                                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                                 .into(avatar);
 
                 }
-                else
+                else    //数据库中无用户，即未登录
                     avatar.setImageDrawable(MyApplication.getContext().getDrawable(R.drawable.icon_default));
             }
         });

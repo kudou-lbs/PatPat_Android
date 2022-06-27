@@ -77,7 +77,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener{
                 return Objects.requireNonNull(dynamicViewModel.getTabItems().getValue()).length;
             }
         });
-        //LiveData更新头像
+        //LiveData更新头像，详见HomeFragment
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         userViewModel.getLoginedUser().observe(getViewLifecycleOwner(), new Observer<List<LoginedUser>>() {
             @Override

@@ -71,7 +71,7 @@ public class DiscoveryFragment extends BackHandledFragment implements View.OnCli
         binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarSearchHome.setOnClickListener(this);
         binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarPersonalHome.setOnClickListener(this);
         avatar = binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarPersonalHome;
-        //LiveData更新头像
+        //LiveData更新头像，详见HomeFragment
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         userViewModel.getLoginedUser().observe(getViewLifecycleOwner(), new Observer<List<LoginedUser>>() {
             @Override
