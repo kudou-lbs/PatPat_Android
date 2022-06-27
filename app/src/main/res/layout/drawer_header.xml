@@ -13,9 +13,8 @@
         android:layout_height="@dimen/drawer_icon_width"
         android:layout_marginLeft="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-<!--        android:src="@drawable/icon_default"-->
-
+        app:layout_constraintTop_toTopOf="parent"
+    />
 
     <TextView
         android:id="@+id/header_nickname"

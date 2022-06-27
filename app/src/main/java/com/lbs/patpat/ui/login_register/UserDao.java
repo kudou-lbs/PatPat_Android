@@ -25,6 +25,12 @@ public interface UserDao {
     @Query("SELECT uid FROM logineduser")
     int[] getUID();
 
+    @Query("SELECT intro FROM logineduser")
+    String[] getIntro();
+
+    @Query("SELECT token FROM logineduser")
+    String[] getToken();
+
     @Update
     public void addFan(LoginedUser... user);
 

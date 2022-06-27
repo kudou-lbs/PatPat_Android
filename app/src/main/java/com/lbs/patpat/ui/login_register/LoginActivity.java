@@ -5,6 +5,8 @@ import static com.lbs.patpat.R.string.saved_user_account_key;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -31,6 +33,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lbs.patpat.PersonalActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.ActivityLoginBinding;
 import com.lbs.patpat.global.MyApplication;
@@ -47,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private SharedPreferences sharedPref;
     private UserDao userDao;
+    private ActivityResultLauncher<Intent> launcher;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,13 @@ public class LoginActivity extends AppCompatActivity {
 
         accountEditText.setText(sharedPref.getString(getString(saved_user_account_key), ""));
 
+         launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        finish();
+                    }
+                });
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @SuppressLint("ResourceType")
             @Override
@@ -171,9 +182,8 @@ public class LoginActivity extends AppCompatActivity {
         toRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
-
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                launcher.launch(intent);
             }
         });
     }
@@ -185,7 +195,14 @@ public class LoginActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        userDao.insertUser(new LoginedUser(data));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                userDao.deleteUser();
+                userDao.insertUser(new LoginedUser(data));
+            }
+        }).start();
+
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(saved_user_account_key), accountEditText.getText().toString());
         editor.apply();

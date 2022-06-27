@@ -72,6 +72,7 @@ public class LoginedUser {
             this.background = userInfo.getString("background");
             this.fansNum = Integer.parseInt(userInfo.getString("fansNum"));
             this.followNum = Integer.parseInt(userInfo.getString("followNum"));
+            this.intro = userInfo.getString("intro");
 
         } catch (JSONException e) {
             Log.d("TEST", "LoginedUser: JSON error");

@@ -1,12 +1,16 @@
 package com.lbs.patpat.ui.login_register;
 
+import static com.lbs.patpat.R.string.saved_user_account_key;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.Html;
@@ -25,6 +29,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.ActivityRegisterBinding;
+import com.lbs.patpat.global.MyApplication;
 
 import org.json.JSONObject;
 
@@ -42,14 +47,17 @@ public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding binding;
     private EditText accountEditText, passwordEditText, confirmEditText;
     private Button registerButton, goBackButton;
+    private SharedPreferences sharedPref;
     private CheckBox protocolAgreement;
     private InputMethodManager keyBoard;
+    private  UserDao userDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        userDao = MyApplication.getUserDatabase().userDao();
+        sharedPref = RegisterActivity.this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         keyBoard = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -156,7 +164,6 @@ public class RegisterActivity extends AppCompatActivity {
             public void run() {
                 String registerUrl = "http://172.21.140.162/user/register";
                 final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-                Log.d(getString(R.string.log_tag), "url:"+registerUrl);
                 try {
                     Looper.prepare();
                     Map<String, Object> bodyDta = new HashMap<>();
@@ -172,10 +179,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Response response = client.newCall(request).execute();
                     String responseBody = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseBody);
-                    Log.d(getString(R.string.log_tag), responseBody);
                     int responseCode = jsonObject.getInt("code");
                     String responseMsg = jsonObject.getString("message");
-                    Log.d(getString(R.string.log_tag), responseMsg +String.valueOf(responseCode));
                     if (responseCode == 0){ //注册成功
                         try {
                             String loginUrl = "http://172.21.140.162/user/login?username=" + account + "&password=" + passwd;
@@ -185,15 +190,26 @@ public class RegisterActivity extends AppCompatActivity {
                             response = client.newCall(request).execute();
                             responseBody = response.body().string();
                             jsonObject = new JSONObject(responseBody);
-                            Log.d(getString(R.string.log_tag), responseBody);
                             int loginCode = jsonObject.getInt("code");
                             String loginMsg = jsonObject.getString("message");
-                            String loginToken ="";
                             if (loginCode == 0) {
-                                loginToken = new JSONObject(jsonObject.getString("data")).getString("token");
-
+                                userDao.deleteUser();
+                                JSONObject data = new JSONObject(jsonObject.getString("data"));
+                                userDao.insertUser(new LoginedUser(data));
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString(getString(saved_user_account_key), accountEditText.getText().toString());
+                                editor.apply();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        setResult(Activity.RESULT_OK, new Intent());
+                                        RegisterActivity.this.finish();
+                                        Log.d(getString(R.string.log_tag), "finish");
+                                    }
+                                });
                                 Toast.makeText(RegisterActivity.this, "注册成功并自动登录", Toast.LENGTH_SHORT).show();
                                 Looper.loop();
+
                             }
                             else {
                                 Toast.makeText(RegisterActivity.this, loginMsg, Toast.LENGTH_SHORT).show();
