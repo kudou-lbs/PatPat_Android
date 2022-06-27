@@ -138,7 +138,7 @@ public class MainActivity extends MyActivity {
                                                 .into(icon);
 
                                     if (loginedUsers.get(0).background.equals("null")) {
-                                        icon.setImageDrawable(getDrawable(R.drawable.drawer_background_custom));
+                                        backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
                                     } else
                                         Glide.with(MainActivity.this)
                                                 .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
