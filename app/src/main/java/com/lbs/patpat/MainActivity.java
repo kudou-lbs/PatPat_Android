@@ -56,24 +56,24 @@ public class MainActivity extends MyActivity {
     private ImageView icon;
     private ConstraintLayout backGround;
     private TextView intro, nickName;
-    private UserDao userDao;
-    private String token,uid;
+    private static UserDao userDao;
+    private static String token,uid;
 
 
-    public String getToken() {
+    public static String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public static void setToken(String newToken) {
+        token = newToken;
     }
 
-    public String getUid() {
+    public static String getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public static void setUid(String newUid) {
+        uid = newUid;
     }
 
     @SuppressLint("WrongConstant")
@@ -300,5 +300,8 @@ public class MainActivity extends MyActivity {
 
     public ActivityMainBinding getBinding() {
         return binding;
+    }
+    public static boolean getIsLogin(){
+        return isLogin;
     }
 }

@@ -61,6 +61,10 @@ public class WebViewFragment extends Fragment {
         WebViewFragment fragment=new WebViewFragment(position);
         return fragment;
     }
+    public static WebViewFragment newInstance(int position,String postId) {
+        WebViewFragment fragment=new WebViewFragment(position,postId);
+        return fragment;
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override

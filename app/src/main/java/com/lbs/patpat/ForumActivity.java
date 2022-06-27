@@ -33,6 +33,7 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
     private ActivityForumBinding binding;
     private String[] forumTab;
     private ForumViewModel forumViewModel;
+    private String fid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return WebViewFragment.newInstance(WebViewFragment.DYNAMIC_RECOMMEND);
+                return WebViewFragment.newInstance(WebViewFragment.FORUM_POST,fid);
             }
 
             @Override
@@ -67,8 +68,8 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
     }
     private void initData(){
         Intent intent=getIntent();
-        Log.d("lbsss",intent.getStringExtra("fid"));
-        forumViewModel=new ForumViewModel(intent.getStringExtra("fid"));
+        fid=intent.getStringExtra("fid");
+        forumViewModel=new ForumViewModel(fid);
 
         forumViewModel.getForumDetailModelMutableLiveData().observe(this, new Observer<ForumDetailModel>() {
             @SuppressLint("SetTextI18n")
