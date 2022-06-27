@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< HEAD
         <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.2125" />
         <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/fragment_discovery.xml" value="0.19635416666666666" />
@@ -13,29 +12,6 @@
         <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/fragment_message.xml" value="0.184375" />
         <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/message_fragment.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2" />
-=======
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/drawable/circle_image_background.xml" value="0.12708333333333333" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/drawable/ic_launcher_background.xml" value="0.17962962962962964" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.2125" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/drawable/shape_search.xml" value="0.1648148148148148" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/activity_login.xml" value="0.264" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/activity_search.xml" value="0.1109375" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/fragment_discovery.xml" value="0.19635416666666666" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/fragment_dynamic.xml" value="0.19635416666666666" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/fragment_front_page.xml" value="0.184375" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/fragment_message.xml" value="0.184375" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/fragment_web_view.xml" value="0.1" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/message_fragment.xml" value="0.19583333333333333" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/toolbar_home_collapse.xml" value="0.264" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/toolbar_home_expand.xml" value="0.2" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/toolbar_home_expand_bottom.xml" value="0.1" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/toolbar_search_collapse.xml" value="0.1" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/layout/web_view_fragment.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2" />
-        <entry key="..\:/Users/kudou/Documents/myAS/Patpat/app/src/main/res/menu/drawer_menu.xml" value="0.1" />
->>>>>>> bed2bf2 (框架基本成型搭建)
       </map>
     </option>
   </component>

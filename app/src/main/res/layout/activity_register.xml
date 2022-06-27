@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login_register.RegisterActivity">
+
+
+    <EditText
+        android:id="@+id/account"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/toolbar_icon_margin"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/account_form"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:selectAllOnFocus="true"
+        android:textColorHint="?android:attr/textColorHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/toolbar_icon_margin"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/passwd_form"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:selectAllOnFocus="true"
+        android:textColorHint="?android:attr/textColorHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/account" />
+
+    <EditText
+        android:id="@+id/confirmPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/toolbar_icon_margin"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/passwd_same"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:selectAllOnFocus="true"
+        android:textColorHint="?android:attr/textColorHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/login_button"
+        android:enabled="false"
+        android:text="@string/registerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
+
+    <TextView
+        android:id="@+id/accountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/toolbar_icon_margin"
+        android:layout_marginTop="89dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/accountText"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/grey_text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/account"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/passwdText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/toolbar_icon_margin"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/passwdText"
+        android:textColor="@color/grey_text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/account"
+        app:layout_constraintVertical_bias="0.96" />
+
+    <TextView
+        android:id="@+id/confirmPasswdText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/toolbar_icon_margin"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/confirmPasswd"
+        android:textColor="@color/grey_text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/confirmPassword"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+    <ImageView
+        android:id="@+id/loginTitle"
+        android:layout_width="130dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="@dimen/toolbar_icon_margin"
+        android:layout_marginTop="20dp"
+        android:tintMode="src_in"
+        app:layout_constraintBottom_toTopOf="@+id/account"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.452"
+        app:srcCompat="@drawable/title" />
+
+    <Button
+        android:id="@+id/goBack"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="@dimen/toolbar_icon_margin"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/backbutton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:buttonTint="@color/patpat"
+        android:text="@string/protocol"
+        android:textColorHighlight="@color/patpat"
+        android:textColorLink="@color/patpat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

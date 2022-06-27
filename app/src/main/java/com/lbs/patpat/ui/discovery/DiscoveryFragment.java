@@ -2,6 +2,7 @@ package com.lbs.patpat.ui.discovery;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,17 +11,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.lbs.patpat.MainActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.SearchActivity;
 import com.lbs.patpat.adapter.JSGameType;
 import com.lbs.patpat.databinding.FragmentDiscoveryBinding;
 import com.lbs.patpat.global.BackHandledFragment;
+import com.lbs.patpat.global.MyApplication;
+import com.lbs.patpat.ui.login_register.LoginedUser;
+import com.lbs.patpat.viewmodel.UserViewModel;
+
+import java.util.List;
 
 public class DiscoveryFragment extends BackHandledFragment implements View.OnClickListener{
 
@@ -29,6 +40,7 @@ public class DiscoveryFragment extends BackHandledFragment implements View.OnCli
     private String url;
     private Handler handler;
     private String type;
+    private ImageView avatar;
 
     public DiscoveryFragment() {
         super();
@@ -58,7 +70,26 @@ public class DiscoveryFragment extends BackHandledFragment implements View.OnCli
 
         binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarSearchHome.setOnClickListener(this);
         binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarPersonalHome.setOnClickListener(this);
+        avatar = binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarPersonalHome;
+        //LiveData更新头像
+        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        userViewModel.getLoginedUser().observe(getViewLifecycleOwner(), new Observer<List<LoginedUser>>() {
+            @Override
+            public void onChanged(List<LoginedUser> loginedUsers) {
+                if (loginedUsers.size()==1){
+                    if(loginedUsers.get(0).avatar.equals("null"))
+                        avatar.setImageDrawable(requireActivity().getDrawable(R.drawable.icon_default));
+                    else
+                    Glide.with(MyApplication.getContext())
+                            .load(requireActivity().getString(R.string.server_ip) + loginedUsers.get(0).avatar)
+                            .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                            .into(avatar);
 
+                }
+                else
+                    avatar.setImageDrawable(getContext().getDrawable(R.drawable.icon_default));
+            }
+        });
 
         //加载webView
         onCreateWebView();
