@@ -31,6 +31,7 @@
     <dimen name="grid_margin_left">30dp</dimen>
     <dimen name="grid_hot_margin_top">40dp</dimen>
     <dimen name="grid_margin_hot">20dp</dimen>
+    <dimen name="grid_item_margin_bottom">10dp</dimen>
     <dimen name="grid_hot_text_size">16sp</dimen>
     <dimen name="grid_text_margin_num">6dp</dimen>
     <!--drawer相关-->
@@ -47,6 +48,7 @@
     <dimen name="recycler_user_nickname_size">18sp</dimen>
         <!--follow_button相关-->
     <dimen name="follow_button_height">30dp</dimen>
+    <dimen name="follow_button_width">60dp</dimen>
     <dimen name="follow_button_radius">15dp</dimen>
     <dimen name="follow_button_text_size">15sp</dimen>
     <!--修改资料-->
@@ -60,5 +62,13 @@
     <dimen name="personal_about_item_detail_margin">120sp</dimen>
     <dimen name="personal_about_title_size">18sp</dimen>
     <dimen name="personal_about_item_size">16sp</dimen>
+
+    <!--论坛-->
+    <dimen name="forum_background_height"> 150dp</dimen>
+    <dimen name="forum_icon_height">100dp</dimen>
+    <dimen name="forum_title_size">25sp</dimen>
+    <dimen name="forum_title_margin_top">20dp</dimen>
+    <dimen name="forum_follow_and_post_num_size">15sp</dimen>
+    <dimen name="forum_follow_and_post_num_margin_top">10dp</dimen>
 
 </resources>

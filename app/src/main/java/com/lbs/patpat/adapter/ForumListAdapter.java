@@ -2,6 +2,7 @@ package com.lbs.patpat.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class ForumListAdapter extends RecyclerView.Adapter<ForumListAdapter.View
 
     public void setForumModelList(List<ForumModel> forumModelList) {
         this.forumModelList = forumModelList;
+        Log.d("lbs","notifychange");
         notifyDataSetChanged();
     }
 
@@ -49,7 +51,7 @@ public class ForumListAdapter extends RecyclerView.Adapter<ForumListAdapter.View
         //设置图标，这里还需要再network里写相关方法
 //        holder.icon.setImageDrawable(context.getDrawable(R.drawable.patpat));
         Glide.with(context)
-                .load("https://upload.wikimedia.org/wikipedia/zh/9/94/Genshin_Impact.jpg")
+                .load(forumModelList.get(position).getForumIcon())
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                 .into(holder.icon);
         holder.name.setText(forumModelList.get(position).getForumName());

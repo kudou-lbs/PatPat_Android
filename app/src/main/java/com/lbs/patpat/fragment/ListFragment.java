@@ -1,5 +1,6 @@
 package com.lbs.patpat.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.lbs.patpat.ForumActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.adapter.ForumListAdapter;
 import com.lbs.patpat.adapter.UserListAdapter;
@@ -64,7 +66,7 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         root=inflater.inflate(R.layout.fragment_list, container, false);
 
         forumModelList=new ArrayList<>();
-        //大问题，在这里写每次重建时view时都会插入重复的数据
+        //大问题，在这里写每次重建时view时都会插入重复的数据，已修复
         initRecyclerView();
 
         userModelList=new ArrayList<>();
@@ -121,6 +123,9 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
     //社区项点击事件
     @Override
     public void onItemClick(ForumModel forumModel) {
-        Toast.makeText(getActivity(),forumModel.getForumName(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(),forumModel.getForumName(),Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(getActivity(), ForumActivity.class);
+        intent.putExtra("fid",forumModel.getForumFid());
+        getActivity().startActivity(intent);
     }
 }
