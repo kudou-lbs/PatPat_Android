@@ -14,7 +14,7 @@ import java.util.List;
 public class UserViewModel extends AndroidViewModel{
 
     private UserDatabase userDatabase;
-    private LiveData<List<LoginedUser>> loginedUser;
+    private LiveData<List<LoginedUser>> loginedUser;    //储存LiveData对象
 
     public UserViewModel(@NonNull Application application) {
         super(application);

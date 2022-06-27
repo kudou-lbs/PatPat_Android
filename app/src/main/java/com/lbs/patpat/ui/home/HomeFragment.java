@@ -49,27 +49,7 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
         tabs[0]=new String(getString(R.string.home_recommend));
         tabs[1]=new String(getString(R.string.home_leaderboard));
 
-        //LiveData更新头像
-        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        userViewModel.getLoginedUser().observe(requireActivity(), new Observer<List<LoginedUser>>() {
-            @SuppressLint("UseCompatLoadingForDrawables")
-            @Override
-            public void onChanged(List<LoginedUser> loginedUsers) {
-                if (loginedUsers.size()==1){
-                    if(loginedUsers.get(0).avatar.equals("null")) {
-                        avatar.setImageDrawable(requireActivity().getDrawable(R.drawable.icon_default));
-                    }
-                    else
-                        Glide.with(MyApplication.getContext())
-                                .load(requireActivity().getString(R.string.server_ip) + loginedUsers.get(0).avatar)
-                                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                                .into(avatar);
 
-                }
-                else
-                    avatar.setImageDrawable(getContext().getDrawable(R.drawable.icon_default));
-            }
-        });
         //设置适配器
         binding.homePager.setAdapter(new FragmentStateAdapter(getActivity().getSupportFragmentManager(),getLifecycle()) {
             @NonNull
@@ -86,7 +66,27 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
 
         binding.tlExpend.toolbarSearchHome.setOnClickListener(this);
         binding.tlExpend.toolbarPersonalHome.setOnClickListener(this);
+        //LiveData更新头像
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getLoginedUser().observe(getViewLifecycleOwner(), new Observer<List<LoginedUser>>() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onChanged(List<LoginedUser> loginedUsers) {
+                if (loginedUsers.size()==1){  //数据库中存在用户，即已登录
+                    if(loginedUsers.get(0).avatar.equals("null")) {  //用户未设置头像，采用默认头像
+                        avatar.setImageDrawable(MyApplication.getContext().getDrawable(R.drawable.icon_default));
+                    }
+                    else    //从服务器加载头像
+                        Glide.with(MyApplication.getContext())
+                                .load(MyApplication.getContext().getString(R.string.server_ip) + loginedUsers.get(0).avatar)
+                                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                                .into(avatar);
 
+                }
+                else    //数据库中无用户，即未登录
+                    avatar.setImageDrawable(MyApplication.getContext().getDrawable(R.drawable.icon_default));
+            }
+        });
         return binding.getRoot();
     }
 

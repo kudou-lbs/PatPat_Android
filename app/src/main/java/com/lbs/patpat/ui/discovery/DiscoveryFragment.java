@@ -71,23 +71,23 @@ public class DiscoveryFragment extends BackHandledFragment implements View.OnCli
         binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarSearchHome.setOnClickListener(this);
         binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarPersonalHome.setOnClickListener(this);
         avatar = binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarPersonalHome;
-        //LiveData更新头像
-        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        //LiveData更新头像，详见HomeFragment
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         userViewModel.getLoginedUser().observe(getViewLifecycleOwner(), new Observer<List<LoginedUser>>() {
             @Override
             public void onChanged(List<LoginedUser> loginedUsers) {
                 if (loginedUsers.size()==1){
                     if(loginedUsers.get(0).avatar.equals("null"))
-                        avatar.setImageDrawable(requireActivity().getDrawable(R.drawable.icon_default));
+                        avatar.setImageDrawable(MyApplication.getContext().getDrawable(R.drawable.icon_default));
                     else
                     Glide.with(MyApplication.getContext())
-                            .load(requireActivity().getString(R.string.server_ip) + loginedUsers.get(0).avatar)
+                            .load(MyApplication.getContext().getString(R.string.server_ip) + loginedUsers.get(0).avatar)
                             .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                             .into(avatar);
 
                 }
                 else
-                    avatar.setImageDrawable(getContext().getDrawable(R.drawable.icon_default));
+                    avatar.setImageDrawable(MyApplication.getContext().getDrawable(R.drawable.icon_default));
             }
         });
 

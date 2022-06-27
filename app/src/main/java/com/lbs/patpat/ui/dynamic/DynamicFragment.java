@@ -48,25 +48,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener{
         binding.dynamicToolbar.imageView2.setOnClickListener(this);
         binding.dynamicToolbar.imageView3.setOnClickListener(this);
         avatar = binding.dynamicToolbar.imageView3;
-        //LiveData更新头像
-        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        userViewModel.getLoginedUser().observe(getViewLifecycleOwner(), new Observer<List<LoginedUser>>() {
-            @Override
-            public void onChanged(List<LoginedUser> loginedUsers) {
-                if (loginedUsers.size()==1){
-                    if(loginedUsers.get(0).avatar.equals("null"))
-                        avatar.setImageDrawable(requireActivity().getDrawable(R.drawable.icon_default));
-                    else
-                        Glide.with(MyApplication.getContext())
-                                .load(requireActivity().getString(R.string.server_ip) + loginedUsers.get(0).avatar)
-                                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                                .into(avatar);
 
-                }
-                else
-                    avatar.setImageDrawable(requireActivity().getDrawable(R.drawable.icon_default));
-            }
-        });
 
         //tabLayout与viewPager适配器
         binding.dynamicPager.setAdapter(new FragmentStateAdapter(getActivity().getSupportFragmentManager(),getLifecycle()) {
@@ -95,7 +77,25 @@ public class DynamicFragment extends Fragment implements View.OnClickListener{
                 return Objects.requireNonNull(dynamicViewModel.getTabItems().getValue()).length;
             }
         });
+        //LiveData更新头像，详见HomeFragment
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getLoginedUser().observe(getViewLifecycleOwner(), new Observer<List<LoginedUser>>() {
+            @Override
+            public void onChanged(List<LoginedUser> loginedUsers) {
+                if (loginedUsers.size()==1){
+                    if(loginedUsers.get(0).avatar.equals("null"))
+                        avatar.setImageDrawable(MyApplication.getContext().getDrawable(R.drawable.icon_default));
+                    else
+                        Glide.with(MyApplication.getContext())
+                                .load(MyApplication.getContext().getString(R.string.server_ip) + loginedUsers.get(0).avatar)
+                                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                                .into(avatar);
 
+                }
+                else
+                    avatar.setImageDrawable(MyApplication.getContext().getDrawable(R.drawable.icon_default));
+            }
+        });
         return root;
     }
 

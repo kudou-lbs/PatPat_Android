@@ -8,31 +8,31 @@ import androidx.room.Update;
 
 import java.util.List;
 
-@Dao
+@Dao    //数据访问对象，提供接口及SQL，ROOM会自动生成
 public interface UserDao {
-    @Insert
+    @Insert //插入用户信息
     public void insertUser(LoginedUser user);
 
-    @Query("DELETE FROM logineduser")
+    @Query("DELETE FROM logineduser")   // 删除用户
     public void deleteUser();
 
-    @Query("SELECT * FROM logineduser")
+    @Query("SELECT * FROM logineduser") //获取用户列表作为LiveData对象
     LiveData<List<LoginedUser>> getUser();
 
-    @Query("SELECT COUNT(*) FROM logineduser")
+    @Query("SELECT COUNT(*) FROM logineduser")  //获取行数
     int getCount();
 
-    @Query("SELECT uid FROM logineduser")
+    @Query("SELECT uid FROM logineduser")   //获取UID
     int[] getUID();
 
-    @Query("SELECT intro FROM logineduser")
+    @Query("SELECT intro FROM logineduser")     //获取介绍
     String[] getIntro();
 
-    @Query("SELECT token FROM logineduser")
+    @Query("SELECT token FROM logineduser")     //获取Token
     String[] getToken();
 
-    @Update
-    public void addFan(LoginedUser... user);
+    @Update     //更新用户信息
+    public void updateUser(LoginedUser... user);
 
 
 

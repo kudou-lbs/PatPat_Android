@@ -2,6 +2,7 @@ package com.lbs.patpat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -24,7 +26,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 import com.lbs.patpat.databinding.ActivityMainBinding;
@@ -49,8 +54,10 @@ public class MainActivity extends MyActivity {
 
     private ActivityMainBinding binding;
     private ImageView icon;
+    private ConstraintLayout backGround;
     private TextView intro, nickName;
     private UserDao userDao;
+    private static Boolean isLogin ;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -61,44 +68,71 @@ public class MainActivity extends MyActivity {
         setContentView(binding.getRoot());
         View headerView = binding.navDrawerMenu.getHeaderView(0);
         icon = headerView.findViewById(R.id.header_avatar);
+        backGround = headerView.findViewById(R.id.header_background);
         intro = headerView.findViewById(R.id.header_follow_and_fans);
         nickName = headerView.findViewById(R.id.header_nickname);
 
         initBottomNav();
         initNavDrawerMenu();
+
+        //检验Token有效期
         checkLoginState();
+
         //登录用户ViewModel
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         userViewModel.getLoginedUser().observe(this, new Observer<List<LoginedUser>>() {
             @Override
             public void onChanged(List<LoginedUser> loginedUsers) {
-                Log.d("TEST", "用户数为：" + String.valueOf(loginedUsers.size()));
+                //Log.d("TEST", "用户数为：" + String.valueOf(loginedUsers.size()));
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (loginedUsers.size() == 0) {
-                                    Toast.makeText(getApplicationContext(), "用户未登录", Toast.LENGTH_SHORT).show();
+                                if (loginedUsers.size() == 0) {     //未登录
+                                    intro.setVisibility(View.GONE);
+                                    nickName.setText("点击头像登录");
+                                    icon.setImageDrawable(getDrawable(R.drawable.icon_default));
+                                    backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
+                                    isLogin = false;
+                                    //Toast.makeText(getApplicationContext(), "用户未登录", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    if (loginedUsers.get(0).intro.isEmpty())
+                                    isLogin = true;
+                                    intro.setVisibility(View.VISIBLE);
+                                    if (loginedUsers.get(0).intro.equals("null"))
                                         intro.setText("这个人很懒，什么都没有写");
                                     else
                                         intro.setText(loginedUsers.get(0).intro);
-                                    if (loginedUsers.get(0).nickname.isEmpty())
+
+                                    if (loginedUsers.get(0).nickname.equals("null"))
                                         nickName.setText("暂无昵称");
                                     else
                                         nickName.setText(loginedUsers.get(0).nickname);
 
-                                    if (loginedUsers.get(0).avatar.isEmpty()) {
+                                    if (loginedUsers.get(0).avatar.equals("null")) {
                                         icon.setImageDrawable(getDrawable(R.drawable.icon_default));
                                     } else
                                         Glide.with(MainActivity.this)
                                                 .load(getString(R.string.server_ip) + loginedUsers.get(0).avatar)
                                                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                                                 .into(icon);
+
+                                    if (loginedUsers.get(0).background.equals("null")) {
+                                        icon.setImageDrawable(getDrawable(R.drawable.drawer_background_custom));
+                                    } else
+                                        Glide.with(MainActivity.this)
+                                                .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
+                                                //.apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                                                .into(new SimpleTarget<Drawable>() {
+                                                    @Override
+                                                    public void onResourceReady(Drawable resource, Transition<?super Drawable> transition) {
+                                                        backGround.setBackground(resource);
+                                                        // Set the resource wherever you need to use it.
+                                                    }
+                                                });
                                 }
+
 
                             }
                         });
@@ -144,6 +178,10 @@ public class MainActivity extends MyActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                switch (item.getItemId()){
+                    case R.id.drawer_logout:
+                        logOut();
+                }
                 return false;
             }
         });
@@ -153,9 +191,13 @@ public class MainActivity extends MyActivity {
         icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent=new Intent(MainActivity.this,PersonalActivity.class);
-//                startActivity(intent);
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent;
+                if(isLogin) {       //已登录，点击事件为打开个人中心
+                    intent = new Intent(MainActivity.this, PersonalActivity.class);
+                }
+                else {      //未登录，点击事件为打开登录活动
+                    intent = new Intent(MainActivity.this, LoginActivity.class);
+                }
                 startActivity(intent);
 
             }
@@ -207,17 +249,35 @@ public class MainActivity extends MyActivity {
                         } else {
                             userDao.deleteUser();
                             Toast.makeText(getApplicationContext(), "登录已过期", Toast.LENGTH_SHORT).show();
-
+                            Looper.loop();
                             Log.d("TEST", "登录已过期");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "网络异常", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
                         Log.d("TEST", "检验出错");
                     }
                 }
             }
         }).start();
 
+    }
+
+    //退出登录
+    private void  logOut(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                userDao.deleteUser();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this,"退出登录",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).start();
     }
 
     public ActivityMainBinding getBinding() {
