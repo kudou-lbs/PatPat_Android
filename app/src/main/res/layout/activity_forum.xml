@@ -17,7 +17,7 @@
             android:id="@+id/item_forum_background"
             android:layout_width="match_parent"
             android:layout_height="@dimen/forum_background_height"
-            android:background="@drawable/drawer_background"
+            android:background="@drawable/background_forum"
             android:fitsSystemWindows="true">
             <ImageView
                 android:id="@+id/item_forum_icon"
@@ -117,6 +117,7 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_button_new_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
