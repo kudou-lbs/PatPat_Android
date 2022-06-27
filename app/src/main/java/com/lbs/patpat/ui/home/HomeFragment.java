@@ -1,6 +1,7 @@
 package com.lbs.patpat.ui.home;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,26 +49,7 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
         tabs[0]=new String(getString(R.string.home_recommend));
         tabs[1]=new String(getString(R.string.home_leaderboard));
 
-        //LiveData更新头像
-        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        userViewModel.getLoginedUser().observe(requireActivity(), new Observer<List<LoginedUser>>() {
-            @Override
-            public void onChanged(List<LoginedUser> loginedUsers) {
-                if (loginedUsers.size()==1){
-                    if(loginedUsers.get(0).avatar.equals("null")) {
-                        avatar.setImageDrawable(requireActivity().getDrawable(R.drawable.icon_default));
-                    }
-                    else
-                        Glide.with(MyApplication.getContext())
-                                .load(requireActivity().getString(R.string.server_ip) + loginedUsers.get(0).avatar)
-                                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                                .into(avatar);
 
-                }
-                else
-                    avatar.setImageDrawable(getContext().getDrawable(R.drawable.icon_default));
-            }
-        });
         //设置适配器
         binding.homePager.setAdapter(new FragmentStateAdapter(getActivity().getSupportFragmentManager(),getLifecycle()) {
             @NonNull
@@ -84,7 +66,27 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
 
         binding.tlExpend.toolbarSearchHome.setOnClickListener(this);
         binding.tlExpend.toolbarPersonalHome.setOnClickListener(this);
+        //LiveData更新头像
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getLoginedUser().observe(getViewLifecycleOwner(), new Observer<List<LoginedUser>>() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onChanged(List<LoginedUser> loginedUsers) {
+                if (loginedUsers.size()==1){
+                    if(loginedUsers.get(0).avatar.equals("null")) {
+                        avatar.setImageDrawable(MyApplication.getContext().getDrawable(R.drawable.icon_default));
+                    }
+                    else
+                        Glide.with(MyApplication.getContext())
+                                .load(MyApplication.getContext().getString(R.string.server_ip) + loginedUsers.get(0).avatar)
+                                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                                .into(avatar);
 
+                }
+                else
+                    avatar.setImageDrawable(MyApplication.getContext().getDrawable(R.drawable.icon_default));
+            }
+        });
         return binding.getRoot();
     }
 
