@@ -27,7 +27,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">"Welcome "</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
@@ -60,7 +60,7 @@
 <!--    <string name="protocol1">勾选即代表同意<font color=#F1A6A6>《服务协议》</font>和<font color=#F1A6A6>《隐私政策》</font></string>-->
     <string name="protocol">勾选即代表同意《服务协议》和《隐私政策》</string>
     <string name="account_form">账号不能为空</string>
-    <string name="passwd_form">密码长度不得小于6</string>
+    <string name="passwd_form">密码应由不小于6位的数字和字母组成</string>
     <string name="confirmPasswd">确认密码</string>
     <string name="passwd_same">再次输入密码</string>
     <string name="registerButton">注册</string>
@@ -69,6 +69,7 @@
     <string name="preference_file_key">patpat_sharePreference</string>
     <string name="log_tag">TEST</string>
     <string name="saved_token_key">saved_token</string>
+    <string name="server_ip">http://172.21.140.162</string>
 
     <!--请求信息-->
     <string name="request_url">http://172.21.140.162/</string>
