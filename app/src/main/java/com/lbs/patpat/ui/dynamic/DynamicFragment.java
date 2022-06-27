@@ -62,7 +62,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener{
                     case 0:
                         webViewType= WebViewFragment.DYNAMIC_FOLLOW;
                         if(MainActivity.getIsLogin()){
-                            return WebViewFragment.newInstance(webViewType,String.valueOf(MyApplication.getUserDatabase().userDao().getUID()[0]));
+                            return WebViewFragment.newInstance(webViewType,MainActivity.getUid());
                         }
                     case 1:
                         webViewType= WebViewFragment.DYNAMIC_RECOMMEND;

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.lbs.patpat.MainActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.FragmentPersonalPublishBinding;
 import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
@@ -37,7 +38,12 @@ public class PersonalPublishFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return WebViewFragment.newInstance(position);
+                switch (position){
+                    case 0:
+                        return WebViewFragment.newInstance(WebViewFragment.USER_POST, MainActivity.getUid());
+                    default:
+                        return WebViewFragment.newInstance(position);
+                }
             }
 
             @Override
