@@ -283,4 +283,7 @@ public class MainActivity extends MyActivity {
     public ActivityMainBinding getBinding() {
         return binding;
     }
+    public static boolean getIsLogin(){
+        return isLogin;
+    }
 }

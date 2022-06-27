@@ -27,6 +27,7 @@ import com.lbs.patpat.fragment.ListFragment;
 import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 import com.lbs.patpat.global.MyApplication;
 import com.lbs.patpat.ui.login_register.LoginedUser;
+import com.lbs.patpat.ui.login_register.UserDao;
 import com.lbs.patpat.viewmodel.UserViewModel;
 
 import java.util.List;
@@ -60,7 +61,9 @@ public class DynamicFragment extends Fragment implements View.OnClickListener{
                     //webView：关注和推荐
                     case 0:
                         webViewType= WebViewFragment.DYNAMIC_FOLLOW;
-                        break;
+                        if(MainActivity.getIsLogin()){
+                            return WebViewFragment.newInstance(webViewType,String.valueOf(MyApplication.getUserDatabase().userDao().getUID()[0]));
+                        }
                     case 1:
                         webViewType= WebViewFragment.DYNAMIC_RECOMMEND;
                         break;
