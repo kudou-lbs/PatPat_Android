@@ -24,6 +24,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.MainActivity;
+import com.lbs.patpat.PostWriteActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.SearchActivity;
 import com.lbs.patpat.databinding.FragmentHomeBinding;

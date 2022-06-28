@@ -3,12 +3,17 @@
     package="com.lbs.patpat">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--相机权限-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!--读文件权限-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".global.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/patpat"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Patpat"

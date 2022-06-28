@@ -171,7 +171,6 @@ public class MainActivity extends MyActivity {
         });
     }
 
-
     //初始化底部栏
     private void initBottomNav() {
         binding.navView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
