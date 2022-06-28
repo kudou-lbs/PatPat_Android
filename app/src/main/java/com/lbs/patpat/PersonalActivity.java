@@ -40,7 +40,7 @@ import com.lbs.patpat.viewmodel.UserViewModel;
 import java.io.InputStream;
 import java.util.List;
 
-public class PersonalActivity extends MyActivity implements View.OnClickListener{
+public class PersonalActivity extends MyActivity implements View.OnClickListener {
 
     private ActivityPersonalBinding binding;
     private String[] tabAll;
@@ -48,7 +48,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityPersonalBinding.inflate(getLayoutInflater());
+        binding = ActivityPersonalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         displayInfo();
@@ -63,45 +63,26 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                 if (loginedUsers.get(0).avatar.equals("null")) {
                     binding.personalIcon.setImageDrawable(getDrawable(R.drawable.icon_default));
                 } else
-                Glide.with(PersonalActivity.this)
-                        .load(getString(R.string.server_ip) + loginedUsers.get(0).avatar)
-                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                        .into(binding.personalIcon);
+                    Glide.with(PersonalActivity.this)
+                            .load(getString(R.string.server_ip) + loginedUsers.get(0).avatar)
+                            .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                            .into(binding.personalIcon);
 
                 if (loginedUsers.get(0).background.equals("null")) {
-                                        binding.personalBaseInfo.setBackground(getDrawable(R.drawable.drawer_background_custom));
-                                    } else
-                                        Glide.with(PersonalActivity.this)
-                                                .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
-                                                .override(binding.personalBaseInfo.getWidth(),binding.personalBaseInfo.getHeight())
-                                                .optionalCenterCrop()
-                                                .into(new GlideLayout(binding.personalBaseInfo));
-//                                                .into(new CustomTarget<Drawable>() {
-//
-//                                                    @Override
-//                                                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-//                                                        BitmapDrawable bitmapDrawable = (BitmapDrawable) resource;
-//                                                        Bitmap bm = bitmapDrawable.getBitmap();
-//                                                    }
-//
-//                                                    @Override
-//                                                    public void onLoadCleared(@Nullable Drawable placeholder) {
-//
-//                                                    }
-//
-////                                                    @Override
-////                                                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-////                                                        binding.personalBaseInfo.setBackground(resource);
-////                                                    }
-//
-//
-//                                                });
+                    binding.personalBaseInfo.setBackground(getDrawable(R.drawable.drawer_background_custom));
+                } else
+                    Glide.with(PersonalActivity.this)
+                            .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
+                            //.override(binding.personalBaseInfo.getWidth(),binding.personalBaseInfo.getHeight())
+                            //.optionalCenterCrop()
+                            .into(new AdaptiveBackground(binding.personalBaseInfo));
+
                 if (loginedUsers.get(0).nickname.equals("null"))
                     binding.personalNickname.setText("暂无昵称");
                 else
                     binding.personalNickname.setText(loginedUsers.get(0).nickname);
-                binding.personalFollowNum.setText("关注"+String.valueOf(loginedUsers.get(0).followNum));
-                binding.personalFanNum.setText("粉丝"+String.valueOf(loginedUsers.get(0).fansNum));
+                binding.personalFollowNum.setText("关注" + String.valueOf(loginedUsers.get(0).followNum));
+                binding.personalFanNum.setText("粉丝" + String.valueOf(loginedUsers.get(0).fansNum));
                 if (loginedUsers.get(0).intro.equals("null"))
                     binding.personalIntro.setText("这个人很懒，什么都没有写");
                 else
@@ -122,13 +103,13 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
         }).start();
     }
 
-    private void initTabAndPager(){
-        tabAll=new String[]{"发布","关于"};
-        binding.personalPager.setAdapter(new FragmentStateAdapter(getSupportFragmentManager(),getLifecycle()) {
+    private void initTabAndPager() {
+        tabAll = new String[]{"发布", "关于"};
+        binding.personalPager.setAdapter(new FragmentStateAdapter(getSupportFragmentManager(), getLifecycle()) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         return new PersonalPublishFragment();
                     case 1:
@@ -145,16 +126,18 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
             }
         });
 
-        new TabLayoutMediator(binding.personalTabAll,binding.personalPager,((tab, position) -> {
+        new TabLayoutMediator(binding.personalTabAll, binding.personalPager, ((tab, position) -> {
             tab.setText(tabAll[position]);
         })).attach();
     }
 
-    private void initClick(){binding.personalReturn.setOnClickListener(this);}
+    private void initClick() {
+        binding.personalReturn.setOnClickListener(this);
+    }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.personal_return:
                 finish();
                 break;
@@ -163,38 +146,5 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
         }
     }
 
-    class GlideLayout extends CustomTarget<Drawable>{
 
-        private ConstraintLayout layout;
-        public GlideLayout(ConstraintLayout layout){
-            this.layout = layout;
-
-        }
-
-        @Override
-        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-
-            int layoutWidth = layout.getWidth();
-            int layoutHeight = layout.getHeight();
-            int figWidth = resource.getIntrinsicWidth();
-            int figHeight = resource.getIntrinsicHeight();
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) resource;
-            Bitmap bm = bitmapDrawable.getBitmap();
-            float param = (float) layoutWidth/(float) figWidth;
-            Log.d("TEST", "Origin: "+String.valueOf(layoutWidth)+"     "+String.valueOf(layoutHeight)+String.valueOf(figWidth)+"     "+String.valueOf(figHeight));
-            Log.d("TEST", "onResourceReady: "+String.valueOf(figHeight*param)+"     "+String.valueOf(figWidth*param)+"     "+String.valueOf(param));
-//            Bitmap resBitmap = Bitmap.createBitmap(bm,0,0,Math.max(figWidth,layoutWidth),Math.max(figHeight,layoutHeight));
-//            resBitmap.setHeight((int)(figHeight*param));
-//            resBitmap.setWidth((int)(figWidth*param));
-//            resBitmap = Bitmap.createScaledBitmap();
-            Drawable res = new BitmapDrawable(bm);
-            layout.setBackground(res);
-
-        }
-
-        @Override
-        public void onLoadCleared(@Nullable Drawable placeholder) {
-
-        }
-    }
 }

@@ -137,21 +137,13 @@ public class MainActivity extends MyActivity {
                                                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                                                 .into(icon);
 
-//                                    if (loginedUsers.get(0).background.equals("null")) {
-//                                        backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
-//                                    } else
-//                                        Glide.with(MainActivity.this)
-//                                                .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
-//                                                .centerCrop()
-//                                                .into(new SimpleTarget<Drawable>() {
-//                                                    @Override
-//                                                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-//                                                        backGround.setBackground(resource);
-//                                                        //backGround.setScaleX((float) (resource.getIntrinsicWidth()/backGround.getWidth()));
-//                                                        //backGround.setScaleY((float) (resource.getIntrinsicHeight()/backGround.getHeight()));
-//                                                        // Set the resource wherever you need to use it.
-//                                                    }
-//                                                });
+                                    if (loginedUsers.get(0).background.equals("null")) {
+                                        backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
+                                    } else
+                                        Glide.with(MainActivity.this)
+                                                .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
+                                                .centerCrop()
+                                                .into(new AdaptiveBackground(backGround));
                                 }
 
 
@@ -233,7 +225,6 @@ public class MainActivity extends MyActivity {
                 if (userDao.getCount() == 0) {
                     Toast.makeText(getApplicationContext(), "用户未登录", Toast.LENGTH_SHORT).show();
                     Looper.loop();
-                    Log.d("TEST", "用户未登录");
                 } else {
                     try {
                         String cachedToken = userDao.getToken()[0];
@@ -258,7 +249,7 @@ public class MainActivity extends MyActivity {
                         Response response = null;
                         response = client.newCall(request).execute();
                         String responseBody = response.body().string();
-                        Log.d("TEST", "\ttestToken Body:" + responseBody);
+                        //Log.d("TEST", "\ttestToken Body:" + responseBody);
                         if (responseBody.equals("请求成功")) {
 
                             Toast.makeText(getApplicationContext(), "用户已登录", Toast.LENGTH_SHORT).show();
