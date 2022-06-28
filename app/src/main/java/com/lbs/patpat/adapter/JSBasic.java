@@ -6,6 +6,8 @@ import android.webkit.JavascriptInterface;
 
 import androidx.fragment.app.Fragment;
 
+import com.lbs.patpat.ForumActivity;
+import com.lbs.patpat.PersonalActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.global.MyApplication;
 import com.lbs.patpat.ui.login_register.UserDao;
@@ -68,5 +70,25 @@ public class JSBasic implements JSInterface{
         if(userDao.getCount()<1)return -1;
 
         return userDao.getUID()[0];
+    }
+
+    /**
+     * 打开论坛
+     * */
+    @JavascriptInterface
+    public void startForumActivity(String fid){
+        Intent intent=new Intent(context, ForumActivity.class);
+        intent.putExtra("fid",fid);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 打开用户主页
+     * */
+    @JavascriptInterface
+    public void goToUser(String uid){
+        Intent intent=new Intent(context, PersonalActivity.class);
+        intent.putExtra("uid",uid);
+        context.startActivity(intent);
     }
 }
