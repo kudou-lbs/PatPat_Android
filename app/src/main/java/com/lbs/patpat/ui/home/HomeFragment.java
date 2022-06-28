@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment implements AppBarLayout.OnOffsetChang
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.toolbar_search_home:
-                Intent intent=new Intent(getActivity(), SearchActivity.class);
+                Intent intent=new Intent(getActivity(),PostWriteActivity.class);
                 startActivity(intent);
                 break;
             case R.id.toolbar_personal_home:

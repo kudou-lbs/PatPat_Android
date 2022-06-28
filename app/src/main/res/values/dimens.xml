@@ -62,7 +62,6 @@
     <dimen name="personal_about_item_detail_margin">120sp</dimen>
     <dimen name="personal_about_title_size">18sp</dimen>
     <dimen name="personal_about_item_size">16sp</dimen>
-
     <!--论坛-->
     <dimen name="forum_background_height"> 150dp</dimen>
     <dimen name="forum_icon_height">100dp</dimen>
@@ -70,5 +69,8 @@
     <dimen name="forum_title_margin_top">20dp</dimen>
     <dimen name="forum_follow_and_post_num_size">15sp</dimen>
     <dimen name="forum_follow_and_post_num_margin_top">10dp</dimen>
-
+    <!--写帖子-->
+    <dimen name="post_write_button_height">40dp</dimen>
+    <dimen name="post_write_button_radius">20dp</dimen>
+    <dimen name="post_write_button_text_size">16sp</dimen>
 </resources>

@@ -33,7 +33,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lbs.patpat.PersonalActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.ActivityLoginBinding;
 import com.lbs.patpat.global.MyApplication;
