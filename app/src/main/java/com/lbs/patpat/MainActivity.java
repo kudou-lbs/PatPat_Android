@@ -137,19 +137,21 @@ public class MainActivity extends MyActivity {
                                                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                                                 .into(icon);
 
-                                    if (loginedUsers.get(0).background.equals("null")) {
-                                        backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
-                                    } else
-                                        Glide.with(MainActivity.this)
-                                                .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
-                                                .centerCrop()
-                                                .into(new SimpleTarget<Drawable>() {
-                                                    @Override
-                                                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                                                        backGround.setBackground(resource);
-                                                        // Set the resource wherever you need to use it.
-                                                    }
-                                                });
+//                                    if (loginedUsers.get(0).background.equals("null")) {
+//                                        backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
+//                                    } else
+//                                        Glide.with(MainActivity.this)
+//                                                .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
+//                                                .centerCrop()
+//                                                .into(new SimpleTarget<Drawable>() {
+//                                                    @Override
+//                                                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+//                                                        backGround.setBackground(resource);
+//                                                        //backGround.setScaleX((float) (resource.getIntrinsicWidth()/backGround.getWidth()));
+//                                                        //backGround.setScaleY((float) (resource.getIntrinsicHeight()/backGround.getHeight()));
+//                                                        // Set the resource wherever you need to use it.
+//                                                    }
+//                                                });
                                 }
 
 

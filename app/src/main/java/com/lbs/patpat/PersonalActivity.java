@@ -3,6 +3,8 @@ package com.lbs.patpat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.graphics.Color;
@@ -17,6 +19,10 @@ import com.lbs.patpat.databinding.ActivityPersonalBinding;
 import com.lbs.patpat.fragment.PersonalAboutFragment;
 import com.lbs.patpat.fragment.PersonalPublishFragment.PersonalPublishFragment;
 import com.lbs.patpat.global.MyActivity;
+import com.lbs.patpat.ui.login_register.LoginedUser;
+import com.lbs.patpat.viewmodel.UserViewModel;
+
+import java.util.List;
 
 public class PersonalActivity extends MyActivity implements View.OnClickListener{
 
@@ -29,8 +35,28 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
         binding=ActivityPersonalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        displayInfo();
         initTabAndPager();
         initClick();
+        //登录用户ViewModel
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getLoginedUser().observe(this, new Observer<List<LoginedUser>>() {
+            @Override
+            public void onChanged(List<LoginedUser> loginedUsers) {
+
+            }
+
+        });
+
+    }
+
+    private void displayInfo() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();
     }
 
     private void initTabAndPager(){
@@ -61,9 +87,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
         })).attach();
     }
 
-    private void initClick(){
-        binding.personalReturn.setOnClickListener(this);
-    }
+    private void initClick(){binding.personalReturn.setOnClickListener(this);}
 
     @Override
     public void onClick(View v) {
