@@ -2,11 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lbs.patpat">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--相机权限-->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <!--读文件权限-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 读文件权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".global.MyApplication"
@@ -18,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Patpat"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".FollowAndFansActivity"
+            android:exported="false" />
         <activity
             android:name=".PostWriteActivity"
             android:exported="false" />

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -35,6 +36,7 @@ import com.lbs.patpat.fragment.PersonalAboutFragment;
 import com.lbs.patpat.fragment.PersonalPublishFragment.PersonalPublishFragment;
 import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.ui.login_register.LoginedUser;
+import com.lbs.patpat.viewmodel.FollowAndFanViewModel;
 import com.lbs.patpat.viewmodel.UserViewModel;
 
 import java.io.InputStream;
@@ -94,8 +96,6 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
 
     }
 
-
-
     private void initTabAndPager() {
         tabAll = new String[]{"发布", "关于"};
         binding.personalPager.setAdapter(new FragmentStateAdapter(getSupportFragmentManager(), getLifecycle()) {
@@ -126,6 +126,8 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
 
     private void initClick() {
         binding.personalReturn.setOnClickListener(this);
+        binding.personalFollowNum.setOnClickListener(this);
+        binding.personalFanNum.setOnClickListener(this);
     }
 
     @Override
@@ -133,6 +135,13 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.personal_return:
                 finish();
+                break;
+            case R.id.personal_follow_num:
+            case R.id.personal_fan_num:
+                Intent intent=new Intent(PersonalActivity.this, FollowAndFansActivity.class);
+                //这里要放当前用户id
+                intent.putExtra("uid",MainActivity.getUid());
+                startActivity(intent);
                 break;
             default:
                 break;

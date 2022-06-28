@@ -159,9 +159,6 @@ public class PostWriteActivity extends MyActivity {
                 +"&content="+text;
         Log.d("lbs",url);
 
-         //url="http://172.21.140.162/post?fid=1000010&uid=1149901&title=testagain&content=test";
-        //Log.d("lbs",url1);
-
         Request request;
         if(filePath!=null){
             File file=new File(filePath);
