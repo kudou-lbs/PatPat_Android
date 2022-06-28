@@ -35,15 +35,15 @@ public class AdaptiveBackground extends CustomTarget<Drawable> {
         float layoutRatio = (float) layoutWidth / (float) layoutHeight;
         Bitmap resBitmap;
         if (figRatio < layoutRatio) { //垂直剪裁
-            Bitmap tmp = Bitmap.createScaledBitmap(bm, layoutWidth, figHeight * layoutWidth / figWidth, false);
+            Bitmap tmp = Bitmap.createScaledBitmap(bm, layoutWidth, figHeight * layoutWidth / figWidth, true);
             resBitmap = Bitmap.createBitmap(tmp, 0, (int) ((figHeight * layoutWidth / figWidth - layoutHeight) / 2), layoutWidth, layoutHeight);
             //Log.d("TEST垂直", String.valueOf((figHeight * layoutWidth / figWidth - layoutHeight) / 2));
         } else if (figRatio > layoutRatio) {   //水平剪裁
-            Bitmap tmp = Bitmap.createScaledBitmap(bm, figWidth * layoutHeight / figHeight, layoutHeight, false);
+            Bitmap tmp = Bitmap.createScaledBitmap(bm, figWidth * layoutHeight / figHeight, layoutHeight, true);
             resBitmap = Bitmap.createBitmap(tmp, (int) ((figWidth * layoutHeight / figHeight - layoutWidth) / 2), 0, layoutWidth, layoutHeight);
             //Log.d("TEST水平", String.valueOf((figWidth * layoutHeight / figHeight - layoutWidth) / 2));
         } else {
-            resBitmap = Bitmap.createScaledBitmap(bm, layoutWidth, layoutHeight, false);
+            resBitmap = Bitmap.createScaledBitmap(bm, layoutWidth, layoutHeight, true);
         }
 
         Drawable res = new BitmapDrawable(resBitmap);
