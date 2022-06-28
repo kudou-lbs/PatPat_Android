@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -126,6 +127,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
 
     private void initClick() {
         binding.personalReturn.setOnClickListener(this);
+        binding.modifyInfo.setOnClickListener(this);
     }
 
     @Override
@@ -134,6 +136,9 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
             case R.id.personal_return:
                 finish();
                 break;
+            case R.id.modifyInfo:
+                startActivity(new Intent(PersonalActivity.this,ModifyInfoActivity.class));
+
             default:
                 break;
         }
