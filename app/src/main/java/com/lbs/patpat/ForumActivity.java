@@ -98,6 +98,7 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
                 break;
             case R.id.floating_button_new_post:
                 Intent intent=new Intent(this,PostWriteActivity.class);
+                intent.putExtra("fid",fid);
                 startActivity(intent);
                 break;
             default:

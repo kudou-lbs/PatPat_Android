@@ -87,7 +87,7 @@
         android:background="@color/white">
 
         <Button
-            android:id="@+id/post_write__button_publish"
+            android:id="@+id/post_write_button_publish"
             android:layout_width="match_parent"
             android:layout_height="@dimen/post_write_button_height"
             android:background="@drawable/shape_post_write_publish"
@@ -103,7 +103,7 @@
             android:src="@drawable/img"
             android:layout_margin="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/post_write__button_publish"/>
+            app:layout_constraintBottom_toTopOf="@id/post_write_button_publish"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
