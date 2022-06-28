@@ -70,6 +70,7 @@ public class DiscoveryFragment extends BackHandledFragment implements View.OnCli
 
         binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarSearchHome.setOnClickListener(this);
         binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarPersonalHome.setOnClickListener(this);
+        binding.toolbarDiscoverBoth.toolbarDiscoveryDetailInclude.discoverReturn.setOnClickListener(this);
         avatar = binding.toolbarDiscoverBoth.toolbarDiscoveryAllInclude.toolbarPersonalHome;
         //LiveData更新头像，详见HomeFragment
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
@@ -159,6 +160,9 @@ public class DiscoveryFragment extends BackHandledFragment implements View.OnCli
                 break;
             case R.id.toolbar_personal_home:
                 ((MainActivity)getActivity()).getBinding().mainDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            case R.id.discover_return:
+                binding.wvDiscovery.goBack();
                 break;
             default:
                 break;

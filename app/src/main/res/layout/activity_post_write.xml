@@ -42,11 +42,25 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@id/post_write_edit_text"
+                android:id="@+id/post_write_edit_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="标题"
+                android:textStyle="bold"
+                android:textSize="@dimen/post_write_title_size"
+                android:layout_marginBottom="@dimen/toolbar_icon_margin"
+                android:maxLines="99999"
+                android:background="@null"
+                />
+
+            <EditText
+                android:id="@+id/post_write_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="写下你的想法"
-                android:maxLines="20"
+                android:textSize="@dimen/post_write_text_size"
+                android:maxLines="99999"
+                android:layout_marginBottom="@dimen/toolbar_icon_margin"
                 android:background="@null"
                 />
 
