@@ -21,8 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:text="点击头像登录"
+        android:textColor="@color/white"
         android:textSize="@dimen/drawer_nickname_size"
         app:layout_constraintLeft_toLeftOf="@id/header_avatar"
         app:layout_constraintTop_toBottomOf="@id/header_avatar" />
@@ -32,6 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="这个人很懒，什么都没有写"
+        android:textColor="@color/white"
         android:textSize="@dimen/drawer_follow_and_fans_size"
         app:layout_constraintLeft_toLeftOf="@id/header_nickname"
         app:layout_constraintTop_toBottomOf="@id/header_nickname" />

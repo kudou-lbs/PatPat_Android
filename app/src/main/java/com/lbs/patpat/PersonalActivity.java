@@ -51,7 +51,6 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
         binding = ActivityPersonalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        displayInfo();
         initTabAndPager();
         initClick();
         //登录用户ViewModel
@@ -70,6 +69,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
 
                 if (loginedUsers.get(0).background.equals("null")) {
                     binding.personalBaseInfo.setBackground(getDrawable(R.drawable.drawer_background_custom));
+                    binding.personalBaseInfo.getBackground().setAlpha(230);
                 } else
                     Glide.with(PersonalActivity.this)
                             .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
@@ -94,14 +94,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
 
     }
 
-    private void displayInfo() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
 
-            }
-        }).start();
-    }
 
     private void initTabAndPager() {
         tabAll = new String[]{"发布", "关于"};

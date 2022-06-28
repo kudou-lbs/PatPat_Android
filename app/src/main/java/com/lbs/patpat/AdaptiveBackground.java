@@ -48,6 +48,7 @@ public class AdaptiveBackground extends CustomTarget<Drawable> {
 
         Drawable res = new BitmapDrawable(resBitmap);
         layout.setBackground(res);
+        layout.getBackground().setAlpha(230);
         //resBitmap.recycle();
 
     }

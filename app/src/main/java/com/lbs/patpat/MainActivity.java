@@ -35,9 +35,12 @@ import com.lbs.patpat.databinding.ActivityMainBinding;
 import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.global.MyApplication;
 import com.lbs.patpat.ui.login_register.LoginActivity;
+import com.lbs.patpat.ui.login_register.LoginResult;
 import com.lbs.patpat.ui.login_register.LoginedUser;
 import com.lbs.patpat.ui.login_register.UserDao;
 import com.lbs.patpat.viewmodel.UserViewModel;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -89,6 +92,7 @@ public class MainActivity extends MyActivity {
         intro = headerView.findViewById(R.id.header_follow_and_fans);
         nickName = headerView.findViewById(R.id.header_nickname);
 
+
         initBottomNav();
         initNavDrawerMenu();
 
@@ -112,6 +116,7 @@ public class MainActivity extends MyActivity {
                                     nickName.setText("点击头像登录");
                                     icon.setImageDrawable(getDrawable(R.drawable.icon_default));
                                     backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
+                                    backGround.getBackground().setAlpha(230);
                                     isLogin = false;
                                     //Toast.makeText(getApplicationContext(), "用户未登录", Toast.LENGTH_SHORT).show();
                                 } else {
@@ -139,6 +144,7 @@ public class MainActivity extends MyActivity {
 
                                     if (loginedUsers.get(0).background.equals("null")) {
                                         backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
+                                        backGround.getBackground().setAlpha(230);
                                     } else
                                         Glide.with(MainActivity.this)
                                                 .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
@@ -251,7 +257,6 @@ public class MainActivity extends MyActivity {
                         String responseBody = response.body().string();
                         //Log.d("TEST", "\ttestToken Body:" + responseBody);
                         if (responseBody.equals("请求成功")) {
-
                             Toast.makeText(getApplicationContext(), "用户已登录", Toast.LENGTH_SHORT).show();
                             Looper.loop();
                             Log.d("TEST", "用户已登录");
@@ -266,7 +271,6 @@ public class MainActivity extends MyActivity {
                         e.printStackTrace();
                         Toast.makeText(getApplicationContext(), "网络异常", Toast.LENGTH_SHORT).show();
                         Looper.loop();
-                        Log.d("TEST", "检验出错");
                     }
                 }
             }
