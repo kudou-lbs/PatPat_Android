@@ -27,13 +27,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     private List<UserModel> userModelList; //信息列表
     private OnItemClickListener mOnItemClickListener; //点击响应
 
-    public UserListAdapter(Context context, List<UserModel> userModelList){
+    public UserListAdapter(Context context, List<UserModel> userModelList, OnItemClickListener mOnItemClickListener){
         this.context=context;
         if(userModelList!=null)
             this.userModelList = userModelList;
         else
             this.userModelList=new ArrayList<>();
-        //this.mOnItemClickListener=mOnItemClickListener;
+        this.mOnItemClickListener=mOnItemClickListener;
     }
 
     @SuppressLint("NotifyDataSetChanged")

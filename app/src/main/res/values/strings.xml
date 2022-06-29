@@ -38,10 +38,10 @@
     <string name="url_recommend">recommend</string>
     <string name="url_leaderboard">top</string>
     <string name="url_discovery">discover</string>
-    <string name="url_search_game">search</string>
+    <string name="url_search">search</string>
     <string name="url_forum_recommend">-2</string>
     <string name="url_forum_follow">-1</string>
-    <string name="url_dynamic_follow_or_recommend">post</string>
+    <string name="url_post">post</string>
 
     <!--搜索界面-->
     <string name="grid_hot_text">热搜榜</string>

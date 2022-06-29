@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.databinding.ActivitySearchBinding;
@@ -49,7 +50,11 @@ public class SearchActivity extends MyActivity {
             public void onClick(View v) {
                 //搜索结果
                 String key=binding.toolbarSearchSearch.searchEdit.getText().toString().trim();
-                if(key.equals(""))return;
+                if(key.equals("")){
+                    Toast.makeText(SearchActivity.this,"请输入有效搜索词",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 //未初始化则先初始化，也就是绑定
                 if(!initTabAndPager){
@@ -84,6 +89,7 @@ public class SearchActivity extends MyActivity {
                 binding.hot6.hottestName.setText(strings[5]);
             }
         });
+        searchViewModel.makeRenewHotApiCall();
     }
 
     //初始化搜索结果界面
@@ -94,6 +100,7 @@ public class SearchActivity extends MyActivity {
                 .attach();
     }
 
+    //更新搜索结果
     private void renewPagerView(String key){
         binding.searchPager.setAdapter(new FragmentStateAdapter(getSupportFragmentManager(),getLifecycle()) {
             @NonNull

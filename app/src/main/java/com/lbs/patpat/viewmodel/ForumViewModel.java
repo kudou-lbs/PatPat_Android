@@ -1,10 +1,15 @@
 package com.lbs.patpat.viewmodel;
 
+import static com.lbs.patpat.global.MyApplication.getContext;
 import static com.lbs.patpat.global.MyApplication.urlPrefix;
+
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.lbs.patpat.global.MyApplication;
 import com.lbs.patpat.model.ForumDetailModel;
 
 import org.json.JSONObject;
@@ -23,9 +28,10 @@ public class ForumViewModel extends ViewModel {
 
     public ForumViewModel(String fid) {
         this.fid = fid;
+        followed=new MutableLiveData<>();
         forumDetailModelMutableLiveData=new MutableLiveData<>();
         makeForumDetailApiCall();
-        makeForumDetailApiCall();
+        makeForumFollowInfoApiCall();
     }
 
     public void onClickFollow(){
@@ -75,7 +81,7 @@ public class ForumViewModel extends ViewModel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
+                Log.d("点击关注","asdasd");
             }
         }).start();
     }
@@ -87,7 +93,7 @@ public class ForumViewModel extends ViewModel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
+                followed.postValue(true);
             }
         }).start();
     }

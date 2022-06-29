@@ -18,6 +18,11 @@ public class SearchViewModel extends ViewModel {
         return hotSearch;
     }
 
+    //调用api更新热搜榜
+    public void makeRenewHotApiCall(){
+
+    }
+
     public MutableLiveData<String[]> getResultClassify() {
         return resultClassify;
     }

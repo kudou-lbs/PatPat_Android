@@ -90,10 +90,10 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
             public void onChanged(Boolean aBoolean) {
                 if(aBoolean) {
                     binding.itemUserButtonFollowed.setText("关注");
-                    binding.itemUserButtonFollowed.setBackground(getDrawable(R.drawable.shape_botton_follow));
+                    binding.itemUserButtonFollowed.setBackground(getDrawable(R.drawable.shape_botton_unfollow));
                 }else{
                     binding.itemUserButtonFollowed.setText("已关注");
-                    binding.itemUserButtonFollowed.setBackground(getDrawable(R.drawable.shape_botton_unfollow));
+                    binding.itemUserButtonFollowed.setBackground(getDrawable(R.drawable.shape_botton_follow));
                 }
             }
         });
