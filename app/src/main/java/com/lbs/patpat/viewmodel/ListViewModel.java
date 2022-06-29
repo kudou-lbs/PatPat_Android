@@ -3,7 +3,6 @@ package com.lbs.patpat.viewmodel;
 import static com.lbs.patpat.global.MyApplication.uid;
 import static com.lbs.patpat.global.MyApplication.urlPrefix;
 
-import android.os.Message;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;

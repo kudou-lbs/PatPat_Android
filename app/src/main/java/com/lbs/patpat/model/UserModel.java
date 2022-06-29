@@ -4,15 +4,29 @@ public class UserModel {
     private String uid;
     private String nickname;
     private String avatar;
-    private int fans_num;
+    private int fansNum;
+    private String intro;
     private boolean followed;
 
-    public UserModel(String uid, String nickname, String avatar, int fans_num, boolean followed) {
+    public String getIntro() {
+        return intro;
+    }
+
+    public UserModel(String uid, String nickname, String avatar, int fansNum, boolean followed) {
         this.uid = uid;
         this.nickname = nickname;
         this.avatar = avatar;
-        this.fans_num = fans_num;
+        this.fansNum = fansNum;
         this.followed = followed;
+    }
+
+    //针对列表返回的信息
+    public UserModel(String uid, String nickname, String avatar, int fansNum, String intro) {
+        this.uid = uid;
+        this.nickname = nickname;
+        this.avatar = avatar;
+        this.fansNum = fansNum;
+        this.intro=intro;
     }
 
     public String getUid() {
@@ -39,12 +53,12 @@ public class UserModel {
         this.avatar = avatar;
     }
 
-    public int getFans_num() {
-        return fans_num;
+    public int getFansNum() {
+        return fansNum;
     }
 
-    public void setFans_num(int fans_num) {
-        this.fans_num = fans_num;
+    public void setFansNum(int fansNum) {
+        this.fansNum = fansNum;
     }
 
     public boolean isFollowed() {

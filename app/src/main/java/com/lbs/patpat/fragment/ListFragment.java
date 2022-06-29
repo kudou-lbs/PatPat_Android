@@ -18,12 +18,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.lbs.patpat.ForumActivity;
+import com.lbs.patpat.MainActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.adapter.ForumListAdapter;
 import com.lbs.patpat.adapter.UserListAdapter;
 import com.lbs.patpat.model.ForumModel;
 import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 import com.lbs.patpat.model.UserModel;
+import com.lbs.patpat.viewmodel.FollowAndFanViewModel;
+import com.lbs.patpat.viewmodel.FollowAndFanViewModelFactory;
 import com.lbs.patpat.viewmodel.ListViewModel;
 
 import java.util.ArrayList;
@@ -36,10 +39,15 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
 
     private int requestPage;
     private ListViewModel mViewModel;
-    private List<ForumModel> forumModelList;
+    //搜索社区
     private ForumListAdapter forumListAdapter;
-    private List<UserModel> userModelList;
+    //搜索用户
     private UserListAdapter userListAdapter;
+    //关注和粉丝
+    private FollowAndFanViewModel followAndFanViewModel;
+
+    public final static int PERSONAL_FOLLOW=0;
+    public final static int PERSONAL_FAN=1;
 
     public ListFragment(int position){
         super();
@@ -56,6 +64,12 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
                 return new ListFragment(WebViewFragment.SEARCH_USER);
             case WebViewFragment.DYNAMIC_FORUM:
                 return new ListFragment(WebViewFragment.DYNAMIC_FORUM);
+            case ListFragment.PERSONAL_FOLLOW:
+                return new ListFragment(PERSONAL_FOLLOW);
+            case ListFragment.PERSONAL_FAN:
+                return new ListFragment(PERSONAL_FAN);
+            default:
+                break;
         }
         return new ListFragment(WebViewFragment.DEFAULT);
     }
@@ -65,11 +79,8 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
                              @Nullable Bundle savedInstanceState) {
         root=inflater.inflate(R.layout.fragment_list, container, false);
 
-        forumModelList=new ArrayList<>();
         //大问题，在这里写每次重建时view时都会插入重复的数据，已修复
         initRecyclerView();
-
-        userModelList=new ArrayList<>();
 
         // 一般来说数据获取在onActivityCreated()中进行，但此方法已弃用，且该fragment出现时activity一定已创建，
         // 因此在这里获取数据影响不大，可能视图加载稍慢
@@ -80,14 +91,29 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         recyclerView=root.findViewById(R.id.recycler_view_fragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //adapter里定义了数据的展示方式
-        if(requestPage== WebViewFragment.SEARCH_USER){
-            userListAdapter =new UserListAdapter(getActivity(),userModelList);
-            recyclerView.setAdapter(userListAdapter);
-            bindUserViewModel();
-        }else{
-            forumListAdapter =new ForumListAdapter(getActivity(),forumModelList,this);
-            recyclerView.setAdapter(forumListAdapter);
-            bindForumViewModel();
+        switch (requestPage){
+            case WebViewFragment.SEARCH_FORUM:
+                forumListAdapter =new ForumListAdapter(getActivity(),null,this);
+                recyclerView.setAdapter(forumListAdapter);
+                bindForumViewModel();
+                break;
+            case WebViewFragment.SEARCH_USER:
+            case ListFragment.PERSONAL_FOLLOW:
+            case ListFragment.PERSONAL_FAN:
+                userListAdapter =new UserListAdapter(getActivity(),null);
+                recyclerView.setAdapter(userListAdapter);
+                switch (requestPage){
+                    case WebViewFragment.SEARCH_FORUM:
+                        bindUserViewModel();
+                        break;
+                    case ListFragment.PERSONAL_FOLLOW:
+                        bindFollowUserViewModel();
+                        break;
+                    case ListFragment.PERSONAL_FAN:
+                        bindFanUserViewModel();
+                        break;
+                }
+                break;
         }
     }
     //观察forumList变化
@@ -99,7 +125,6 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
             @Override
             public void onChanged(List<ForumModel> forumModels) {
                 if(forumModels!=null){
-                    forumModelList=forumModels;
                     forumListAdapter.setForumModelList(forumModels);
                 }
             }
@@ -113,14 +138,35 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         mViewModel.getUserList().observe(requireActivity(), new Observer<List<UserModel>>() {
             @Override
             public void onChanged(List<UserModel> userModels) {
-                userModelList=userModels;
                 userListAdapter.setUserModelList(userModels);
             }
         });
         mViewModel.makeUserApiCall();
     }
+    //观察关注和粉丝列表变化，不同的fragment处于相同的活动中，观察的是同一个viewModel
+    public void bindFollowUserViewModel(){
+        //followAndFanViewModel= new ViewModelProvider(this,new FollowAndFanViewModelFactory(MainActivity.getUid())).get(FollowAndFanViewModel.class);
+        followAndFanViewModel=new ViewModelProvider(requireActivity()).get(FollowAndFanViewModel.class);
+        followAndFanViewModel.getFollowUsers().observe(requireActivity(), new Observer<List<UserModel>>() {
+            @Override
+            public void onChanged(List<UserModel> userModels) {
+                userListAdapter.setUserModelList(userModels);
+            }
+        });
+        followAndFanViewModel.makeFollowUserCall();
+    }
+    public void bindFanUserViewModel(){
+        followAndFanViewModel=new ViewModelProvider(requireActivity()).get(FollowAndFanViewModel.class);
+        followAndFanViewModel.getFanUsers().observe(requireActivity(), new Observer<List<UserModel>>() {
+            @Override
+            public void onChanged(List<UserModel> userModels) {
+                userListAdapter.setUserModelList(userModels);
+            }
+        });
+        followAndFanViewModel.makeFanUserCall();
+    }
 
-    //社区项点击事件
+    //社区项点击事件，用户点击事件未做
     @Override
     public void onItemClick(ForumModel forumModel) {
         //Toast.makeText(getActivity(),forumModel.getForumName(),Toast.LENGTH_SHORT).show();

@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.lbs.patpat.R;
 import com.lbs.patpat.model.UserModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder>{
@@ -28,12 +29,16 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     public UserListAdapter(Context context, List<UserModel> userModelList){
         this.context=context;
-        this.userModelList = userModelList;
+        if(userModelList!=null)
+            this.userModelList = userModelList;
+        else
+            this.userModelList=new ArrayList<>();
         //this.mOnItemClickListener=mOnItemClickListener;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setUserModelList(List<UserModel> userModelList) {
-        this.userModelList = userModelList;
+        this.userModelList.addAll(userModelList);
         notifyDataSetChanged();
     }
 
@@ -50,12 +55,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         //设置图标，这里还需要再network里写相关方法
         UserModel currentUser=userModelList.get(position);
         Glide.with(context)
-                .load("https://upload.wikimedia.org/wikipedia/zh/9/94/Genshin_Impact.jpg")
+                .load(context.getString(R.string.server_ip)+currentUser.getAvatar())
+                .error(R.drawable.icon_default)
+                .placeholder(R.drawable.icon_default)
+                .fallback(R.drawable.icon_default)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .into(holder.avatar);
         holder.nickname.setText(currentUser.getNickname());
-        holder.idAndFans.setText("ID："+currentUser.getUid()
-                +"\t粉丝："+currentUser.getFans_num());
+        holder.intro.setText(currentUser.getIntro());
         //还有关注的展示和点击事件没写
 
         //整个项的点击事件
@@ -83,13 +90,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder{
         ImageView avatar;
         TextView nickname;
-        TextView idAndFans;
+        TextView intro;
         TextView followed;
         public ViewHolder(View view) {
             super(view);
             avatar=view.findViewById(R.id.item_user_avatar);
             nickname=view.findViewById(R.id.item_user_nickname);
-            idAndFans=view.findViewById(R.id.item_user_id_and_fans);
+            intro =view.findViewById(R.id.item_user_id_and_fans);
             followed=view.findViewById(R.id.header_follow_and_fans);
         }
 

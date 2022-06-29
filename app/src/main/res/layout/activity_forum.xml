@@ -16,7 +16,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/item_forum_background"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/forum_background_height"
+            android:layout_height="wrap_content"
             android:background="@drawable/background_forum"
             android:fitsSystemWindows="true">
             <ImageView
@@ -24,6 +24,7 @@
                 android:layout_width="@dimen/forum_icon_height"
                 android:layout_height="@dimen/forum_icon_height"
                 android:layout_marginLeft="@dimen/toolbar_icon_margin"
+                android:layout_marginBottom="10dp"
                 android:src="@drawable/icon_default"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -34,14 +35,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_text_margin_icon"
-                android:layout_marginTop="@dimen/forum_title_margin_top"
                 android:textColor="@color/white"
                 android:text="原神"
                 android:textSize="@dimen/forum_title_size"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/item_forum_icon"
                 app:layout_constraintTop_toTopOf="@+id/item_forum_icon" />
-
 
             <TextView
                 android:id="@+id/item_forum_intro"

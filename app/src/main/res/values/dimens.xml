@@ -64,8 +64,8 @@
     <dimen name="personal_about_item_size">16sp</dimen>
     <!--论坛-->
     <dimen name="forum_background_height"> 150dp</dimen>
-    <dimen name="forum_icon_height">100dp</dimen>
-    <dimen name="forum_title_size">25sp</dimen>
+    <dimen name="forum_icon_height">60dp</dimen>
+    <dimen name="forum_title_size">20sp</dimen>
     <dimen name="forum_title_margin_top">20dp</dimen>
     <dimen name="forum_follow_and_post_num_size">15sp</dimen>
     <dimen name="forum_follow_and_post_num_margin_top">10dp</dimen>
