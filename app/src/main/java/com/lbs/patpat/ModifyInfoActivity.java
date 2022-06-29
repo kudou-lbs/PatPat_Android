@@ -446,28 +446,28 @@ public class ModifyInfoActivity extends MyActivity {
 
                 Log.d(TAG, "123456");
                 try {
-                    if (localImg != null) {
-                        File file = new File(localImg);
-
-                        MultipartBody body = new MultipartBody.Builder()
-                                .setType(MultipartBody.FORM)
-                                .addFormDataPart(
-                                        "filename",
-                                        "image.png",
-                                        MultipartBody.create(file, MediaType.parse("image/png"))
-                                ).build();
-                        Request request = new Request.Builder()
-                                .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid() + "/avatar")
-                                .addHeader("token", MainActivity.getToken())
-                                .post(body)
-                                .build();
-
-                        Response response = null;
-
-
-                        response = client.newCall(request).execute();
-                        Log.d(TAG, "image: " + response.isSuccessful());
-                    }
+//                    if (localImg != null) {
+//                        File file = new File(localImg);
+//
+//                        MultipartBody body = new MultipartBody.Builder()
+//                                .setType(MultipartBody.FORM)
+//                                .addFormDataPart(
+//                                        "filename",
+//                                        "image.png",
+//                                        MultipartBody.create(file, MediaType.parse("image/png"))
+//                                ).build();
+//                        Request request = new Request.Builder()
+//                                .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid() + "/avatar")
+//                                .addHeader("token", MainActivity.getToken())
+//                                .post(body)
+//                                .build();
+//
+//                        Response response = null;
+//
+//
+//                        response = client.newCall(request).execute();
+//                        Log.d(TAG, "image: " + response.isSuccessful());
+//                    }
                     RequestBody infoBody = RequestBody.create(String.valueOf(infoJSON), JSON);
                     Request infoRequest = new Request.Builder()
                             .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid())

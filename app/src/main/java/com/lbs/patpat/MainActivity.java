@@ -3,7 +3,6 @@ package com.lbs.patpat;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -29,16 +28,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 import com.lbs.patpat.databinding.ActivityMainBinding;
 import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.global.MyApplication;
 import com.lbs.patpat.ui.login_register.LoginActivity;
-import com.lbs.patpat.ui.login_register.LoginResult;
 import com.lbs.patpat.ui.login_register.LoginedUser;
+import com.lbs.patpat.ui.login_register.ModifyPasswdActivity;
 import com.lbs.patpat.ui.login_register.UserDao;
 import com.lbs.patpat.viewmodel.UserViewModel;
 
@@ -232,6 +229,12 @@ public class MainActivity extends MyActivity {
                         break;
                     case R.id.drawer_logout:
                         logOut();
+                        break;
+                    case R.id.drawer_dark_mode:
+                        if(getIsLogin())
+                            startActivity(new Intent(MainActivity.this, ModifyPasswdActivity.class));
+                        else
+                            Toast.makeText(getApplicationContext(),"请先登录",Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
