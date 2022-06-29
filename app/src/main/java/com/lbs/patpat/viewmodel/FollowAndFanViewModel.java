@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.lbs.patpat.FollowAndFansActivity;
 import com.lbs.patpat.MainActivity;
+import com.lbs.patpat.R;
 import com.lbs.patpat.fragment.ListFragment;
+import com.lbs.patpat.global.MyApplication;
 import com.lbs.patpat.model.UserModel;
 
 import org.json.JSONArray;
@@ -98,9 +100,9 @@ public class FollowAndFanViewModel extends ViewModel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-               /* String url= urlPrefix+"user/"+uid+"/"+(type==ListFragment.PERSONAL_FOLLOW?"follow":"fan")+"?"
+                /*String url= MyApplication.getContext().getString(R.string.server_ip) +"/user/"+uid+"/"+(type==ListFragment.PERSONAL_FOLLOW?"follow":"fan")+"?"
                         +"offset=0"
-                        +"pageSize=2";*/
+                        +"pageSize=10";*/
                 String url;
                 if(type==ListFragment.PERSONAL_FOLLOW) url="http://172.21.140.162/user/9/follow?offset=0&pageSize=2";
                 else url="http://172.21.140.162/user/9/fan?offset=0&pageSize=2";

@@ -1,17 +1,12 @@
 package com.lbs.patpat;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.lbs.patpat.adapter.JSBasic;
-import com.lbs.patpat.adapter.JSPostDetail;
 import com.lbs.patpat.global.MyActivity;
 
 /**
@@ -35,7 +30,7 @@ public class webViewActivity extends MyActivity {
         if(url==null){
             url=getString(R.string.url_prefix)
                     +getString(R.string.url_suffix)
-                    +getString(R.string.url_dynamic_follow_or_recommend)
+                    +getString(R.string.url_post)
                     +"/"+pid;
         }
 

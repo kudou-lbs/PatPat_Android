@@ -1,6 +1,5 @@
 package com.lbs.patpat.viewmodel;
 
-import static com.lbs.patpat.global.MyApplication.uid;
 import static com.lbs.patpat.global.MyApplication.urlPrefix;
 
 import android.util.Log;
@@ -8,6 +7,9 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.lbs.patpat.MainActivity;
+import com.lbs.patpat.R;
+import com.lbs.patpat.global.MyApplication;
 import com.lbs.patpat.model.ForumModel;
 import com.lbs.patpat.model.UserModel;
 
@@ -27,17 +29,32 @@ import okhttp3.Response;
 public class ListViewModel extends ViewModel {
 
     //社区信息列表
+    private int forumOffset, forumPageSize;
+    private int userOffset, userPageSize;
     private  MutableLiveData<List<ForumModel>> forumsList;
     private MutableLiveData<List<UserModel>> userList;
     private OkHttpClient client;
 
     public ListViewModel() {
+        forumOffset =0;
+        forumPageSize =10;
+        userOffset=0;
+        userPageSize=10;
+
         forumsList=new MutableLiveData<>();
         forumsList.setValue(new ArrayList<>());
         userList=new MutableLiveData<>();
         userList.setValue(new ArrayList<>());
 
         client=new OkHttpClient();
+    }
+
+    public void backToForumStart(){
+        forumOffset =0;
+    }
+
+    public void backToUserStart(){
+        userOffset=0;
     }
 
     public MutableLiveData<List<ForumModel>> getForumsList() {
@@ -48,8 +65,8 @@ public class ListViewModel extends ViewModel {
         return userList;
     }
 
-    //调用API服务更新展示列表信息
-    public void makeForumApiCall(){
+    //更新搜索论坛
+    public void makeForumApiCall(String key){
         //使用okHttp请求信息，具体逻辑在network相关类里写好再调用
         //test
         if(forumsList!=null)forumsList.getValue().clear();
@@ -58,9 +75,10 @@ public class ListViewModel extends ViewModel {
             @Override
             public void run() {
                 try {
-                    String tmpUrl=urlPrefix+"forum?uid="+String.valueOf(uid)
-                            +"&pageSize=10"
-                            +"&offset=0";
+                    String tmpUrl= MyApplication.getContext().getString(R.string.server_ip)+"/"
+                            +"forum?uid="+ MainActivity.getUid()
+                            +"&pageSize="+ forumPageSize
+                            +"&offset=0"+ forumOffset;
                     Request request=new Request.Builder()
                             .url(tmpUrl)
                             .build();
@@ -89,6 +107,7 @@ public class ListViewModel extends ViewModel {
                             Log.d("lbs",String.valueOf(i)+tmpObject.toString());
                         }
                         forumsList.postValue(tmpList);
+                        forumOffset += forumPageSize;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -96,11 +115,16 @@ public class ListViewModel extends ViewModel {
             }
         }).start();
     }
-    public void makeUserApiCall(){
+    //更新搜索用户
+    public void makeUserApiCall(String key){
         //同上请求
-        if(userList!=null)userList.getValue().clear();
+        List<UserModel> list=new ArrayList<>();
         for(int i=0;i<10;++i){
-            userList.getValue().add(new UserModel("123","原神-西风驿站","192.168.0.1/avatar",9999,true));
+            list.add(new UserModel("123","原神-西风驿站","192.168.0.1/avatar",9999,true));
         }
+        userList.setValue(list);
+    }
+    public void makeFollowForumApiCall(){
+
     }
 }

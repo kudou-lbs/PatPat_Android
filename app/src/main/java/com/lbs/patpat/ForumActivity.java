@@ -84,10 +84,24 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
                 binding.itemForumIntro.setText(forumDetailModel.getFollowNum()+"粉丝    "+forumDetailModel.getPostNum()+"帖子");
             }
         });
+        forumViewModel.getFollowed().observe(this, new Observer<Boolean>() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean) {
+                    binding.itemUserButtonFollowed.setText("关注");
+                    binding.itemUserButtonFollowed.setBackground(getDrawable(R.drawable.shape_botton_unfollow));
+                }else{
+                    binding.itemUserButtonFollowed.setText("已关注");
+                    binding.itemUserButtonFollowed.setBackground(getDrawable(R.drawable.shape_botton_follow));
+                }
+            }
+        });
     }
     private void initClick() {
         binding.forumSearchReturn.setOnClickListener(this);
         binding.floatingButtonNewPost.setOnClickListener(this);
+        binding.itemUserButtonFollowed.setOnClickListener(this);
     }
 
     @Override
@@ -100,6 +114,9 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
                 Intent intent=new Intent(this,PostWriteActivity.class);
                 intent.putExtra("fid",fid);
                 startActivity(intent);
+                break;
+            case R.id.item_user_button_followed:
+                forumViewModel.onClickFollow();
                 break;
             default:
                 break;

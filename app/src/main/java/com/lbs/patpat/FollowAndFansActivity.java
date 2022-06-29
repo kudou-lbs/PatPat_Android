@@ -17,6 +17,7 @@ import com.lbs.patpat.viewmodel.FollowAndFanViewModel;
 /**
  * 打开该活动前，务必传入uid，根据当前用户id展示关注数及粉丝数
  * intent.putExtra("uid", uid);
+ * 该活动也是唯一一个能使用FollowAndFanViewModel的活动，因为ViewModel的特殊性，暂时无法做到完全解耦
 * */
 public class FollowAndFansActivity extends AppCompatActivity {
 

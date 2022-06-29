@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.lbs.patpat.R;
 import com.lbs.patpat.model.ForumModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ForumListAdapter extends RecyclerView.Adapter<ForumListAdapter.ViewHolder>{
@@ -28,12 +29,12 @@ public class ForumListAdapter extends RecyclerView.Adapter<ForumListAdapter.View
 
     public ForumListAdapter(Context context, List<ForumModel> forumModelList, OnItemClickListener mOnItemClickListener){
         this.context=context;
-        this.forumModelList=forumModelList;
+        this.forumModelList=forumModelList==null?new ArrayList<>():forumModelList;
         this.mOnItemClickListener=mOnItemClickListener;
     }
 
     public void setForumModelList(List<ForumModel> forumModelList) {
-        this.forumModelList = forumModelList;
+        this.forumModelList.addAll(forumModelList);
         Log.d("lbs","notifychange");
         notifyDataSetChanged();
     }

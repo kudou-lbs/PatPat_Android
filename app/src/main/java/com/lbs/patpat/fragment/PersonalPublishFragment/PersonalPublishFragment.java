@@ -23,7 +23,7 @@ public class PersonalPublishFragment extends Fragment {
 
     private PersonalPublishViewModel mViewModel;
     private FragmentPersonalPublishBinding binding;
-    private String[] publishTab=new String[]{"帖子","评论","回复"};
+    private String[] publishTab=new String[]{"帖子","评论","喜欢"};
 
     public static PersonalPublishFragment newInstance() {
         return new PersonalPublishFragment();
