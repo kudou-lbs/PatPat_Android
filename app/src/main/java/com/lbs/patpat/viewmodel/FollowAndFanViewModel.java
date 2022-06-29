@@ -38,6 +38,11 @@ public class FollowAndFanViewModel extends ViewModel {
     private Handler handler;
     private JSONArray responseData;
 
+    int followOffset=0;
+    int fanOffset=0;
+    int pageSize=100;
+    //lbsDebug这里还需要添加读取到末尾刷新
+
     public FollowAndFanViewModel() {
         followUsers=new MutableLiveData<>();
         followUsers.setValue(new ArrayList<>());
@@ -71,9 +76,11 @@ public class FollowAndFanViewModel extends ViewModel {
                 switch (msg.what){
                     case ListFragment.PERSONAL_FOLLOW:
                         followUsers.setValue(tmpList);
+                        followOffset+=pageSize;
                         break;
                     case ListFragment.PERSONAL_FAN:
                         fanUsers.setValue(tmpList);
+                        fanOffset+=pageSize;
                         break;
                 }
             }
@@ -100,12 +107,15 @@ public class FollowAndFanViewModel extends ViewModel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                /*String url= MyApplication.getContext().getString(R.string.server_ip) +"/user/"+uid+"/"+(type==ListFragment.PERSONAL_FOLLOW?"follow":"fan")+"?"
-                        +"offset=0"
-                        +"pageSize=10";*/
+                String urlPrefix=MyApplication.getContext().getString(R.string.server_ip)+"/user/";
                 String url;
-                if(type==ListFragment.PERSONAL_FOLLOW) url="http://172.21.140.162/user/9/follow?offset=0&pageSize=2";
-                else url="http://172.21.140.162/user/9/fan?offset=0&pageSize=2";
+                /*if(type==ListFragment.PERSONAL_FOLLOW) url="http://172.21.140.162/user/9/follow?offset=0&pageSize=2";
+                else url="http://172.21.140.162/user/9/fan?offset=0&pageSize=2";*/
+                if(type==ListFragment.PERSONAL_FOLLOW){
+                    url=urlPrefix+uid+"/follow?offset="+followOffset+"&pageSize="+pageSize;
+                }else{
+                    url=urlPrefix+uid+"/fan?offset="+fanOffset+"&pageSize="+pageSize;
+                }
                 Request request=new Request.Builder()
                         .url(url)
                         .addHeader("token", MainActivity.getToken())
@@ -132,6 +142,5 @@ public class FollowAndFanViewModel extends ViewModel {
                 });
             }
         }).start();
-
     }
 }

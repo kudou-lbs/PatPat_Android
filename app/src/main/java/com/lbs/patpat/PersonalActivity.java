@@ -80,6 +80,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
     private Dialog showAvatar;
     private ActivityPersonalBinding binding;
     private String[] tabAll;
+    //当前uid
     private String currentUserId;
     private ImageView image;
 
@@ -253,7 +254,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
             public Fragment createFragment(int position) {
                 switch (position) {
                     case 0:
-                        return new PersonalPublishFragment();
+                        return PersonalPublishFragment.newInstance(currentUserId);
                     case 1:
                         return new PersonalAboutFragment();
                     default:

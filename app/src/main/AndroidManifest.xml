@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Patpat"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".CollectActivity"
+            android:exported="false" />
+        <activity
             android:name=".FollowAndFansActivity"
             android:exported="false" />
         <activity

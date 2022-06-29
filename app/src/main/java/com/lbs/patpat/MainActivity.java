@@ -2,6 +2,7 @@ package com.lbs.patpat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
@@ -93,6 +94,7 @@ public class MainActivity extends MyActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         View headerView = binding.navDrawerMenu.getHeaderView(0);
+
         icon = headerView.findViewById(R.id.header_avatar);
         backGround = headerView.findViewById(R.id.header_background);
         intro = headerView.findViewById(R.id.header_follow_and_fans);
@@ -204,12 +206,30 @@ public class MainActivity extends MyActivity {
         icon.setBackground(getDrawable(R.drawable.icon_default));
         binding.navDrawerMenu.setItemIconTintList(null);
         binding.navDrawerMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 switch (item.getItemId()) {
+                    case R.id.drawer_person_page:
+                        startPersonalActivity();
+                        break;
+                    case R.id.drawer_follow:
+                        startFollowAndFansActivity();
+                        break;
+                    case R.id.drawer_collect:
+                        startCollectActivity();
+                        break;
+                    case R.id.drawer_version:
+                        try{
+                            String versionName=getPackageManager().getPackageInfo(getPackageName(),0).versionName;
+                            Toast.makeText(MainActivity.this,"当前版本："+versionName,Toast.LENGTH_SHORT).show();
+                        } catch (PackageManager.NameNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        break;
                     case R.id.drawer_logout:
                         logOut();
+                        break;
                 }
                 return false;
             }
@@ -220,17 +240,34 @@ public class MainActivity extends MyActivity {
         icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                if (isLogin) {       //已登录，点击事件为打开个人中心
-                    intent = new Intent(MainActivity.this, PersonalActivity.class);
-                    intent.putExtra("uid",getUid());
-                } else {      //未登录，点击事件为打开登录活动
-                    intent = new Intent(MainActivity.this, LoginActivity.class);
-                }
-                startActivity(intent);
-
+                startPersonalActivity();
             }
         });
+    }
+
+    //打开个人中心
+    private void startPersonalActivity(){
+        Intent intent;
+        if (isLogin) {       //已登录，点击事件为打开个人中心
+            intent = new Intent(MainActivity.this, PersonalActivity.class);
+            intent.putExtra("uid",getUid());
+        } else {      //未登录，点击事件为打开登录活动
+            intent = new Intent(MainActivity.this, LoginActivity.class);
+        }
+        startActivity(intent);
+    }
+
+    //打开关注列表
+    private void startFollowAndFansActivity(){
+        Intent intent=new Intent(MainActivity.this,FollowAndFansActivity.class);
+        intent.putExtra("uid",getUid());
+        startActivity(intent);
+    }
+
+    private void startCollectActivity(){
+        Intent intent=new Intent(MainActivity.this,CollectActivity.class);
+        intent.putExtra("uid",getUid());
+        startActivity(intent);
     }
 
     //检验登录状态

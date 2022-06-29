@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
+import com.lbs.patpat.MainActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.adapter.JSBasic;
 import com.lbs.patpat.adapter.JSPostList;
@@ -132,6 +133,7 @@ public class WebViewFragment extends Fragment {
             //用户帖子
             case USER_POST:
                 Log.d("lmw", idOrKey);
+                Log.d("当前用户与登录用户：",idOrKey+" "+ MainActivity.getUid());
                 viewSelect="user/" + idOrKey +"/"
                         +MyApplication.getInstance().getString(R.string.url_post);
                 binding.webview.addJavascriptInterface(new JSPostList(WebViewFragment.this),"jsAdapter");
@@ -161,6 +163,7 @@ public class WebViewFragment extends Fragment {
         }
         if(viewSelect!=null) {
             url1= MyApplication.getInstance().getString(R.string.url_prefix)+ MyApplication.getInstance().getString(R.string.url_suffix)+viewSelect;
+            Log.d("当前url:",url1);
             Log.d("lmw",url1);
         }
 

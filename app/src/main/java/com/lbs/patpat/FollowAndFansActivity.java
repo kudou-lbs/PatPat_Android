@@ -7,11 +7,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.ActivityFollowAndFansBinding;
 import com.lbs.patpat.fragment.ListFragment;
+import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.viewmodel.FollowAndFanViewModel;
 
 /**
@@ -19,7 +21,7 @@ import com.lbs.patpat.viewmodel.FollowAndFanViewModel;
  * intent.putExtra("uid", uid);
  * 该活动也是唯一一个能使用FollowAndFanViewModel的活动，因为ViewModel的特殊性，暂时无法做到完全解耦
 * */
-public class FollowAndFansActivity extends AppCompatActivity {
+public class FollowAndFansActivity extends MyActivity {
 
     ActivityFollowAndFansBinding binding;
     String[] tabs;
@@ -36,6 +38,16 @@ public class FollowAndFansActivity extends AppCompatActivity {
         tabs=new String[]{"关注","粉丝"};
         //viewModel=
         initTabAndPager();
+        intClick();
+    }
+
+    private void intClick() {
+        binding.followAndFansReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initTabAndPager() {

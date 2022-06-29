@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,17 @@ public class PersonalPublishFragment extends Fragment {
 
     private PersonalPublishViewModel mViewModel;
     private FragmentPersonalPublishBinding binding;
+    private String uid;
     private String[] publishTab=new String[]{"帖子","评论","喜欢"};
 
-    public static PersonalPublishFragment newInstance() {
-        return new PersonalPublishFragment();
+    public PersonalPublishFragment(String uid) {
+        super();
+        this.uid = uid;
+        Log.d("当前用户与登录用户：",this.uid+" "+MainActivity.getUid());
+    }
+
+    public static PersonalPublishFragment newInstance(String uid) {
+        return new PersonalPublishFragment(uid);
     }
 
     @Override
@@ -40,11 +48,11 @@ public class PersonalPublishFragment extends Fragment {
             public Fragment createFragment(int position) {
                 switch (position){
                     case 0:
-                        return WebViewFragment.newInstance(WebViewFragment.USER_POST, MainActivity.getUid());
+                        return WebViewFragment.newInstance(WebViewFragment.USER_POST, uid);
                     case 1:
-                        return WebViewFragment.newInstance(WebViewFragment.USER_POST_REPLY);
+                        return WebViewFragment.newInstance(WebViewFragment.USER_POST_REPLY,uid);
                     case 2:
-                        return WebViewFragment.newInstance(WebViewFragment.USER_LIKE_POST);
+                        return WebViewFragment.newInstance(WebViewFragment.USER_LIKE_POST,uid);
                     default:
                         return WebViewFragment.newInstance(WebViewFragment.DEFAULT);
                 }
