@@ -39,6 +39,7 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
 
     private int requestPage;
     private ListViewModel mViewModel;
+    private String searchKey;
     //搜索社区
     private ForumListAdapter forumListAdapter;
     //搜索用户
@@ -54,20 +55,34 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         //根据不同情形选择不同的viewModel，adapter
         requestPage=position;
     }
+    public ListFragment(int position,String searchKey){
+        super();
+        //根据不同情形选择不同的viewModel，adapter
+        requestPage=position;
+        this.searchKey=searchKey;
+    }
 
     public static ListFragment newInstance(int position) {
         switch (position){
             //搜索结果
-            case WebViewFragment.SEARCH_FORUM:
-                return new ListFragment(WebViewFragment.SEARCH_FORUM);
-            case WebViewFragment.SEARCH_USER:
-                return new ListFragment(WebViewFragment.SEARCH_USER);
             case WebViewFragment.DYNAMIC_FORUM:
                 return new ListFragment(WebViewFragment.DYNAMIC_FORUM);
             case ListFragment.PERSONAL_FOLLOW:
                 return new ListFragment(PERSONAL_FOLLOW);
             case ListFragment.PERSONAL_FAN:
                 return new ListFragment(PERSONAL_FAN);
+            default:
+                break;
+        }
+        return new ListFragment(WebViewFragment.DEFAULT);
+    }
+
+    public static ListFragment newSearchInstance(int position,String key){
+        switch (position){
+            case WebViewFragment.SEARCH_FORUM:
+                return new ListFragment(WebViewFragment.SEARCH_FORUM,key);
+            case WebViewFragment.SEARCH_USER:
+                return new ListFragment(WebViewFragment.SEARCH_USER,key);
             default:
                 break;
         }
@@ -82,8 +97,6 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         //大问题，在这里写每次重建时view时都会插入重复的数据，已修复
         initRecyclerView();
 
-        // 一般来说数据获取在onActivityCreated()中进行，但此方法已弃用，且该fragment出现时activity一定已创建，
-        // 因此在这里获取数据影响不大，可能视图加载稍慢
         return root;
     }
 
@@ -93,6 +106,7 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         //adapter里定义了数据的展示方式
         switch (requestPage){
             case WebViewFragment.SEARCH_FORUM:
+            case WebViewFragment.DYNAMIC_FORUM:
                 forumListAdapter =new ForumListAdapter(getActivity(),null,this);
                 recyclerView.setAdapter(forumListAdapter);
                 bindForumViewModel();
@@ -103,8 +117,8 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
                 userListAdapter =new UserListAdapter(getActivity(),null);
                 recyclerView.setAdapter(userListAdapter);
                 switch (requestPage){
-                    case WebViewFragment.SEARCH_FORUM:
-                        bindUserViewModel();
+                    case WebViewFragment.SEARCH_USER:
+                        bindSearchUserViewModel();
                         break;
                     case ListFragment.PERSONAL_FOLLOW:
                         bindFollowUserViewModel();
@@ -115,12 +129,23 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
                 }
                 break;
         }
+        //到达底部时请求数据
+        recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(recyclerView.canScrollVertically(-1)){
+                    requestMoreInfo();
+                }
+            }
+        });
     }
-    //观察forumList变化
+
+    //论坛相关，信息请求见requestMoreInfo
     public void bindForumViewModel() {
         // 专：mViewModel = new ViewModelProvider(this).get(ListViewModel.class);
         // 通过这种方式获取到的viewModel是activity共用的，下面是共：
         mViewModel= new ViewModelProvider(requireActivity()).get(ListViewModel.class);
+        mViewModel.getForumsList().setValue(new ArrayList<>());
         mViewModel.getForumsList().observe(requireActivity(), new Observer<List<ForumModel>>() {
             @Override
             public void onChanged(List<ForumModel> forumModels) {
@@ -130,20 +155,20 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
             }
         });
         //调用api获取数据
-        mViewModel.makeForumApiCall();
+        requestMoreInfo();
     }
-    //观察userList变化
-    public void bindUserViewModel(){
+    public void bindSearchUserViewModel(){
         mViewModel= new ViewModelProvider(requireActivity()).get(ListViewModel.class);
+        mViewModel.getUserList().setValue(new ArrayList<>());
         mViewModel.getUserList().observe(requireActivity(), new Observer<List<UserModel>>() {
             @Override
             public void onChanged(List<UserModel> userModels) {
                 userListAdapter.setUserModelList(userModels);
             }
         });
-        mViewModel.makeUserApiCall();
+        requestMoreInfo();
     }
-    //观察关注和粉丝列表变化，不同的fragment处于相同的活动中，观察的是同一个viewModel
+    //关注和粉丝
     public void bindFollowUserViewModel(){
         //followAndFanViewModel= new ViewModelProvider(this,new FollowAndFanViewModelFactory(MainActivity.getUid())).get(FollowAndFanViewModel.class);
         followAndFanViewModel=new ViewModelProvider(requireActivity()).get(FollowAndFanViewModel.class);
@@ -153,7 +178,7 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
                 userListAdapter.setUserModelList(userModels);
             }
         });
-        followAndFanViewModel.makeFollowUserCall();
+        requestMoreInfo();
     }
     public void bindFanUserViewModel(){
         followAndFanViewModel=new ViewModelProvider(requireActivity()).get(FollowAndFanViewModel.class);
@@ -163,7 +188,30 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
                 userListAdapter.setUserModelList(userModels);
             }
         });
-        followAndFanViewModel.makeFanUserCall();
+        requestMoreInfo();
+    }
+
+
+    private void requestMoreInfo(){
+        switch (requestPage){
+            case WebViewFragment.DYNAMIC_FORUM:
+                mViewModel.makeFollowForumApiCall();
+                break;
+            case WebViewFragment.SEARCH_FORUM:
+                mViewModel.makeForumApiCall(searchKey);
+                break;
+            case WebViewFragment.SEARCH_USER:
+                mViewModel.makeUserApiCall(searchKey);
+                break;
+            case ListFragment.PERSONAL_FOLLOW:
+                followAndFanViewModel.makeFollowUserCall();
+                break;
+            case ListFragment.PERSONAL_FAN:
+                followAndFanViewModel.makeFanUserCall();
+                break;
+            default:
+                break;
+        }
     }
 
     //社区项点击事件，用户点击事件未做

@@ -38,6 +38,7 @@ public class WebViewFragment extends Fragment {
 
     public final static int FORUM_POST=8;
     public final static int USER_POST=9;
+    public final static int SEARCH_POST=10;
 
     private WebViewViewModel mViewModel;
     //请求webView地址
@@ -99,6 +100,11 @@ public class WebViewFragment extends Fragment {
                 break;
             //搜索游戏列表
             case SEARCH_GAMES:
+                viewSelect=MyApplication.getInstance().getString(R.string.url_search_game);
+                binding.webview.addJavascriptInterface(new JSBasic(WebViewFragment.this),"jsAdapter");
+                break;
+            //搜索帖子列表
+            case SEARCH_POST:
                 viewSelect=MyApplication.getInstance().getString(R.string.url_search_game);
                 binding.webview.addJavascriptInterface(new JSBasic(WebViewFragment.this),"jsAdapter");
                 break;

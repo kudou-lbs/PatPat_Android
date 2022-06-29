@@ -21,7 +21,6 @@ public class MessageFragment extends Fragment {
 
     private MessageViewModel messageViewModel;
     private FragmentMessageBinding binding;
-    private Button button;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,22 +37,7 @@ public class MessageFragment extends Fragment {
 
         binding = FragmentMessageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        button = binding.button;
-        button.setOnClickListener(new View.OnClickListener() {
-            int num = 1;
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
-
-        final TextView textView = binding.textMessage;
-        messageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 

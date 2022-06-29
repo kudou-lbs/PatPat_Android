@@ -48,8 +48,8 @@ public class ListViewModel extends ViewModel {
         return userList;
     }
 
-    //调用API服务更新展示列表信息
-    public void makeForumApiCall(){
+    //更新搜索论坛
+    public void makeForumApiCall(String key){
         //使用okHttp请求信息，具体逻辑在network相关类里写好再调用
         //test
         if(forumsList!=null)forumsList.getValue().clear();
@@ -96,11 +96,16 @@ public class ListViewModel extends ViewModel {
             }
         }).start();
     }
-    public void makeUserApiCall(){
+    //更新搜索用户
+    public void makeUserApiCall(String key){
         //同上请求
-        if(userList!=null)userList.getValue().clear();
+        List<UserModel> list=new ArrayList<>();
         for(int i=0;i<10;++i){
-            userList.getValue().add(new UserModel("123","原神-西风驿站","192.168.0.1/avatar",9999,true));
+            list.add(new UserModel("123","原神-西风驿站","192.168.0.1/avatar",9999,true));
         }
+        userList.setValue(list);
+    }
+    public void makeFollowForumApiCall(){
+
     }
 }

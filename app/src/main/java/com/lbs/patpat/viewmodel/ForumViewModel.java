@@ -18,14 +18,24 @@ import okhttp3.Response;
 public class ForumViewModel extends ViewModel {
 
     String fid;
+    MutableLiveData<Boolean> followed;
     MutableLiveData<ForumDetailModel> forumDetailModelMutableLiveData;
 
     public ForumViewModel(String fid) {
         this.fid = fid;
         forumDetailModelMutableLiveData=new MutableLiveData<>();
         makeForumDetailApiCall();
+        makeForumDetailApiCall();
     }
 
+    public void onClickFollow(){
+        followed.setValue(!followed.getValue());
+        renewFollowInfo();
+    }
+
+    public MutableLiveData<Boolean> getFollowed() {
+        return followed;
+    }
     public MutableLiveData<ForumDetailModel> getForumDetailModelMutableLiveData() {
         return forumDetailModelMutableLiveData;
     }
@@ -51,21 +61,33 @@ public class ForumViewModel extends ViewModel {
                             data.getString("postNum"),
                             data.getString("fid"));
                     forumDetailModelMutableLiveData.postValue(tmpViewModel);
-
-                    /*if(forumDetailModelMutableLiveData.getValue()==null){
-                        //copy out
-                    }else {
-                        ForumDetailModel detailModel=forumDetailModelMutableLiveData.getValue();
-                        detailModel.setName(data.getString("name"));
-                        detailModel.setIntro(data.getString("intro"));
-                        detailModel.setIcon(data.getString("icon"));
-                        detailModel.setFollowNum(data.getString("followNum"));
-                        detailModel.setPostNum(data.getString("postNum"));
-                        detailModel.setFid(data.getString("fid"));
-                    }*/
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        }).start();
+    }
+
+    /**
+     * 根据当前followed更新服务器关注信息
+     * */
+    public void renewFollowInfo(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();
+    }
+
+    /**
+     * 获取当前服务端关注信息
+     * */
+    public void makeForumFollowInfoApiCall(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
             }
         }).start();
     }
