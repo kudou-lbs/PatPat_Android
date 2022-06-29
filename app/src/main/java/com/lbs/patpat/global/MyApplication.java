@@ -8,6 +8,7 @@ import com.lbs.patpat.ui.login_register.UserDatabase;
 
 public class MyApplication extends Application {
 
+    public static final String EXTRA_MESSAGE = "INTENT_EXTRA";
     private static Context mContext;
     private APIServer apiServer;
 

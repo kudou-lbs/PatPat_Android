@@ -40,6 +40,7 @@ import com.github.gzuliyujiang.wheelpicker.widget.LinkageWheelLayout;
 import com.github.gzuliyujiang.wheelpicker.widget.OptionWheelLayout;
 import com.lbs.patpat.databinding.ActivityModifyInfoBinding;
 import com.github.gzuliyujiang.wheelpicker.SexPicker;
+import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.global.MyApplication;
 import com.lbs.patpat.ui.login_register.LoginedUser;
 
@@ -60,7 +61,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class ModifyInfoActivity extends AppCompatActivity {
+public class ModifyInfoActivity extends MyActivity {
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     final String TAG = "TEST";
     Handler handler;
@@ -293,6 +294,13 @@ public class ModifyInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveInfo();
+            }
+        });
+
+        binding.goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 

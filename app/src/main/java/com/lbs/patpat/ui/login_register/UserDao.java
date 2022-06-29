@@ -23,7 +23,7 @@ public interface UserDao {
     int getCount();
 
     @Query("SELECT uid FROM logineduser")   //获取UID
-    int[] getUID();
+    String[] getUID();
 
     @Query("SELECT intro FROM logineduser")     //获取介绍
     String[] getIntro();

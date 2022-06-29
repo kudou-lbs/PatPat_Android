@@ -70,4 +70,7 @@ dependencies {
     implementation "com.github.gzu-liyujiang.AndroidPicker:AddressPicker:$version"
     implementation "com.github.gzu-liyujiang.AndroidPicker:CalendarPicker:$version"
     implementation "com.github.gzu-liyujiang.AndroidPicker:ImagePicker:$version"
+
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation 'com.ycjiang:ImagePreview:2.3.5'
 }

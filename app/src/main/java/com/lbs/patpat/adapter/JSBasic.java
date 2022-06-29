@@ -69,7 +69,7 @@ public class JSBasic implements JSInterface{
         UserDao userDao= MyApplication.getUserDatabase().userDao();
         if(userDao.getCount()<1)return -1;
 
-        return userDao.getUID()[0];
+        return Integer.parseInt(userDao.getUID()[0]);
     }
 
     /**
