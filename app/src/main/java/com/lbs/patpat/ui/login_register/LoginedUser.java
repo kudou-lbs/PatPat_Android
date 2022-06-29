@@ -30,6 +30,8 @@ public class LoginedUser {
     public int fansNum;
     public int followNum;
     public String token;
+//    public String birthday;
+//    public String address;
 
     @NonNull
     public String getUid() {

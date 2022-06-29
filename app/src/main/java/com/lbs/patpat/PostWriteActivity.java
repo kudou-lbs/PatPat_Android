@@ -167,7 +167,7 @@ public class PostWriteActivity extends MyActivity {
                     .addFormDataPart(
                             "image",
                             "image.png",
-                            MultipartBody.create(MediaType.parse("image/png"),file)
+                            MultipartBody.create(file,MediaType.parse("image/png"))
                             ).build();
             Log.d("lbssss",body.toString());
             request=new Request.Builder()
