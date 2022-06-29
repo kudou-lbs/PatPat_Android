@@ -1,6 +1,5 @@
 package com.lbs.patpat;
 
-import static com.lbs.patpat.global.MyApplication.urlPrefix;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.databinding.ActivityForumBinding;
 import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 import com.lbs.patpat.global.MyActivity;
+import com.lbs.patpat.global.MyApplication;
 import com.lbs.patpat.model.ForumDetailModel;
 import com.lbs.patpat.viewmodel.ForumViewModel;
 
@@ -72,7 +72,7 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
             @Override
             public void onChanged(ForumDetailModel forumDetailModel) {
                 Glide.with(binding.getRoot())
-                        .load(urlPrefix+forumDetailModel.getIcon())
+                        .load(MyApplication.getContext().getString(R.string.server_ip)+"/" +forumDetailModel.getIcon())
                         .apply(RequestOptions.bitmapTransform(new RoundedCorners(50)))
                         .into(binding.itemForumIcon);
                 binding.itemForumName.setText(forumDetailModel.getName());

@@ -150,10 +150,17 @@ public class WebViewFragment extends Fragment {
                         +MyApplication.getInstance().getString(R.string.url_post);
                 binding.webview.addJavascriptInterface(new JSPostList(WebViewFragment.this),"jsAdapter");
                 break;
+            //用户评论
+            case USER_POST_REPLY:
+                viewSelect="user/"+idOrKey+"/reply";
+                binding.webview.addJavascriptInterface(new JSPostList(WebViewFragment.this),"jsAdapter");
+                break;
+            //回复消息
             case USER_MESSAGE_REPLY:
                 viewSelect="message/reply";
                 binding.webview.addJavascriptInterface(new JSPostList(WebViewFragment.this),"jsAdapter");
                 break;
+            //点赞消息
             case USER_MESSAGE_LIKE:
                 viewSelect="message/like";
                 binding.webview.addJavascriptInterface(new JSPostList(WebViewFragment.this),"jsAdapter");

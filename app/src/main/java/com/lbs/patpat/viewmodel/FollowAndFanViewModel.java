@@ -1,7 +1,5 @@
 package com.lbs.patpat.viewmodel;
 
-import static com.lbs.patpat.global.MyApplication.urlPrefix;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
