@@ -8,14 +8,16 @@ public class ForumDetailModel {
     String followNum;
     String postNum;
     String fid;
+    boolean isLike;
 
-    public ForumDetailModel(String name, String intro, String icon, String followNum, String postNum, String fid) {
+    public ForumDetailModel(String name, String intro, String icon, String followNum, String postNum, String fid,boolean isLike) {
         this.name = name;
         this.intro = intro;
         this.icon = icon;
         this.followNum = followNum;
         this.postNum = postNum;
         this.fid = fid;
+        this.isLike=isLike;
     }
 
     public String getName() {
@@ -64,5 +66,13 @@ public class ForumDetailModel {
 
     public void setFid(String fid) {
         this.fid = fid;
+    }
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
     }
 }

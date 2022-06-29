@@ -67,7 +67,6 @@ public class ListViewModel extends ViewModel {
 
     //更新搜索论坛
     public void makeForumApiCall(String key){
-        //使用okHttp请求信息，具体逻辑在network相关类里写好再调用
         //test
         if(forumsList!=null)forumsList.getValue().clear();
 
@@ -90,17 +89,9 @@ public class ListViewModel extends ViewModel {
                         JSONArray jsonArray=jsonObject.getJSONArray("data");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject tmpObject=jsonArray.getJSONObject(i);
-                            tmpObject.getString("icon");
-                            String icon;
-                            if(tmpObject.getString("icon").equals("null")){
-                                icon="https://upload.wikimedia.org/wikipedia/zh/9/94/Genshin_Impact.jpg";
-                            }else{
-                                icon=urlPrefix+tmpObject.getString("icon");
-                            }
-
                             ForumModel tmpForumModel=new ForumModel(tmpObject.getString("name"),
                                     tmpObject.getString("fid"),
-                                    icon,
+                                    tmpObject.getString("icon"),
                                     tmpObject.getInt("postNum"),
                                     tmpObject.getInt("followNum"));
                             tmpList.add(tmpForumModel);
@@ -125,6 +116,53 @@ public class ListViewModel extends ViewModel {
         userList.setValue(list);
     }
     public void makeFollowForumApiCall(){
+        if(forumsList!=null)forumsList.getValue().clear();
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String tmpUrl= MyApplication.getContext().getString(R.string.server_ip)+"/"
+                            +"forum/like?uid="+ MainActivity.getUid()
+                            +"&pageSize="+ forumPageSize
+                            +"&offset=0"+ forumOffset;
+                    //Log.d("用户关注论坛",String.valueOf(forumOffset)+String.valueOf(forumPageSize));
+                    Request request=new Request.Builder()
+                            .url(tmpUrl)
+                            .header("token",MainActivity.getToken())
+                            .build();
+                    Response response=client.newCall(request).execute();
+                    String responseData=response.body().string();
+                    JSONObject jsonObject=new JSONObject(responseData);
+                    List<ForumModel> tmpList=new ArrayList<>();
+                    if(jsonObject.getString("message").equals("OK")){
+                        JSONArray jsonArray=jsonObject.getJSONArray("data");
+                        Log.d("获取成功",String.valueOf(jsonArray.length()));
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject tmpObject=jsonArray.getJSONObject(i);
+                            /*String icon;
+                            if(tmpObject.getString("icon").equals("null")){
+                                icon="https://upload.wikimedia.org/wikipedia/zh/9/94/Genshin_Impact.jpg";
+                            }else{
+                                icon=MyApplication.getContext().getString(R.string.server_ip)+"/"
+                                        +tmpObject.getString("icon");
+                            }*/
+
+                            ForumModel tmpForumModel=new ForumModel(tmpObject.getString("name"),
+                                    tmpObject.getString("fid"),
+                                    tmpObject.getString("icon"),
+                                    0,
+                                    0);
+                            tmpList.add(tmpForumModel);
+                            Log.d("lbs",String.valueOf(i)+tmpObject.toString());
+                        }
+                        forumsList.postValue(tmpList);
+                        forumOffset += forumPageSize;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

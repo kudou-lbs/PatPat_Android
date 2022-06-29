@@ -20,13 +20,9 @@
     <group android:id="@+id/group2"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/drawer_setting"
-            android:icon="@drawable/drawer_setting"
-            android:title="@string/drawer_setting"/>
-        <item
             android:id="@+id/drawer_dark_mode"
             android:icon="@drawable/drawer_dark_mode"
-            android:title="@string/drawer_dark_mode"/>
+            android:title="@string/drawer_password_modify"/>
         <item
             android:id="@+id/drawer_version"
             android:icon="@drawable/drawer_version"
