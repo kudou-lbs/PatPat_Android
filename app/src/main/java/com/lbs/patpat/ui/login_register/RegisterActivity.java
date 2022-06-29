@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.ActivityRegisterBinding;
+import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.global.MyApplication;
 
 import org.json.JSONObject;
@@ -43,7 +44,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends MyActivity {
     private ActivityRegisterBinding binding;
     private EditText accountEditText, passwordEditText, confirmEditText;
     private Button registerButton, goBackButton;

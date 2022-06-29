@@ -35,12 +35,13 @@ import android.widget.Toast;
 
 import com.lbs.patpat.R;
 import com.lbs.patpat.databinding.ActivityLoginBinding;
+import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.global.MyApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends MyActivity {
 
     private static final String TAG = "TEST";
     private LoginViewModel loginViewModel;

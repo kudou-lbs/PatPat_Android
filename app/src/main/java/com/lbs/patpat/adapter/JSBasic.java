@@ -106,7 +106,7 @@ public class JSBasic implements JSInterface{
      * 打开评论详情
      * */
     @JavascriptInterface
-    public void goToReply(String pid, String rid){
+    public void goToReply(String pid, String rid, String floorNum){
 
     }
 }
