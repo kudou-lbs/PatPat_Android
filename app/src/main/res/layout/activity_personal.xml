@@ -54,6 +54,23 @@
             android:text="  修改资料  "
             android:textColor="@color/white"
             android:textSize="@dimen/modify_text_size"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/personal_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.809"
+            app:layout_constraintStart_toEndOf="@+id/personal_icon"
+            app:layout_constraintTop_toTopOf="@+id/personal_icon" />
+
+        <TextView
+            android:id="@+id/follow_current_user"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/modify_rectangle_height"
+            android:background="@drawable/shape_modify_personal_info"
+            android:gravity="center"
+            android:text="  关注  "
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/personal_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.809"
@@ -124,5 +141,7 @@
         android:id="@+id/personal_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
 
 </LinearLayout>

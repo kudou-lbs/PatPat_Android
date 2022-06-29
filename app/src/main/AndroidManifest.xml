@@ -20,8 +20,11 @@
             android:name=".FollowAndFansActivity"
             android:exported="false" />
         <activity
+            android:name=".ModifyInfoActivity"
+            android:exported="true" />
+        <activity
             android:name=".PostWriteActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ForumActivity"
             android:exported="false" />

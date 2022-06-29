@@ -19,11 +19,15 @@ public interface UserDao {
     @Query("SELECT * FROM logineduser") //获取用户列表作为LiveData对象
     LiveData<List<LoginedUser>> getUser();
 
+    @Query("SELECT * FROM logineduser")
+    List<LoginedUser> getLoginUser();
+
+
     @Query("SELECT COUNT(*) FROM logineduser")  //获取行数
     int getCount();
 
     @Query("SELECT uid FROM logineduser")   //获取UID
-    int[] getUID();
+    String[] getUID();
 
     @Query("SELECT intro FROM logineduser")     //获取介绍
     String[] getIntro();

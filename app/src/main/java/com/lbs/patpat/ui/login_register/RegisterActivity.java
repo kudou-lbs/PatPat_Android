@@ -104,7 +104,6 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (keyBoard != null)
                     keyBoard.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
                 register(accountEditText.getText().toString(), passwordEditText.getText().toString(), confirmEditText.getText().toString());
             }
         });
@@ -158,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), R.string.passwd_confirm, Toast.LENGTH_SHORT).show();
             return;
         }
-
+        binding.progressBar.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
             @Override
             public void run() {
