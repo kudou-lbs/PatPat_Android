@@ -253,7 +253,7 @@ public class MainActivity extends MyActivity {
         Intent intent;
         if (isLogin) {       //已登录，点击事件为打开个人中心
             intent = new Intent(MainActivity.this, PersonalActivity.class);
-            intent.putExtra("uid", "7");
+            intent.putExtra("uid", getUid());
         } else {      //未登录，点击事件为打开登录活动
             intent = new Intent(MainActivity.this, LoginActivity.class);
         }
