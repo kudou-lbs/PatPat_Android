@@ -241,11 +241,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                 }
             }).start();
         }
-
-
     }
-
-
     private void initTabAndPager() {
         tabAll = new String[]{"发布", "关于"};
         binding.personalPager.setAdapter(new FragmentStateAdapter(getSupportFragmentManager(), getLifecycle()) {
@@ -256,7 +252,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                     case 0:
                         return PersonalPublishFragment.newInstance(currentUserId);
                     case 1:
-                        return new PersonalAboutFragment();
+                        return new PersonalAboutFragment(currentUserId);
                     default:
                         break;
                 }

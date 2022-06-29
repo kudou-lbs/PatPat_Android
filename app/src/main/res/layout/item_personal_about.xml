@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/personal_about_item_margin_top"
     android:layout_height="wrap_content">
     <TextView
         android:id="@+id/item_personal_about_title"

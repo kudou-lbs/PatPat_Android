@@ -36,6 +36,10 @@ public class ForumFragment extends Fragment {
     private void initBinding() {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
+                .add(R.id.fragment_forum_follow_container, ListFragment.newInstance(WebViewFragment.DYNAMIC_FORUM))
+                .commit();
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
                 .add(R.id.fragment_forum_follow_container, ListFragment.newInstance(WebViewFragment.SEARCH_FORUM))
                 .commit();
     }

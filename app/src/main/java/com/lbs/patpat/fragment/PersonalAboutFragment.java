@@ -21,24 +21,21 @@ import com.lbs.patpat.viewmodel.PersonalAboutViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PersonalAboutFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PersonalAboutFragment extends Fragment {
 
     private FragmentPersonalAboutBinding binding;
     private List<PersonalModel> personalModelList;
     private PersonalAboutAdapter adapter;
     private PersonalAboutViewModel viewModel;
+    private String uid;
 
-    public PersonalAboutFragment() {
+    public PersonalAboutFragment(String uid) {
         super();
+        this.uid=uid;
     }
 
-    public static PersonalAboutFragment newInstance(String param1, String param2) {
-        return new PersonalAboutFragment();
+    public static PersonalAboutFragment newInstance(String uid) {
+        return new PersonalAboutFragment(uid);
     }
 
     @Override
@@ -58,7 +55,7 @@ public class PersonalAboutFragment extends Fragment {
         binding.personalAboutList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter=new PersonalAboutAdapter(getActivity(),personalModelList);
         binding.personalAboutList.setAdapter(adapter);
-        viewModel=new ViewModelProvider(requireActivity()).get(PersonalAboutViewModel.class);
+        viewModel=new PersonalAboutViewModel(uid);
         viewModel.getPersonalModelList().observe(requireActivity(), new Observer<List<PersonalModel>>() {
             @Override
             public void onChanged(List<PersonalModel> personalModels) {

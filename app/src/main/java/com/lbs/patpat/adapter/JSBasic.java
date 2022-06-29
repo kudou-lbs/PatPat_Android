@@ -107,6 +107,11 @@ public class JSBasic implements JSInterface{
      * */
     @JavascriptInterface
     public void goToReply(String pid, String rid, String floorNum){
-
+        Intent intent=new Intent(context, webViewActivity.class);
+        String url=MyApplication.getContext().getString(R.string.url_prefix)
+                +MyApplication.getContext().getString(R.string.url_suffix)
+                +"post/"+pid+"/reply/"+rid+"/"+floorNum;
+        intent.putExtra("url",url);
+        context.startActivity(intent);
     }
 }
