@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 @Entity
-public class LoginedUser {
+public class LoginedUser implements Cloneable{
 
     public String username;
 
@@ -101,6 +101,17 @@ public class LoginedUser {
             Log.d("TEST", "LoginedUser: JSON error");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public LoginedUser clone() {
+        LoginedUser loginedUser = null;
+        try{
+            loginedUser= (LoginedUser) super.clone();
+        }catch(CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return loginedUser;
     }
 }
 

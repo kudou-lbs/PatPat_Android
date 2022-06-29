@@ -36,6 +36,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
@@ -162,7 +163,7 @@ public class RegisterActivity extends MyActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String registerUrl = "http://172.21.140.162/user/register";
+                String registerUrl = getString(R.string.server_ip)+"/user/register";
                 final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
                 try {
                     Looper.prepare();
@@ -171,7 +172,7 @@ public class RegisterActivity extends MyActivity {
                     bodyDta.put("password",passwd);
                     String json = new Gson().toJson(bodyDta);
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody body = RequestBody.create(JSON, json);
+                    RequestBody body = RequestBody.create(json,JSON);
                     Request request = new Request.Builder()
                             .post(body)
                             .url(registerUrl)
@@ -183,7 +184,7 @@ public class RegisterActivity extends MyActivity {
                     String responseMsg = jsonObject.getString("message");
                     if (responseCode == 0){ //注册成功
                         try {
-                            String loginUrl = "http://172.21.140.162/user/login?username=" + account + "&password=" + passwd;
+                            String loginUrl = getString(R.string.server_ip)+"/user/login?username=" + account + "&password=" + passwd;
                             request = new Request.Builder()
                                     .url(loginUrl)
                                     .build();
@@ -212,6 +213,12 @@ public class RegisterActivity extends MyActivity {
 
                             }
                             else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        binding.progressBar.setVisibility(View.GONE);
+                                    }
+                                });
                                 Toast.makeText(RegisterActivity.this, loginMsg, Toast.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
