@@ -41,8 +41,12 @@ public class PersonalPublishFragment extends Fragment {
                 switch (position){
                     case 0:
                         return WebViewFragment.newInstance(WebViewFragment.USER_POST, MainActivity.getUid());
+                    case 1:
+                        return WebViewFragment.newInstance(WebViewFragment.USER_POST_REPLY);
+                    case 2:
+                        return WebViewFragment.newInstance(WebViewFragment.USER_LIKE_POST);
                     default:
-                        return WebViewFragment.newInstance(position);
+                        return WebViewFragment.newInstance(WebViewFragment.DEFAULT);
                 }
             }
 

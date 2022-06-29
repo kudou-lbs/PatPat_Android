@@ -47,6 +47,13 @@ public class WebViewFragment extends Fragment {
     public final static int USER_LIKE_POST=11;
     //用户收藏的帖子
     public final static int USER_COLLECT_POST=12;
+    //用户的评论
+    public final static int USER_POST_REPLY=13;
+    //回复消息
+    public final static int USER_MESSAGE_REPLY=14;
+    //点赞消息
+    public final static int USER_MESSAGE_LIKE=15;
+
 
     private WebViewViewModel mViewModel;
     //请求webView地址
@@ -135,10 +142,20 @@ public class WebViewFragment extends Fragment {
                         +MyApplication.getInstance().getString(R.string.url_post);
                 binding.webview.addJavascriptInterface(new JSPostList(WebViewFragment.this),"jsAdapter");
                 break;
+            //用户收藏的帖子
             case USER_COLLECT_POST:
                 viewSelect="collect/"+idOrKey+"/"
                         +MyApplication.getInstance().getString(R.string.url_post);
                 binding.webview.addJavascriptInterface(new JSPostList(WebViewFragment.this),"jsAdapter");
+                break;
+            case USER_MESSAGE_REPLY:
+                viewSelect="message/reply";
+                binding.webview.addJavascriptInterface(new JSPostList(WebViewFragment.this),"jsAdapter");
+                break;
+            case USER_MESSAGE_LIKE:
+                viewSelect="message/like";
+                binding.webview.addJavascriptInterface(new JSPostList(WebViewFragment.this),"jsAdapter");
+                break;
             default:
                 break;
         }

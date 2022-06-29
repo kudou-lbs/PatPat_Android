@@ -275,7 +275,6 @@ public class MainActivity extends MyActivity {
                 }
             }
         }).start();
-
     }
 
     //退出登录

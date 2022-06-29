@@ -19,7 +19,6 @@ import com.lbs.patpat.databinding.FragmentMessageBinding;
 
 public class MessageFragment extends Fragment {
 
-    private MessageViewModel messageViewModel;
     private FragmentMessageBinding binding;
 
     @Override
@@ -29,12 +28,6 @@ public class MessageFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Log.d("TEST", "onCreateView: ");
-
-
-        messageViewModel =
-                new ViewModelProvider(this).get(MessageViewModel.class);
-
         binding = FragmentMessageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
