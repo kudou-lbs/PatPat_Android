@@ -57,18 +57,17 @@ import okio.BufferedSink;
 public class MainActivity extends MyActivity {
 
     private static Boolean isLogin;
+    private static UserDao userDao;
+    private static String token, uid;
+    private static LoginedUser loginedUser;
     private ActivityMainBinding binding;
     private ImageView icon;
     private ConstraintLayout backGround;
     private TextView intro, nickName;
-    private static UserDao userDao;
-    private static String token,uid;
 
     public static LoginedUser getLoginedUser() {
         return loginedUser;
     }
-
-    private  static  LoginedUser loginedUser;
 
     public static String getToken() {
         return token;
@@ -84,6 +83,10 @@ public class MainActivity extends MyActivity {
 
     public static void setUid(String newUid) {
         uid = newUid;
+    }
+
+    public static boolean getIsLogin() {
+        return isLogin;
     }
 
     @SuppressLint("WrongConstant")
@@ -129,7 +132,7 @@ public class MainActivity extends MyActivity {
                                     isLogin = false;
                                     //Toast.makeText(getApplicationContext(), "用户未登录", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    loginedUser = loginedUsers.get(0);
+                                    loginedUser = loginedUsers.get(0).clone();
                                     isLogin = true;
                                     setToken(loginedUsers.get(0).token);
                                     setUid(loginedUsers.get(0).getUid());
@@ -220,9 +223,9 @@ public class MainActivity extends MyActivity {
                         startCollectActivity();
                         break;
                     case R.id.drawer_version:
-                        try{
-                            String versionName=getPackageManager().getPackageInfo(getPackageName(),0).versionName;
-                            Toast.makeText(MainActivity.this,"当前版本："+versionName,Toast.LENGTH_SHORT).show();
+                        try {
+                            String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+                            Toast.makeText(MainActivity.this, "当前版本：" + versionName, Toast.LENGTH_SHORT).show();
                         } catch (PackageManager.NameNotFoundException e) {
                             e.printStackTrace();
                         }
@@ -246,11 +249,11 @@ public class MainActivity extends MyActivity {
     }
 
     //打开个人中心
-    private void startPersonalActivity(){
+    private void startPersonalActivity() {
         Intent intent;
         if (isLogin) {       //已登录，点击事件为打开个人中心
             intent = new Intent(MainActivity.this, PersonalActivity.class);
-            intent.putExtra("uid",getUid());
+            intent.putExtra("uid", "7");
         } else {      //未登录，点击事件为打开登录活动
             intent = new Intent(MainActivity.this, LoginActivity.class);
         }
@@ -258,15 +261,15 @@ public class MainActivity extends MyActivity {
     }
 
     //打开关注列表
-    private void startFollowAndFansActivity(){
-        Intent intent=new Intent(MainActivity.this,FollowAndFansActivity.class);
-        intent.putExtra("uid",getUid());
+    private void startFollowAndFansActivity() {
+        Intent intent = new Intent(MainActivity.this, FollowAndFansActivity.class);
+        intent.putExtra("uid", getUid());
         startActivity(intent);
     }
 
-    private void startCollectActivity(){
-        Intent intent=new Intent(MainActivity.this,CollectActivity.class);
-        intent.putExtra("uid",getUid());
+    private void startCollectActivity() {
+        Intent intent = new Intent(MainActivity.this, CollectActivity.class);
+        intent.putExtra("uid", getUid());
         startActivity(intent);
     }
 
@@ -306,6 +309,27 @@ public class MainActivity extends MyActivity {
                         String responseBody = response.body().string();
                         //Log.d("TEST", "\ttestToken Body:" + responseBody);
                         if (responseBody.equals("请求成功")) {
+                            String searchUrl = getString(R.string.server_ip) + "/user/" + userDao.getUID()[0];
+                            client = new OkHttpClient();
+                            request = new Request.Builder()
+                                    .url(searchUrl)
+                                    .build();
+
+
+                            response = client.newCall(request).execute();
+                            responseBody = response.body().string();
+                            Log.d("TEST", "run: "+searchUrl);
+                            JSONObject jsonObject = new JSONObject(responseBody);
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            LoginedUser update = userDao.getLoginUser().get(0).clone();
+                            update.setBackground(data.getString("background"));
+                            update.setAvatar(data.getString("avatar"));
+                            update.setIntro(data.getString("intro"));
+                            update.setGender(data.getInt("gender"));
+                            update.setNickname(data.getString("nickname"));
+                            userDao.deleteUser();
+                            userDao.insertUser(update);
+
                             Toast.makeText(getApplicationContext(), "用户已登录", Toast.LENGTH_SHORT).show();
                             Looper.loop();
                             Log.d("TEST", "用户已登录");
@@ -344,8 +368,5 @@ public class MainActivity extends MyActivity {
 
     public ActivityMainBinding getBinding() {
         return binding;
-    }
-    public static boolean getIsLogin(){
-        return isLogin;
     }
 }

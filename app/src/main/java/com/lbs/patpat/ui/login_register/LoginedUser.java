@@ -20,9 +20,29 @@ import java.util.List;
 
 @Entity
 public class LoginedUser implements Cloneable{
-
+    @PrimaryKey
+    @NonNull
+    private String uid;
     public String username;
+    public String nickname;
+    public String intro;
+    public int gender;
+    public String avatar;
+    public String background;
+    public int fansNum;
+    public int followNum;
+    public String token;
+   // public String birthday;
+//    public String address;
 
+    @NonNull
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(@NonNull String uid) {
+        this.uid = uid;
+    }
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -43,29 +63,6 @@ public class LoginedUser implements Cloneable{
         this.background = background;
     }
 
-    public String nickname;
-    public String intro;
-    public int gender;
-    public String avatar;
-    public String background;
-    public int fansNum;
-    public int followNum;
-    public String token;
-//    public String birthday;
-//    public String address;
-
-    @NonNull
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(@NonNull String uid) {
-        this.uid = uid;
-    }
-
-    @PrimaryKey
-    @NonNull
-    private String uid;
 
 
     public LoginedUser(String uid, String username, String nickname, String intro,int gender,

@@ -8,7 +8,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-@Dao    //数据访问对象，提供接口及SQL，ROOM会自动生成
+@Dao    //数据访问对象
 public interface UserDao {
     @Insert //插入用户信息
     public void insertUser(LoginedUser user);

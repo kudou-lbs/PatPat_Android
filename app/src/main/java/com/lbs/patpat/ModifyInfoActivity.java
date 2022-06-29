@@ -27,6 +27,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.github.gzuliyujiang.imagepicker.ActivityBuilder;
+import com.github.gzuliyujiang.imagepicker.CropImageView;
+import com.github.gzuliyujiang.imagepicker.ImagePicker;
+import com.github.gzuliyujiang.imagepicker.PickCallback;
 import com.github.gzuliyujiang.wheelpicker.AddressPicker;
 import com.github.gzuliyujiang.wheelpicker.BirthdayPicker;
 import com.github.gzuliyujiang.wheelpicker.DatePicker;
@@ -54,6 +58,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -378,7 +384,7 @@ public class ModifyInfoActivity extends MyActivity {
 
     private void modifyAvatar() {
         requestPermission();
-        openGallery(1);
+        onGallery(binding.modifyAvatar);
     }
 
 
@@ -394,40 +400,40 @@ public class ModifyInfoActivity extends MyActivity {
         }
     }
 
-    //调用选择图片
-    private void openGallery(int type) {
-        Intent gallery = new Intent(Intent.ACTION_PICK);
-        gallery.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(gallery, type);
-    }
-
-    //选择图片结果
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // 这里没有判断是否匹配，data为空
-        if (data != null)
-            Glide.with(this)
-                    .load(data.getData())
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .circleCrop()
-                    .into(binding.modifyAvatar);
-
-        // 要查询的列字段名称
-        String[] filePathColumns = {MediaStore.Images.Media.DATA};
-        // 到数据库中查询 , 查询 _data 列字段信息
-        Cursor cursor = getContentResolver().query(
-                data.getData(),
-                filePathColumns,
-                null,
-                null,
-                null);
-        cursor.moveToFirst();
-        // 获取 _data 列所在的列索引
-        int columnIndex = cursor.getColumnIndex(filePathColumns[0]);
-        // 获取图片的存储路径
-        localImg = cursor.getString(columnIndex);
-    }
+//    //调用选择图片
+//    private void openGallery(int type) {
+//        Intent gallery = new Intent(Intent.ACTION_PICK);
+//        gallery.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+//        startActivityForResult(gallery, type);
+//    }
+//
+//    //选择图片结果
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        // 这里没有判断是否匹配，data为空
+//        if (data != null)
+//            Glide.with(this)
+//                    .load(data.getData())
+//                    .skipMemoryCache(true)
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .circleCrop()
+//                    .into(binding.modifyAvatar);
+//
+//        // 要查询的列字段名称
+//        String[] filePathColumns = {MediaStore.Images.Media.DATA};
+//        // 到数据库中查询 , 查询 _data 列字段信息
+//        Cursor cursor = getContentResolver().query(
+//                data.getData(),
+//                filePathColumns,
+//                null,
+//                null,
+//                null);
+//        cursor.moveToFirst();
+//        // 获取 _data 列所在的列索引
+//        int columnIndex = cursor.getColumnIndex(filePathColumns[0]);
+//        // 获取图片的存储路径
+//        localImg = cursor.getString(columnIndex);
+//    }
 
     private void saveInfo() {
         sendData = new Thread(new Runnable() {
@@ -436,8 +442,6 @@ public class ModifyInfoActivity extends MyActivity {
                 //OkHttpClient client = new OkHttpClient();
                 OkHttpClient client = new OkHttpClient.Builder()
                         .connectTimeout(1500, TimeUnit.MILLISECONDS)
-                        .readTimeout(1000, TimeUnit.MILLISECONDS)
-                        .writeTimeout(1000, TimeUnit.MILLISECONDS)
                         .build();
 
                 Log.d(TAG, "123456");
@@ -500,6 +504,125 @@ public class ModifyInfoActivity extends MyActivity {
 
         });
         sendData.start();
+    }
+
+    private final PickCallback cropCallback = new PickCallback() {
+        @Override
+        public void onPermissionDenied(String[] permissions, String message) {
+            Toast.makeText(ModifyInfoActivity.this, message, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void cropConfig(ActivityBuilder builder) {
+            builder.setMultiTouchEnabled(true)
+                    .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
+                    .setCropShape(CropImageView.CropShape.OVAL)
+                    .setRequestedSize(400, 400)
+                    .setFixAspectRatio(true)
+                    .setAspectRatio(1, 1);
+        }
+
+        @Override
+        public void onCropImage(@Nullable Uri imageUri) {
+            Glide.with(ModifyInfoActivity.this)
+                    .load(imageUri)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .circleCrop()
+                    .into(binding.modifyAvatar);
+
+            new Thread(new Runnable() {     //改变背景
+                @Override
+                public void run() {
+                    OkHttpClient client = new OkHttpClient();
+                    File file = null;
+                    try {
+                        file = new File(new URI(imageUri.toString()));
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+
+                    MultipartBody body = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart(
+                                    "filename",
+                                    "image.png",
+                                    MultipartBody.create(file, MediaType.parse("image/png"))
+                            ).build();
+                    Request request = new Request.Builder()
+                            .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid() + "/avatar")
+                            .addHeader("token", MainActivity.getToken())
+                            .post(body)
+                            .build();
+
+                    Response response = null;
+
+
+                    try {
+                        response = client.newCall(request).execute();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.d("TEST", "run: failed");
+                    }
+                    Log.d("TEST", "image: " + response.isSuccessful());
+                    request = new Request.Builder()
+                            .url(getString(R.string.server_ip) + "/user/" + loginedUser.getUid()+ "/avatar")
+                            .build();
+                    try {
+                        response = client.newCall(request).execute();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    String responseBody = null;
+                    try {
+                        responseBody = response.body().string();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        JSONObject json = new JSONObject(responseBody);
+                        String imgPath = json.getString("data");
+                        LoginedUser update = MyApplication.getUserDatabase().userDao().getLoginUser().get(0).clone();
+                        update.setAvatar(imgPath);
+                        MyApplication.getUserDatabase().userDao().deleteUser();
+                        MyApplication.getUserDatabase().userDao().insertUser(update);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ModifyInfoActivity.this, "成功更换背景", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            }).start();
+
+
+
+        }
+    };
+
+    public void onCamera(View view) {
+        ImagePicker.getInstance().startCamera(this, true, cropCallback);
+    }
+
+    public void onGallery(View view) {
+        ImagePicker.getInstance().startGallery(this, true, cropCallback);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ImagePicker.getInstance().onActivityResult(this, requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        ImagePicker.getInstance().onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 }
 

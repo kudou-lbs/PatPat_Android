@@ -33,6 +33,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -47,6 +48,10 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.github.gzuliyujiang.imagepicker.ActivityBuilder;
+import com.github.gzuliyujiang.imagepicker.CropImageView;
+import com.github.gzuliyujiang.imagepicker.ImagePicker;
+import com.github.gzuliyujiang.imagepicker.PickCallback;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.databinding.ActivityPersonalBinding;
 import com.lbs.patpat.fragment.PersonalAboutFragment;
@@ -65,24 +70,30 @@ import com.previewlibrary.loader.MySimpleTarget;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 
 public class PersonalActivity extends MyActivity implements View.OnClickListener {
 
     List<UserViewInfo> imgList;
-    private Dialog showAvatar;
     private ActivityPersonalBinding binding;
     private String[] tabAll;
     //当前uid
     private String currentUserId;
-    private ImageView image;
+
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
@@ -130,6 +141,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                                 + resources.getResourceTypeName(id) + "/"
                                 + resources.getResourceEntryName(id);
                         String url = Uri.parse(path).toString();
+                        imgList.clear();
                         imgList.add(new UserViewInfo(url));
                         binding.personalIcon.setImageDrawable(getDrawable(R.drawable.icon_default));
                     } else {
@@ -138,6 +150,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                                 .load(url)
                                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                                 .into(binding.personalIcon);
+                        imgList.clear();
                         imgList.add(new UserViewInfo(url));
                     }
 
@@ -197,6 +210,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                                                 + resources.getResourceTypeName(id) + "/"
                                                 + resources.getResourceEntryName(id);
                                         String url = Uri.parse(path).toString();
+                                        imgList.clear();
                                         imgList.add(new UserViewInfo(url));
                                         binding.personalIcon.setImageDrawable(getDrawable(R.drawable.icon_default));
                                     } else {
@@ -205,6 +219,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                                                 .load(url)
                                                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                                                 .into(binding.personalIcon);
+                                        imgList.clear();
                                         imgList.add(new UserViewInfo(url));
                                     }
 
@@ -298,6 +313,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                 startActivity(new Intent(PersonalActivity.this, ModifyInfoActivity.class));
                 break;
             case R.id.personal_base_info:
+                onGallery(binding.personalBaseInfo);
                 break;
             case R.id.personal_icon:
                 GPreviewBuilder.from(PersonalActivity.this)
@@ -305,12 +321,195 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                         .setCurrentIndex(0)  //图片下标
                         .setSingleFling(true)  //是否在黑屏区域点击返回
                         .setDrag(false)  //是否禁用图片拖拽返回
-                        .setType(GPreviewBuilder.IndicatorType.Number)  //指示器类型
+                        .setType(GPreviewBuilder.IndicatorType.Dot)  //指示器类型
                         .start();  //启动
+                break;
+            case R.id.follow_current_user:
+                followUser();
+                break;
 
             default:
                 break;
         }
+    }
+
+    private void followUser() {
+        if(!MainActivity.getIsLogin()){
+            Toast.makeText(getApplicationContext(),"请先登录",Toast.LENGTH_SHORT).show();
+            return;
+        }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new RequestBody() {
+                        @Nullable
+                        @Override
+                        public MediaType contentType() {
+                            return null;
+                        }
+
+                        @Override
+                        public void writeTo(@NonNull BufferedSink bufferedSink) throws IOException {
+
+                        }
+                    };
+                    Request request = new Request.Builder()
+                            .url(getString(R.string.server_ip)+"/user/concern?followedId="
+                                    +currentUserId+"&followingId="+MainActivity.getUid())
+                            .addHeader("token", MainActivity.getToken())
+                            .post(body)
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        String responseBody = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseBody);
+                        if(jsonObject.getInt("code")==-1) {
+                            Log.d("TEST", "返回-1");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "已经关注过了", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(),"成功关注",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        Log.d("TEST","follow"+responseBody);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+    }
+
+    private final PickCallback cropCallback = new PickCallback() {
+        @Override
+        public void onPermissionDenied(String[] permissions, String message) {
+            Toast.makeText(PersonalActivity.this, message, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void cropConfig(ActivityBuilder builder) {
+            builder.setMultiTouchEnabled(true)
+                    .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
+                    .setCropShape(CropImageView.CropShape.RECTANGLE)
+                    .setRequestedSize(500, 500)
+                    .setFixAspectRatio(true)
+                    .setAspectRatio(1, 1);
+        }
+
+        @Override
+    public void onCropImage(@Nullable Uri imageUri) {
+            Glide.with(PersonalActivity.this)
+                    .load(imageUri)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    //.circleCrop()
+                    .into(new AdaptiveBackground(binding.personalBaseInfo));
+
+            new Thread(new Runnable() {     //改变背景
+                @Override
+                public void run() {
+                    OkHttpClient client = new OkHttpClient();
+                    File file = null;
+                    try {
+                        file = new File(new URI(imageUri.toString()));
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+
+                    MultipartBody body = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart(
+                                    "filename",
+                                    "image.png",
+                                    MultipartBody.create(file, MediaType.parse("image/png"))
+                            ).build();
+                    Request request = new Request.Builder()
+                            .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid() + "/background")
+                            .addHeader("token", MainActivity.getToken())
+                            .post(body)
+                            .build();
+
+                    Response response = null;
+
+
+                    try {
+                        response = client.newCall(request).execute();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.d("TEST", "run: failed");
+                    }
+                    Log.d("TEST", "image: " + response.isSuccessful());
+                    request = new Request.Builder()
+                            .url(getString(R.string.server_ip) + "/user/" + currentUserId + "/background")
+                            .build();
+                    try {
+                        response = client.newCall(request).execute();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    String responseBody = null;
+                    try {
+                        responseBody = response.body().string();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        JSONObject json = new JSONObject(responseBody);
+                        String imgPath = json.getString("data");
+                        LoginedUser update = MyApplication.getUserDatabase().userDao().getLoginUser().get(0).clone();
+                        update.setBackground(imgPath);
+                        MyApplication.getUserDatabase().userDao().deleteUser();
+                        MyApplication.getUserDatabase().userDao().insertUser(update);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(PersonalActivity.this, "成功更换背景", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            }).start();
+
+
+
+        }
+    };
+
+    public void onCamera(View view) {
+        ImagePicker.getInstance().startCamera(this, true, cropCallback);
+    }
+
+    public void onGallery(View view) {
+        ImagePicker.getInstance().startGallery(this, true, cropCallback);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ImagePicker.getInstance().onActivityResult(this, requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        ImagePicker.getInstance().onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+
+    private void changeBackground() {
+
     }
 
 
