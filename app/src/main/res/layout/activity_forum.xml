@@ -53,7 +53,7 @@
                 app:layout_constraintStart_toStartOf="@+id/item_forum_name" />
 
             <Button
-                android:id="@+id/item_user_button_followed"
+                android:id="@+id/item_forum_followed"
                 android:layout_width="@dimen/follow_button_width"
                 android:layout_height="@dimen/follow_button_height"
                 android:layout_marginRight="@dimen/toolbar_icon_margin"

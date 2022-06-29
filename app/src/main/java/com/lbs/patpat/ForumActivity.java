@@ -3,7 +3,6 @@ package com.lbs.patpat;
 import static com.lbs.patpat.global.MyApplication.urlPrefix;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,16 +11,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.lbs.patpat.adapter.ForumListAdapter;
 import com.lbs.patpat.databinding.ActivityForumBinding;
 import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 import com.lbs.patpat.global.MyActivity;
@@ -88,12 +84,14 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(aBoolean) {
-                    binding.itemUserButtonFollowed.setText("关注");
-                    binding.itemUserButtonFollowed.setBackground(getDrawable(R.drawable.shape_botton_unfollow));
+                if(!aBoolean) {
+                    binding.itemForumFollowed.setText("关注");
+                    binding.itemForumFollowed.setTextColor(getColor(R.color.black));
+                    binding.itemForumFollowed.setBackground(getDrawable(R.drawable.shape_botton_unfollow));
                 }else{
-                    binding.itemUserButtonFollowed.setText("已关注");
-                    binding.itemUserButtonFollowed.setBackground(getDrawable(R.drawable.shape_botton_follow));
+                    binding.itemForumFollowed.setText("已关注");
+                    binding.itemForumFollowed.setTextColor(getColor(R.color.grey_background));
+                    binding.itemForumFollowed.setBackground(getDrawable(R.drawable.shape_botton_follow));
                 }
             }
         });
@@ -101,7 +99,7 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
     private void initClick() {
         binding.forumSearchReturn.setOnClickListener(this);
         binding.floatingButtonNewPost.setOnClickListener(this);
-        binding.itemUserButtonFollowed.setOnClickListener(this);
+        binding.itemForumFollowed.setOnClickListener(this);
     }
 
     @Override
@@ -115,7 +113,7 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
                 intent.putExtra("fid",fid);
                 startActivity(intent);
                 break;
-            case R.id.item_user_button_followed:
+            case R.id.item_forum_followed:
                 forumViewModel.onClickFollow();
                 break;
             default:

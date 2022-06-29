@@ -52,7 +52,10 @@ public class ForumListAdapter extends RecyclerView.Adapter<ForumListAdapter.View
         //设置图标，这里还需要再network里写相关方法
 //        holder.icon.setImageDrawable(context.getDrawable(R.drawable.patpat));
         Glide.with(context)
-                .load(forumModelList.get(position).getForumIcon())
+                .load(context.getString(R.string.server_ip)+forumModelList.get(position).getForumIcon())
+                .error(R.drawable.icon_default)
+                .placeholder(R.drawable.icon_default)
+                .fallback(R.drawable.icon_default)
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                 .into(holder.icon);
         holder.name.setText(forumModelList.get(position).getForumName());

@@ -33,15 +33,4 @@
         app:layout_constraintStart_toStartOf="@+id/item_user_nickname"
         app:layout_constraintBottom_toBottomOf="@id/item_user_avatar" />
 
-    <Button
-        android:id="@+id/item_user_button_followed"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/follow_button_height"
-        android:text="关注"
-        android:textSize="@dimen/follow_button_text_size"
-        android:background="@drawable/shape_botton_follow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

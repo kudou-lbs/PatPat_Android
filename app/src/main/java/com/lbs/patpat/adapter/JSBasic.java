@@ -91,4 +91,17 @@ public class JSBasic implements JSInterface{
         intent.putExtra("uid",uid);
         context.startActivity(intent);
     }
+
+    /**
+     * 根据pid打开帖子
+     * */
+    @JavascriptInterface
+    public void goToPost(String pid){
+
+    }
+
+    @JavascriptInterface
+    public void goToReply(String pid, String rid){
+
+    }
 }
