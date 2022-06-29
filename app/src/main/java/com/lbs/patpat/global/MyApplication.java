@@ -12,9 +12,6 @@ public class MyApplication extends Application {
     private static Context mContext;
     private APIServer apiServer;
 
-    public static final String uid="1149901";
-    public static final String urlPrefix="http://172.21.140.162/";
-
     private static UserDatabase userDatabase;
 
     public static Context getInstance() {

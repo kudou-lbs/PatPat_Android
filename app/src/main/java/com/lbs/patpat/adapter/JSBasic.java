@@ -97,7 +97,9 @@ public class JSBasic implements JSInterface{
      * */
     @JavascriptInterface
     public void goToPost(String pid){
-
+        Intent intent=new Intent(context, webViewActivity.class);
+        intent.putExtra(context.getString(R.string.intent_post_pid),String.valueOf(pid));
+        context.startActivity(intent);
     }
 
     /**

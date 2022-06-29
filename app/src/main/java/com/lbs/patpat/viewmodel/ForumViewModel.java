@@ -1,8 +1,5 @@
 package com.lbs.patpat.viewmodel;
 
-import static com.lbs.patpat.global.MyApplication.getContext;
-import static com.lbs.patpat.global.MyApplication.urlPrefix;
-
 import android.util.Log;
 import android.widget.Toast;
 
