@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,6 +25,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.github.gzuliyujiang.wheelpicker.AddressPicker;
 import com.github.gzuliyujiang.wheelpicker.BirthdayPicker;
 import com.github.gzuliyujiang.wheelpicker.DatePicker;
@@ -73,11 +78,13 @@ public class ModifyInfoActivity extends MyActivity {
     private String localImg;
     private String errMessage;
     private Thread sendData;
+    private  LoginedUser loginedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityModifyInfoBinding.inflate(getLayoutInflater());
+        loginedUser = MainActivity.getLoginedUser();
         setContentView(binding.getRoot());
         sexPicker = new SexPicker(this);
         addressPicker = new AddressPicker(this);
@@ -107,31 +114,83 @@ public class ModifyInfoActivity extends MyActivity {
     }
 
     private void loadData() {
-        binding.gender.setText("男");
+        //binding.gender.setText("男");
         binding.address.setText("广东省广州市");
-//        LoginedUser loginedUser = MyApplication.getUserDatabase().userDao().getUser().getValue().get(0);
-//        if (!loginedUser.avatar.equals("null"))
-//            Glide.with(ModifyInfoActivity.this)
-//                    .load(getString(R.string.server_ip) + loginedUser.avatar)
-//                    .circleCrop()
-//                    .into(binding.modifyAvatar);
-//
-//        if (!loginedUser.nickname.equals("null"))
-//            binding.editNickName.setText(loginedUser.nickname);
-//
-//        if (!loginedUser.intro.equals("null"))
-//            binding.editIntro.setText(loginedUser.intro);
-//
-//        if (loginedUser.gender != 0) {
-//            if (loginedUser.gender == 1)
-//                binding.gender.setText("男");
-//            else
-//                binding.gender.setText("女");
-//        }
+        binding.birthDay.setText("2001-6-6");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String searchUrl = getString(R.string.server_ip) + "/user/" + MainActivity.getUid();
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(searchUrl)
+                        .build();
+                Response response = null;
+                try {
+                    response = client.newCall(request).execute();
+                    String responseBody = response.body().string();
+                    JSONObject jsonObject = new JSONObject(responseBody);
+                    JSONObject data = jsonObject.getJSONObject("data");
+
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        try {
+                            if (!data.getString("avatar").equals("null")) {
+                                String url = getString(R.string.server_ip) + data.getString("avatar");
+                                Glide.with(ModifyInfoActivity.this)
+                                        .load(url)
+                                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                                        .into(binding.modifyAvatar);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            if (!data.getString("nickname").equals("null"))
+                                    binding.editNickName.setText(data.getString("nickname"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            if (!data.getString("intro").equals("null"))
+                                    binding.editIntro.setText(data.getString("intro"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            if (data.getInt("gender") != 0) {
+                                        if (data.getInt("gender") == 1) {
+                                            binding.gender.setText("男");
+                                            Log.d(TAG, "load: 男");
+                                        }
+                                        else {
+                                            binding.gender.setText("女");
+                                            Log.d(TAG, "load: 女");
+                                        }
+                                    }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
 
         //地址和生日未添加
-    }
 
+    }
 
     private void initView() {
         //binding.datepicker.setVisibility(View.GONE);
@@ -174,6 +233,51 @@ public class ModifyInfoActivity extends MyActivity {
     }
 
     private void initListener() {
+        binding.editIntro.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                try {
+                    infoJSON.put("intro",binding.editIntro.getText().toString());
+                    loginedUser.setIntro(binding.editIntro.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        binding.editNickName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                try {
+                    infoJSON.put("nickname",binding.editNickName.getText());
+                    loginedUser.setNickname(binding.editNickName.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         //性别
         sexPicker.setOnOptionPickedListener(new OnOptionPickedListener() {
             @Override
@@ -182,10 +286,17 @@ public class ModifyInfoActivity extends MyActivity {
                 binding.gender.setText(entity.getName());
 
                 try {
-                    if (entity.getName().equals("男"))
-                        infoJSON.put("gender", 0);
-                    else
+                    if (entity.getName().equals("男")) {
                         infoJSON.put("gender", 1);
+                        loginedUser.setGender(1);
+                        Log.d(TAG, "onOptionPicked: "+"男");
+                    }
+
+                    else {
+                        infoJSON.put("gender", 2);
+                        loginedUser.setGender(2);
+                        Log.d(TAG, "onOptionPicked: "+"女");
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -217,48 +328,6 @@ public class ModifyInfoActivity extends MyActivity {
                 binding.birthDay.setText(date);
                 try {
                     infoJSON.put("birthday", date);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        binding.editNickName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                try {
-                    infoJSON.put("nickname", binding.editNickName.getText().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        binding.editIntro.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                try {
-                    infoJSON.put("intro", binding.editIntro.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -361,8 +430,6 @@ public class ModifyInfoActivity extends MyActivity {
     }
 
     private void saveInfo() {
-
-
         sendData = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -381,43 +448,58 @@ public class ModifyInfoActivity extends MyActivity {
                         MultipartBody body = new MultipartBody.Builder()
                                 .setType(MultipartBody.FORM)
                                 .addFormDataPart(
-                                        "image",
+                                        "filename",
                                         "image.png",
                                         MultipartBody.create(file, MediaType.parse("image/png"))
                                 ).build();
                         Request request = new Request.Builder()
                                 .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid() + "/avatar")
-                                //.addHeader("token", MainActivity.getToken())
+                                .addHeader("token", MainActivity.getToken())
                                 .post(body)
                                 .build();
 
                         Response response = null;
 
-                        Log.d(TAG, "image: " + request.toString());
+
                         response = client.newCall(request).execute();
+                        Log.d(TAG, "image: " + response.isSuccessful());
                     }
                     RequestBody infoBody = RequestBody.create(String.valueOf(infoJSON), JSON);
                     Request infoRequest = new Request.Builder()
                             .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid())
-                            //.addHeader("token", MainActivity.getToken())
+                            .addHeader("token", MainActivity.getToken())
                             .put(infoBody)
                             .build();
                     Log.d(TAG, "text: " + infoRequest.toString());
                     client.newCall(infoRequest).execute();
 
-                } catch (IOException e) {
+                    Request request = new Request.Builder()
+                            .url(getString(R.string.server_ip)+"/user/"+MainActivity.getUid()+"/avatar")
+                            .build();
+                    Response response = client.newCall(request).execute();
+
+                    String responseBody = response.body().string();
+                    try {
+                        JSONObject json = new JSONObject(responseBody);
+                        String imgPath = json.getString("data");
+                        loginedUser.setAvatar(imgPath);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    MyApplication.getUserDatabase().userDao().deleteUser();
+                    MyApplication.getUserDatabase().userDao().insertUser(loginedUser);
                     Message message = new Message();
-                    message.what = 1;
+                    message.what = 0;
                     handler.sendMessage(message);
+                } catch (IOException e) {
                     errMessage = "网络异常";
                     e.printStackTrace();
                 }
             }
 
-
         });
         sendData.start();
-
     }
 }
 

@@ -22,6 +22,27 @@ import java.util.List;
 public class LoginedUser {
 
     public String username;
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
     public String nickname;
     public String intro;
     public int gender;

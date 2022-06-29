@@ -244,19 +244,6 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
 
     }
 
-    private ImageView getImageView() {
-        ImageView imageView = new ImageView(this);
-        //宽高
-        imageView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        //imageView设置图片
-        @SuppressLint("ResourceType") InputStream is = getResources().openRawResource(R.drawable.patpat);
-
-        Drawable drawable = BitmapDrawable.createFromStream(is, null);
-        //imageView.setImageDrawable(binding.personalIcon.getDrawable());
-        imageView.setImageDrawable(drawable);
-        return imageView;
-    }
 
     private void initTabAndPager() {
         tabAll = new String[]{"发布", "关于"};
@@ -314,7 +301,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                 startActivity(new Intent(PersonalActivity.this, ModifyInfoActivity.class));
                 break;
             case R.id.personal_base_info:
-
+                break;
             case R.id.personal_icon:
                 GPreviewBuilder.from(PersonalActivity.this)
                         .setData(imgList)  //数据

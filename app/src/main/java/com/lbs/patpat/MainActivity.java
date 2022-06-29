@@ -25,6 +25,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -62,6 +63,11 @@ public class MainActivity extends MyActivity {
     private static UserDao userDao;
     private static String token,uid;
 
+    public static LoginedUser getLoginedUser() {
+        return loginedUser;
+    }
+
+    private  static  LoginedUser loginedUser;
 
     public static String getToken() {
         return token;
@@ -104,7 +110,8 @@ public class MainActivity extends MyActivity {
         userViewModel.getLoginedUser().observe(this, new Observer<List<LoginedUser>>() {
             @Override
             public void onChanged(List<LoginedUser> loginedUsers) {
-                //Log.d("TEST", "用户数为：" + String.valueOf(loginedUsers.size()));
+
+                Log.d("TEST", "用户数为：" + String.valueOf(loginedUsers.size()));
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -120,6 +127,7 @@ public class MainActivity extends MyActivity {
                                     isLogin = false;
                                     //Toast.makeText(getApplicationContext(), "用户未登录", Toast.LENGTH_SHORT).show();
                                 } else {
+                                    loginedUser = loginedUsers.get(0);
                                     isLogin = true;
                                     setToken(loginedUsers.get(0).token);
                                     setUid(loginedUsers.get(0).getUid());
@@ -139,6 +147,8 @@ public class MainActivity extends MyActivity {
                                     } else
                                         Glide.with(MainActivity.this)
                                                 .load(getString(R.string.server_ip) + loginedUsers.get(0).avatar)
+                                                .skipMemoryCache(true)//跳过内存缓存
+                                                .diskCacheStrategy(DiskCacheStrategy.NONE)//不要在disk硬盘缓存
                                                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                                                 .into(icon);
 
@@ -148,7 +158,8 @@ public class MainActivity extends MyActivity {
                                     } else
                                         Glide.with(MainActivity.this)
                                                 .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
-                                                .centerCrop()
+                                                .skipMemoryCache(true)//跳过内存缓存
+                                                .diskCacheStrategy(DiskCacheStrategy.NONE)//不要在disk硬盘缓存.centerCrop()
                                                 .into(new AdaptiveBackground(backGround));
                                 }
 
@@ -212,7 +223,7 @@ public class MainActivity extends MyActivity {
                 Intent intent;
                 if (isLogin) {       //已登录，点击事件为打开个人中心
                     intent = new Intent(MainActivity.this, PersonalActivity.class);
-                    intent.putExtra("uid","9");
+                    intent.putExtra("uid",getUid());
                 } else {      //未登录，点击事件为打开登录活动
                     intent = new Intent(MainActivity.this, LoginActivity.class);
                 }
