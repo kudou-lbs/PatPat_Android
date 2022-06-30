@@ -104,8 +104,7 @@ public class MainActivity extends MyActivity {
         initBottomNav();
         initNavDrawerMenu();
 
-        //检验Token有效期
-        checkLoginState();
+
 
         //登录用户ViewModel
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
@@ -182,6 +181,9 @@ public class MainActivity extends MyActivity {
                 return insets;
             }
         });
+
+        //检验Token有效期
+        checkLoginState();
     }
 
     //初始化底部栏
@@ -258,6 +260,7 @@ public class MainActivity extends MyActivity {
             intent = new Intent(MainActivity.this, PersonalActivity.class);
             intent.putExtra("uid", getUid());
         } else {      //未登录，点击事件为打开登录活动
+            Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
             intent = new Intent(MainActivity.this, LoginActivity.class);
         }
         startActivity(intent);
@@ -265,15 +268,28 @@ public class MainActivity extends MyActivity {
 
     //打开关注列表
     private void startFollowAndFansActivity() {
-        Intent intent = new Intent(MainActivity.this, FollowAndFansActivity.class);
-        intent.putExtra("uid", getUid());
+        Intent intent;
+        if (isLogin) {       //已登录，点击事件为打开关注列表
+            intent = new Intent(MainActivity.this, FollowAndFansActivity.class);
+            intent.putExtra("uid", getUid());
+        } else {      //未登录，点击事件为打开登录活动
+            Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+            intent = new Intent(MainActivity.this, LoginActivity.class);
+        }
         startActivity(intent);
     }
 
     private void startCollectActivity() {
-        Intent intent = new Intent(MainActivity.this, CollectActivity.class);
-        intent.putExtra("uid", getUid());
+        Intent intent;
+        if (isLogin) {       //已登录，点击事件为打开收藏列表
+            intent = new Intent(MainActivity.this, CollectActivity.class);
+            intent.putExtra("uid", getUid());
+        } else {      //未登录，点击事件为打开登录活动
+            Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+            intent = new Intent(MainActivity.this, LoginActivity.class);
+        }
         startActivity(intent);
+
     }
 
     //检验登录状态

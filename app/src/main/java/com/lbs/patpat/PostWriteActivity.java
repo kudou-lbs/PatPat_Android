@@ -156,6 +156,7 @@ public class PostWriteActivity extends MyActivity {
         String url=getString(R.string.server_ip)
                 +"/post?fid="+fid
                 +"&uid="+MainActivity.getUid()
+                
                 +"&title="+title
                 +"&content="+text;
         Log.d("lbs",url);
