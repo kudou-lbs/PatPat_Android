@@ -589,12 +589,12 @@ public class ModifyInfoActivity extends MyActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(ModifyInfoActivity.this, "成功更换背景", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(ModifyInfoActivity.this, "成功更换背景", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
 
                 }
             }).start();
