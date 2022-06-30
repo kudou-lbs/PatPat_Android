@@ -40,7 +40,7 @@ public class ForumFragment extends Fragment {
                 .commit();
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_forum_follow_container, ListFragment.newInstance(WebViewFragment.SEARCH_FORUM))
+                .add(R.id.fragment_forum_recommend_container, ListFragment.newSearchInstance(WebViewFragment.SEARCH_FORUM,""))
                 .commit();
     }
 }

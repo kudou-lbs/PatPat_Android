@@ -32,6 +32,7 @@ public class ForumViewModel extends ViewModel {
         followed=new MutableLiveData<>();
         followed.setValue(false);
         forumDetailModelMutableLiveData=new MutableLiveData<>();
+        //forumDetailModelMutableLiveData.setValue(new ForumDetailModel("","","","","","",false));
         makeForumDetailApiCall();
     }
 
@@ -53,6 +54,7 @@ public class ForumViewModel extends ViewModel {
             public void run() {
                 try{
                     String url=MyApplication.getContext().getString(R.string.server_ip)+"/forum/"+fid+"?"+"uid="+MainActivity.getUid();
+                    Log.d("lbs",url);
                     Request request=new Request.Builder()
                             .url(url)
                             .header("token",MainActivity.getToken())
@@ -61,7 +63,9 @@ public class ForumViewModel extends ViewModel {
                     Response response=client.newCall(request).execute();
                     String responseData=response.body().string();
                     JSONObject data=new JSONObject(responseData).getJSONObject("data");
-                    ForumDetailModel tmpViewModel=new ForumDetailModel(
+                    ForumDetailModel tmpViewModel;
+                    if(data.has("isLike"))
+                    tmpViewModel=new ForumDetailModel(
                             data.getString("name"),
                             data.getString("intro"),
                             data.getString("icon"),
@@ -69,9 +73,19 @@ public class ForumViewModel extends ViewModel {
                             data.getString("postNum"),
                             data.getString("fid"),
                             data.getBoolean("isLike"));
+                    else
+                        tmpViewModel=new ForumDetailModel(
+                                data.getString("name"),
+                                data.getString("intro"),
+                                data.getString("icon"),
+                                data.getString("followNum"),
+                                data.getString("postNum"),
+                                data.getString("fid"),
+                                false);
                     followed.postValue(tmpViewModel.isLike());
                     forumDetailModelMutableLiveData.postValue(tmpViewModel);
                 } catch (Exception e) {
+                    Log.d("lbs","获取社区详情出错啦");
                     e.printStackTrace();
                 }
             }
@@ -88,25 +102,34 @@ public class ForumViewModel extends ViewModel {
                 String tmpUrl=MyApplication.getContext().getString(R.string.server_ip)+"/"
                         +"forum/like?uid="+ MainActivity.getUid()
                         +"&fid="+fid;
+                Log.d("lbsssssss",tmpUrl);
                 if(Boolean.TRUE.equals(followed.getValue())){
                     Request request=new Request.Builder()
                             .url(tmpUrl)
+                            .header("token",MainActivity.getToken())
                             .post(RequestBody.create( "",null))
                             .build();
                     try {
                         new OkHttpClient().newCall(request).execute();
                         forumDetailModelMutableLiveData.getValue().setLike(followed.getValue());
+                        ForumDetailModel forumDetailModel=forumDetailModelMutableLiveData.getValue();
+                        forumDetailModel.setFollowNum(String.valueOf(Integer.valueOf(forumDetailModelMutableLiveData.getValue().getFollowNum())+1));
+                        forumDetailModelMutableLiveData.postValue(forumDetailModel);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }else{
                     Request request=new Request.Builder()
                             .url(tmpUrl)
+                            .header("token",MainActivity.getToken())
                             .delete()
                             .build();
                     try {
                         new OkHttpClient().newCall(request).execute();
                         forumDetailModelMutableLiveData.getValue().setLike(followed.getValue());
+                        ForumDetailModel forumDetailModel=forumDetailModelMutableLiveData.getValue();
+                        forumDetailModel.setFollowNum(String.valueOf(Integer.valueOf(forumDetailModelMutableLiveData.getValue().getFollowNum())-1));
+                        forumDetailModelMutableLiveData.postValue(forumDetailModel);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

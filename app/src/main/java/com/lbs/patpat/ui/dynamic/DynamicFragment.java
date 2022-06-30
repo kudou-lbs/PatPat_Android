@@ -23,6 +23,7 @@ import com.lbs.patpat.MainActivity;
 import com.lbs.patpat.R;
 import com.lbs.patpat.SearchActivity;
 import com.lbs.patpat.databinding.FragmentDynamicBinding;
+import com.lbs.patpat.fragment.ForumFragment;
 import com.lbs.patpat.fragment.ListFragment;
 import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 import com.lbs.patpat.global.MyApplication;
@@ -69,7 +70,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener{
                         break;
                     //ListView：论坛
                     case 2:
-                        return ListFragment.newInstance(WebViewFragment.DYNAMIC_FORUM);
+                        return ListFragment.newSearchInstance(WebViewFragment.SEARCH_FORUM,"");
                 }
 
                 return WebViewFragment.newInstance(webViewType);
