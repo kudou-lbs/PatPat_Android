@@ -122,6 +122,7 @@ public class PostWriteActivity extends MyActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // 这里没有判断是否匹配，data为空
+        if(data==null)return;
         imgUri=data.getData();
         // 要查询的列字段名称
         String[] filePathColumns = {MediaStore.Images.Media.DATA};
