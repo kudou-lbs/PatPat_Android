@@ -229,8 +229,8 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                                     } else
                                         Glide.with(PersonalActivity.this)
                                                 .load(getString(R.string.server_ip) + data.getString("background"))
-                                                //.override(binding.personalBaseInfo.getWidth(),binding.personalBaseInfo.getHeight())
-                                                //.optionalCenterCrop()
+                                                .skipMemoryCache(true)//跳过内存缓存
+                                                .diskCacheStrategy(DiskCacheStrategy.NONE)//不要在disk硬盘缓存
                                                 .into(new AdaptiveBackground(binding.personalBaseInfo));
 
 
