@@ -120,7 +120,6 @@ public class MainActivity extends MyActivity {
                     backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
                     backGround.getBackground().setAlpha(230);
                     isLogin = false;
-                    Toast.makeText(getApplicationContext(), "无用户", Toast.LENGTH_SHORT).show();
                 } else {
                     loginedUser = loginedUsers.get(0).clone();
                     isLogin = true;
