@@ -85,6 +85,7 @@ public class ModifyInfoActivity extends MyActivity {
     private String errMessage;
     private Thread sendData;
     private  LoginedUser loginedUser;
+    private String newAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,8 @@ public class ModifyInfoActivity extends MyActivity {
         sexPicker = new SexPicker(this);
         addressPicker = new AddressPicker(this);
         addressPicker.setAddressMode(AddressMode.PROVINCE_CITY);
-        infoJSON = new JSONObject();
+        infoJSON = new JSONObject();  //用户新信息
+        newAvatar = null;   //新头像Uri
         loadData();     //加载已有数据
         initView();
         initListener();
@@ -400,43 +402,84 @@ public class ModifyInfoActivity extends MyActivity {
         }
     }
 
-//    //调用选择图片
-//    private void openGallery(int type) {
-//        Intent gallery = new Intent(Intent.ACTION_PICK);
-//        gallery.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-//        startActivityForResult(gallery, type);
-//    }
-//
-//    //选择图片结果
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        // 这里没有判断是否匹配，data为空
-//        if (data != null)
-//            Glide.with(this)
-//                    .load(data.getData())
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .circleCrop()
-//                    .into(binding.modifyAvatar);
-//
-//        // 要查询的列字段名称
-//        String[] filePathColumns = {MediaStore.Images.Media.DATA};
-//        // 到数据库中查询 , 查询 _data 列字段信息
-//        Cursor cursor = getContentResolver().query(
-//                data.getData(),
-//                filePathColumns,
-//                null,
-//                null,
-//                null);
-//        cursor.moveToFirst();
-//        // 获取 _data 列所在的列索引
-//        int columnIndex = cursor.getColumnIndex(filePathColumns[0]);
-//        // 获取图片的存储路径
-//        localImg = cursor.getString(columnIndex);
-//    }
 
     private void saveInfo() {
-        sendData = new Thread(new Runnable() {
+
+        if(newAvatar!=null)
+            new Thread(new Runnable() {     //上传头像
+                @Override
+                public void run() {
+                    OkHttpClient client = new OkHttpClient();
+                    File file = null;
+                    try {
+                        try {
+                            file = new File(new URI(newAvatar));
+                        } catch (URISyntaxException e) {
+                            if(errMessage==null)
+                            errMessage = "文件读取出错";
+                            e.printStackTrace();
+                        }
+
+                        MultipartBody body = new MultipartBody.Builder()
+                                .setType(MultipartBody.FORM)
+                                .addFormDataPart(
+                                        "filename",
+                                        "image.png",
+                                        MultipartBody.create(file, MediaType.parse("image/png"))
+                                ).build();
+                        Request request = new Request.Builder()
+                                .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid() + "/avatar")
+                                .addHeader("token", MainActivity.getToken())
+                                .post(body)
+                                .build();
+
+                        Response response = null;
+
+
+                        try {
+                            response = client.newCall(request).execute();
+                        } catch (IOException e) {
+                            if(errMessage==null)
+                                errMessage = "网络异常";
+                            e.printStackTrace();
+                        }
+                        Log.d("TEST", "image: " + response.isSuccessful());
+                        request = new Request.Builder()
+                                .url(getString(R.string.server_ip) + "/user/" + loginedUser.getUid() + "/avatar")
+                                .build();
+                        try {
+                            response = client.newCall(request).execute();
+                        } catch (IOException e) {
+                            if(errMessage==null)
+                                errMessage = "网络异常";
+                            e.printStackTrace();
+                        }
+                        String responseBody = null;
+                        try {
+                            responseBody = response.body().string();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            JSONObject json = new JSONObject(responseBody);
+                            String imgPath = json.getString("data");
+                            LoginedUser update = MyApplication.getUserDatabase().userDao().getLoginUser().get(0).clone();
+                            update.setAvatar(imgPath);
+                            MyApplication.getUserDatabase().userDao().deleteUser();
+                            MyApplication.getUserDatabase().userDao().insertUser(update);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        Message message = new Message();
+                        message.what=1;
+                        handler.sendMessage(message);
+                    }
+                }
+            }).start();
+
+        new Thread(new Runnable() {     //修改个人信息
             @Override
             public void run() {
                 //OkHttpClient client = new OkHttpClient();
@@ -446,28 +489,7 @@ public class ModifyInfoActivity extends MyActivity {
 
                 Log.d(TAG, "123456");
                 try {
-//                    if (localImg != null) {
-//                        File file = new File(localImg);
-//
-//                        MultipartBody body = new MultipartBody.Builder()
-//                                .setType(MultipartBody.FORM)
-//                                .addFormDataPart(
-//                                        "filename",
-//                                        "image.png",
-//                                        MultipartBody.create(file, MediaType.parse("image/png"))
-//                                ).build();
-//                        Request request = new Request.Builder()
-//                                .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid() + "/avatar")
-//                                .addHeader("token", MainActivity.getToken())
-//                                .post(body)
-//                                .build();
-//
-//                        Response response = null;
-//
-//
-//                        response = client.newCall(request).execute();
-//                        Log.d(TAG, "image: " + response.isSuccessful());
-//                    }
+
                     RequestBody infoBody = RequestBody.create(String.valueOf(infoJSON), JSON);
                     Request infoRequest = new Request.Builder()
                             .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid())
@@ -497,13 +519,16 @@ public class ModifyInfoActivity extends MyActivity {
                     message.what = 0;
                     handler.sendMessage(message);
                 } catch (IOException e) {
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
                     errMessage = "网络异常";
                     e.printStackTrace();
                 }
             }
 
-        });
-        sendData.start();
+        }).start();
+
     }
 
     private final PickCallback cropCallback = new PickCallback() {
@@ -517,7 +542,8 @@ public class ModifyInfoActivity extends MyActivity {
             builder.setMultiTouchEnabled(true)
                     .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
                     .setCropShape(CropImageView.CropShape.OVAL)
-                    .setRequestedSize(400, 400)
+                    .setRequestedSize(200, 200)
+                    .setOutputCompressQuality(80)
                     .setFixAspectRatio(true)
                     .setAspectRatio(1, 1);
         }
@@ -530,76 +556,7 @@ public class ModifyInfoActivity extends MyActivity {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .circleCrop()
                     .into(binding.modifyAvatar);
-
-            new Thread(new Runnable() {     //改变背景
-                @Override
-                public void run() {
-                    OkHttpClient client = new OkHttpClient();
-                    File file = null;
-                    try {
-                        file = new File(new URI(imageUri.toString()));
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
-
-                    MultipartBody body = new MultipartBody.Builder()
-                            .setType(MultipartBody.FORM)
-                            .addFormDataPart(
-                                    "filename",
-                                    "image.png",
-                                    MultipartBody.create(file, MediaType.parse("image/png"))
-                            ).build();
-                    Request request = new Request.Builder()
-                            .url(getString(R.string.server_ip) + "/user/" + MainActivity.getUid() + "/avatar")
-                            .addHeader("token", MainActivity.getToken())
-                            .post(body)
-                            .build();
-
-                    Response response = null;
-
-
-                    try {
-                        response = client.newCall(request).execute();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Log.d("TEST", "run: failed");
-                    }
-                    Log.d("TEST", "image: " + response.isSuccessful());
-                    request = new Request.Builder()
-                            .url(getString(R.string.server_ip) + "/user/" + loginedUser.getUid()+ "/avatar")
-                            .build();
-                    try {
-                        response = client.newCall(request).execute();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    String responseBody = null;
-                    try {
-                        responseBody = response.body().string();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        JSONObject json = new JSONObject(responseBody);
-                        String imgPath = json.getString("data");
-                        LoginedUser update = MyApplication.getUserDatabase().userDao().getLoginUser().get(0).clone();
-                        update.setAvatar(imgPath);
-                        MyApplication.getUserDatabase().userDao().deleteUser();
-                        MyApplication.getUserDatabase().userDao().insertUser(update);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(ModifyInfoActivity.this, "成功更换背景", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-
-                }
-            }).start();
-
-
+            newAvatar = imageUri.toString();
 
         }
     };
@@ -614,7 +571,7 @@ public class ModifyInfoActivity extends MyActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ImagePicker.getInstance().onActivityResult(this, requestCode, resultCode, data);
     }
