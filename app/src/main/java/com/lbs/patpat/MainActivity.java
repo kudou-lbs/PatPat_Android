@@ -113,62 +113,51 @@ public class MainActivity extends MyActivity {
             public void onChanged(List<LoginedUser> loginedUsers) {
 
                 Log.d("TEST", "用户数为：" + String.valueOf(loginedUsers.size()));
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (loginedUsers.size() == 0) {     //未登录
-                                    intro.setVisibility(View.GONE);
-                                    nickName.setText("点击头像登录");
-                                    icon.setImageDrawable(getDrawable(R.drawable.icon_default));
-                                    backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
-                                    backGround.getBackground().setAlpha(230);
-                                    isLogin = false;
-                                    //Toast.makeText(getApplicationContext(), "用户未登录", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    loginedUser = loginedUsers.get(0).clone();
-                                    isLogin = true;
-                                    setToken(loginedUsers.get(0).token);
-                                    setUid(loginedUsers.get(0).getUid());
-                                    intro.setVisibility(View.VISIBLE);
-                                    if (loginedUsers.get(0).intro.equals("null"))
-                                        intro.setText("这个人很懒，什么都没有写");
-                                    else
-                                        intro.setText(loginedUsers.get(0).intro);
+                if (loginedUsers.size() == 0) {     //未登录
+                    intro.setVisibility(View.GONE);
+                    nickName.setText("点击头像登录");
+                    icon.setImageDrawable(getDrawable(R.drawable.icon_default));
+                    backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
+                    backGround.getBackground().setAlpha(230);
+                    isLogin = false;
+                    Toast.makeText(getApplicationContext(), "无用户", Toast.LENGTH_SHORT).show();
+                } else {
+                    loginedUser = loginedUsers.get(0).clone();
+                    isLogin = true;
+                    setToken(loginedUsers.get(0).token);
+                    setUid(loginedUsers.get(0).getUid());
+                    intro.setVisibility(View.VISIBLE);
+                    if (loginedUsers.get(0).intro.equals("null"))
+                        intro.setText("这个人很懒，什么都没有写");
+                    else
+                        intro.setText(loginedUsers.get(0).intro);
 
-                                    if (loginedUsers.get(0).nickname.equals("null"))
-                                        nickName.setText("暂无昵称");
-                                    else
-                                        nickName.setText(loginedUsers.get(0).nickname);
+                    if (loginedUsers.get(0).nickname.equals("null"))
+                        nickName.setText("暂无昵称");
+                    else
+                        nickName.setText(loginedUsers.get(0).nickname);
 
-                                    if (loginedUsers.get(0).avatar.equals("null")) {
-                                        icon.setImageDrawable(getDrawable(R.drawable.icon_default));
-                                    } else
-                                        Glide.with(MainActivity.this)
-                                                .load(getString(R.string.server_ip) + loginedUsers.get(0).avatar)
-                                                .skipMemoryCache(true)//跳过内存缓存
-                                                .diskCacheStrategy(DiskCacheStrategy.NONE)//不要在disk硬盘缓存
-                                                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                                                .into(icon);
+                    if (loginedUsers.get(0).avatar.equals("null")) {
+                        icon.setImageDrawable(getDrawable(R.drawable.icon_default));
+                    } else
+                        Glide.with(MainActivity.this)
+                                .load(getString(R.string.server_ip) + loginedUsers.get(0).avatar)
+                                .skipMemoryCache(true)//跳过内存缓存
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)//不要在disk硬盘缓存
+                                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                                .into(icon);
 
-                                    if (loginedUsers.get(0).background.equals("null")) {
-                                        backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
-                                        backGround.getBackground().setAlpha(230);
-                                    } else
-                                        Glide.with(MainActivity.this)
-                                                .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
-                                                .skipMemoryCache(true)//跳过内存缓存
-                                                .diskCacheStrategy(DiskCacheStrategy.NONE)//不要在disk硬盘缓存.centerCrop()
-                                                .into(new AdaptiveBackground(backGround));
-                                }
+                    if (loginedUsers.get(0).background.equals("null")) {
+                        backGround.setBackground(getDrawable(R.drawable.drawer_background_custom));
+                        backGround.getBackground().setAlpha(230);
+                    } else
+                        Glide.with(MainActivity.this)
+                                .load(getString(R.string.server_ip) + loginedUsers.get(0).background)
+                                .skipMemoryCache(true)//跳过内存缓存
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)//不要在disk硬盘缓存.centerCrop()
+                                .into(new AdaptiveBackground(backGround));
+                }
 
-
-                            }
-                        });
-                    }
-                }).start();
             }
 
         });
@@ -228,6 +217,14 @@ public class MainActivity extends MyActivity {
                         } catch (PackageManager.NameNotFoundException e) {
                             e.printStackTrace();
                         }
+//                        new Thread(new Runnable() {   //修改Token
+//                            @Override
+//                            public void run() {
+//                                LoginedUser user = MyApplication.getUserDatabase().userDao().getLoginUser().get(0);
+//                                user.setToken("123456");
+//                                MyApplication.getUserDatabase().userDao().updateUser(user);
+//                            }
+//                        }).start();
                         break;
                     case R.id.drawer_logout:
                         logOut();
