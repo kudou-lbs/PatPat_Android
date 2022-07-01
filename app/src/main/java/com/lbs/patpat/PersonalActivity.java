@@ -400,7 +400,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
             builder.setMultiTouchEnabled(true)
                     .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
                     .setCropShape(CropImageView.CropShape.RECTANGLE)
-                    .setRequestedSize(500, 500)
+                    .setRequestedSize(750, 750)
                     .setFixAspectRatio(true)
                     .setAspectRatio(1, 1);
         }
@@ -421,6 +421,7 @@ public class PersonalActivity extends MyActivity implements View.OnClickListener
                     File file = null;
                     try {
                         file = new File(new URI(imageUri.toString()));
+                        Log.d("TEST", "run: "+file.canRead()+file.getPath());
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
