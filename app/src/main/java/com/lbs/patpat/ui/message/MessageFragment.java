@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +19,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.lbs.patpat.MainActivity;
 import com.lbs.patpat.R;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lbs.patpat.databinding.FragmentMessageBinding;
@@ -43,6 +45,7 @@ public class MessageFragment extends Fragment {
         binding = FragmentMessageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         initTabAndPager();
+        initClick();
 
         //LiveData更新头像，详见HomeFragment
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
@@ -63,6 +66,15 @@ public class MessageFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    private void initClick() {
+        binding.tlMessage.imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).getBinding().mainDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
     }
 
     private void initTabAndPager(){
