@@ -75,7 +75,6 @@ public class ListViewModel extends ViewModel {
         makeSearchApiCall(TYPE_USER,key);
     }
     private void makeSearchApiCall(String type,String key){
-
         //这个清除似乎没有意义
         //if(forumsList!=null)forumsList.getValue().clear();
 
@@ -145,6 +144,8 @@ public class ListViewModel extends ViewModel {
             }
         }).start();
     }
+
+    //获取关注论坛列表，这里无意义
     public void makeFollowForumApiCall(){
         if(forumsList!=null)forumsList.getValue().clear();
 

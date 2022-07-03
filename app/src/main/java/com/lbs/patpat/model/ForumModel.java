@@ -8,6 +8,7 @@ public class ForumModel {
     private String forumIcon;
     private int forumPostNum;
     private int forumFollowNum;
+    private String lastTitle;
 
 
     public ForumModel(String forumName, String forumFid, String forumIcon, int forumPostNum, int forumFollowNum){
@@ -16,6 +17,13 @@ public class ForumModel {
         this.forumIcon=forumIcon;
         this.forumPostNum=forumPostNum;
         this.forumFollowNum=forumFollowNum;
+    }
+
+    public ForumModel(String forumName, String forumFid, String forumIcon, String lastTitle) {
+        this.forumName = forumName;
+        this.forumFid = forumFid;
+        this.forumIcon = forumIcon;
+        this.lastTitle = lastTitle;
     }
 
     //以下为getter & setter
@@ -57,5 +65,9 @@ public class ForumModel {
 
     public void setForumFollowNum(int forumFollowNum) {
         this.forumFollowNum = forumFollowNum;
+    }
+
+    public String getLastTitle() {
+        return lastTitle;
     }
 }

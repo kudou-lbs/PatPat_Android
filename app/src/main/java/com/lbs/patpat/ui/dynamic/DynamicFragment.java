@@ -70,7 +70,7 @@ public class DynamicFragment extends Fragment implements View.OnClickListener{
                         break;
                     //ListView：论坛
                     case 2:
-                        return ListFragment.newSearchInstance(WebViewFragment.SEARCH_FORUM,"");
+                        return ForumFragment.newInstance();
                 }
 
                 return WebViewFragment.newInstance(webViewType);
