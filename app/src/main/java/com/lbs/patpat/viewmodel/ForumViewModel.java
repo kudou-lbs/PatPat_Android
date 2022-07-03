@@ -26,12 +26,15 @@ public class ForumViewModel extends ViewModel {
     String fid;
     MutableLiveData<Boolean> followed;
     MutableLiveData<ForumDetailModel> forumDetailModelMutableLiveData;
+    MutableLiveData<Boolean> login;
 
     public ForumViewModel(String fid) {
         this.fid = fid;
         followed=new MutableLiveData<>();
         followed.setValue(false);
         forumDetailModelMutableLiveData=new MutableLiveData<>();
+        login=new MutableLiveData<>();
+        login.setValue(MainActivity.getIsLogin());
         //forumDetailModelMutableLiveData.setValue(new ForumDetailModel("","","","","","",false));
         makeForumDetailApiCall();
     }
@@ -47,18 +50,28 @@ public class ForumViewModel extends ViewModel {
     public MutableLiveData<ForumDetailModel> getForumDetailModelMutableLiveData() {
         return forumDetailModelMutableLiveData;
     }
+
+    public MutableLiveData<Boolean> getLogin() {
+        return login;
+    }
+
     //获取当前社区详信息
     public void makeForumDetailApiCall(){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
-                    String url=MyApplication.getContext().getString(R.string.server_ip)+"/forum/"+fid+"?"+"uid="+MainActivity.getUid();
-                    Log.d("lbs",url);
-                    Request request=new Request.Builder()
-                            .url(url)
-                            .header("token",MainActivity.getToken())
-                            .build();
+                    String url=MyApplication.getContext().getString(R.string.server_ip)+"/forum/"+fid+"?";
+                    if(Boolean.TRUE.equals(login.getValue())){
+                        url=url+"uid="+MainActivity.getUid();
+                    }
+                    Log.d("lbs","获取论坛详细信息社区url是"+url);
+                    Request.Builder builder=new Request.Builder().url(url);
+                    if(Boolean.TRUE.equals(login.getValue())){
+                        builder.header("token",MainActivity.getToken());
+                    }
+                    Request request=builder.build();
+
                     OkHttpClient client=new OkHttpClient();
                     Response response=client.newCall(request).execute();
                     String responseData=response.body().string();
@@ -85,7 +98,7 @@ public class ForumViewModel extends ViewModel {
                     followed.postValue(tmpViewModel.isLike());
                     forumDetailModelMutableLiveData.postValue(tmpViewModel);
                 } catch (Exception e) {
-                    Log.d("lbs","获取社区详情出错啦");
+                    Log.d("lbs","获取论坛详情出错啦");
                     e.printStackTrace();
                 }
             }

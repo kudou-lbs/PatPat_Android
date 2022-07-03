@@ -192,6 +192,7 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         requestMoreInfo();
     }
 
+    //在刚开始和滑动到结尾的时候进行请求
     private void requestMoreInfo(){
         switch (requestPage){
             case WebViewFragment.DYNAMIC_FORUM:
@@ -214,6 +215,10 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         }
     }
 
+    public void backToStart(){
+        mViewModel.backToForumStart();
+    }
+
     //社区项点击事件
     @Override
     public void onItemClick(ForumModel forumModel) {
@@ -231,7 +236,4 @@ public class ListFragment extends Fragment implements ForumListAdapter.OnItemCli
         getActivity().startActivity(intent);
     }
 
-    public void backToStart(){
-        mViewModel.backToForumStart();
-    }
 }

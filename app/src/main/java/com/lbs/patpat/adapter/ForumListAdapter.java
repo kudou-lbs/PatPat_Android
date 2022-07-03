@@ -2,6 +2,7 @@ package com.lbs.patpat.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,7 @@ public class ForumListAdapter extends RecyclerView.Adapter<ForumListAdapter.View
                 .fallback(R.drawable.icon_default)
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                 .into(holder.icon);
-        holder.name.setText(forumModelList.get(position).getForumName());
+        holder.name.setText(Html.fromHtml(forumModelList.get(position).getForumName(),0));
         holder.intro.setText(new StringBuilder()
                 .append(forumModelList.get(position).getForumFollowNum())
                 .append("关注 ")

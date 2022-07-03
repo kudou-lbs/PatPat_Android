@@ -33,6 +33,9 @@ public class ListViewModel extends ViewModel {
     private MutableLiveData<List<UserModel>> userList;
     private OkHttpClient client;
 
+    public static final String TYPE_FORUM="forum";
+    public static final String TYPE_USER="user";
+
     public ListViewModel() {
         forumOffset =0;
         forumPageSize =10;
@@ -65,53 +68,82 @@ public class ListViewModel extends ViewModel {
 
     //更新搜索论坛
     public void makeForumApiCall(String key){
-        //test
-        if(forumsList!=null)forumsList.getValue().clear();
+        makeSearchApiCall(TYPE_FORUM,key);
+    }
+    //更新搜索用户
+    public void makeUserApiCall(String key){
+        makeSearchApiCall(TYPE_USER,key);
+    }
+    private void makeSearchApiCall(String type,String key){
+
+        //这个清除似乎没有意义
+        //if(forumsList!=null)forumsList.getValue().clear();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     String tmpUrl= MyApplication.getContext().getString(R.string.server_ip)+"/"
-                            +"forum?uid="+ MainActivity.getUid()
+                            +"search?type="+type
+                            +"&key="+key
                             +"&pageSize="+ forumPageSize
-                            +"&offset=0"+ forumOffset;
+                            +"&offset="+ forumOffset;
+                    Log.d("lbs_search_forum","url is "+tmpUrl);
                     Request request=new Request.Builder()
                             .url(tmpUrl)
                             .build();
                     Response response=client.newCall(request).execute();
                     String responseData=response.body().string();
                     JSONObject jsonObject=new JSONObject(responseData);
-                    List<ForumModel> tmpList=new ArrayList<>();
-                    if(jsonObject.getString("message").equals("OK")){
-                        JSONArray jsonArray=jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject tmpObject=jsonArray.getJSONObject(i);
-                            ForumModel tmpForumModel=new ForumModel(tmpObject.getString("name"),
-                                    tmpObject.getString("fid"),
-                                    tmpObject.getString("icon"),
-                                    tmpObject.getInt("postNum"),
-                                    tmpObject.getInt("followNum"));
-                            tmpList.add(tmpForumModel);
-                            Log.d("lbs",String.valueOf(i)+tmpObject.toString());
-                        }
-                        forumsList.postValue(tmpList);
-                        forumOffset += forumPageSize;
+
+                    //根据返回结果进行数据更新
+                    switch (type){
+                        case TYPE_FORUM:
+                            List<ForumModel> tmpList=new ArrayList<>();
+                            if(jsonObject.getString("message").equals("OK")){
+                                JSONArray jsonArray=jsonObject.getJSONArray("data");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject tmpObject=jsonArray.getJSONObject(i);
+                                    ForumModel tmpForumModel=new ForumModel(tmpObject.getString("name"),
+                                            tmpObject.getString("fid"),
+                                            tmpObject.getString("icon"),
+                                            tmpObject.getInt("postNum"),
+                                            tmpObject.getInt("followNum"));
+                                    tmpList.add(tmpForumModel);
+                                    Log.d("lbs",String.valueOf(i)+tmpObject.toString());
+                                }
+                                forumsList.postValue(tmpList);
+                                forumOffset += forumPageSize;
+                            }
+                            break;
+                        case TYPE_USER:
+                            List<UserModel> tmpUserList=new ArrayList<>();
+                            if(jsonObject.getString("message").equals("OK")){
+                                JSONArray jsonArray=jsonObject.getJSONArray("data");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject tmpObject=jsonArray.getJSONObject(i);
+                                    UserModel tmpUserModel=new UserModel(
+                                            tmpObject.getString("uid"),
+                                            tmpObject.getString("nickname"),
+                                            tmpObject.getString("avatar"),
+                                            tmpObject.getInt("fansNum"),
+                                            tmpObject.getString("intro")
+                                    );
+                                    tmpUserList.add(tmpUserModel);
+                                    Log.d("lbs",String.valueOf(i)+tmpObject.toString());
+                                }
+                                userList.postValue(tmpUserList);
+                                userOffset += userPageSize;
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-    }
-    //更新搜索用户
-    public void makeUserApiCall(String key){
-        //同上请求
-        List<UserModel> list=new ArrayList<>();
-        for(int i=0;i<10;++i){
-            list.add(new UserModel("123","原神-西风驿站","192.168.0.1/avatar",9999,true));
-        }
-        userList.setValue(list);
     }
     public void makeFollowForumApiCall(){
         if(forumsList!=null)forumsList.getValue().clear();

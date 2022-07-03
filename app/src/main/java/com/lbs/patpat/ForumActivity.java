@@ -22,6 +22,7 @@ import com.lbs.patpat.fragment.WebViewFragment.WebViewFragment;
 import com.lbs.patpat.global.MyActivity;
 import com.lbs.patpat.global.MyApplication;
 import com.lbs.patpat.model.ForumDetailModel;
+import com.lbs.patpat.ui.login_register.LoginActivity;
 import com.lbs.patpat.viewmodel.ForumViewModel;
 
 public class ForumActivity extends MyActivity implements View.OnClickListener{
@@ -114,7 +115,16 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.item_forum_followed:
-                forumViewModel.onClickFollow();
+                if(Boolean.TRUE.equals(forumViewModel.getLogin().getValue())){
+                    forumViewModel.onClickFollow();
+                }else{
+                    Intent intent1=new Intent(ForumActivity.this, LoginActivity.class);
+                    startActivity(intent1);
+                    if(MainActivity.getIsLogin()) {
+                        forumViewModel.getLogin().setValue(MainActivity.getIsLogin());
+                        forumViewModel.onClickFollow();
+                    }
+                }
                 break;
             default:
                 break;

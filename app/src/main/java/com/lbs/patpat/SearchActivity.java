@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -55,7 +56,6 @@ public class SearchActivity extends MyActivity {
                     return;
                 }
 
-
                 //未初始化则先初始化，也就是绑定
                 if(!initTabAndPager){
                     initResultPage(key);
@@ -102,6 +102,7 @@ public class SearchActivity extends MyActivity {
 
     //更新搜索结果
     private void renewPagerView(String key){
+        Log.d("lbs","开始搜索");
         binding.searchPager.setAdapter(new FragmentStateAdapter(getSupportFragmentManager(),getLifecycle()) {
             @NonNull
             @Override

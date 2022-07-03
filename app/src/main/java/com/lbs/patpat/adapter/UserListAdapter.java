@@ -3,6 +3,7 @@ package com.lbs.patpat.adapter;
 import android.content.Context;
 
 import android.annotation.SuppressLint;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
                 .fallback(R.drawable.icon_default)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .into(holder.avatar);
-        holder.nickname.setText(currentUser.getNickname());
+        holder.nickname.setText(Html.fromHtml(currentUser.getNickname(),0));
         holder.intro.setText(currentUser.getIntro());
         //还有关注的展示和点击事件没写
 
