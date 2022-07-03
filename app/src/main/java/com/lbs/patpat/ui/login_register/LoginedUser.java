@@ -31,6 +31,8 @@ public class LoginedUser implements Cloneable{
     public String background;
     public int fansNum;
     public int followNum;
+
+
     public String token;
    // public String birthday;
 //    public String address;
@@ -62,6 +64,11 @@ public class LoginedUser implements Cloneable{
     public void setBackground(String background) {
         this.background = background;
     }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
 
 
 

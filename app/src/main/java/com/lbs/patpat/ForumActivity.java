@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -110,9 +111,13 @@ public class ForumActivity extends MyActivity implements View.OnClickListener{
                 finish();
                 break;
             case R.id.floating_button_new_post:
-                Intent intent=new Intent(this,PostWriteActivity.class);
-                intent.putExtra("fid",fid);
-                startActivity(intent);
+                if(MainActivity.getIsLogin()) {
+                    Intent intent = new Intent(this, PostWriteActivity.class);
+                    intent.putExtra("fid", fid);
+                    startActivity(intent);
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "请先登录", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_forum_followed:
                 if(Boolean.TRUE.equals(forumViewModel.getLogin().getValue())){

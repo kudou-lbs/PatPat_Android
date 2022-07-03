@@ -63,6 +63,9 @@ public class WebViewFragment extends Fragment {
     private String idOrKey;
     private FragmentWebViewBinding binding;
 
+    public WebViewFragment(){
+        super();
+    }
     //这里添加根据pos修改url1
     private WebViewFragment(int requestPage){
         super();
