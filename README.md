@@ -32,7 +32,7 @@ PatPat是一个类似于TapTap的游戏社区，分为用户、游戏、论坛�
 
 #### 未登录时状态 ：
 
-<img src="https://gitee.com/lin_po_sheng/android-study/raw/master/202207182123760.jpg" width=250px" />
+<img src="https://gitee.com/lin_po_sheng/android-study/raw/master/202207182123760.jpg" alt="img" width=250px" />
 
 #### 登录界面：
 
